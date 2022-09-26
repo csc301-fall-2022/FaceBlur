@@ -1,25 +1,29 @@
-# YOUR PRODUCT/TEAM NAME
-> _Note:_ This document is meant to evolve throughout the planning phase of your project.   That is, it makes sense for you commit regularly to this file while working on the project (especially edits/additions/deletions to the _Highlights_ section). Most importantly, it is a reflection of all the planning you work you've done in the first iteration. 
+# University of Toronto / MBELKS
+> _Note:_ This document is meant to evolve throughout the planning phase of your project.   That is, it makes sense for you commit regularly to this file while working on the project (especially edits/additions/deletions to the _Highlights_ section). Most importantly, it is a reflection of all the planning you work you've done in the first iteration.
  > **This document will serve as a master plan between your team, your partner and your TA.**
 
 ## Product Details
- 
+
 #### Q1: What are you planning to build?
+
+We are planning to build a web-app that enables U of T Researchers to analyze videos of children while ignoring either the background of the video, or the face of the child. This allows viewers of videos to analyze the situation in the background of the video without being affected by the child, or to analyze the emotions and reactions of the child without knowledge of the background situation. It also anonymizes children, if our users wish to publish the videos to support research.
 
  > Short (1 - 2 min' read)
  * Start with a single sentence, high-level description of the product.
  * Be clear - Describe the problem you are solving in simple terms.
  * Be concrete. For example:
     * What are you planning to build? Is it a website, mobile app,
-   browser extension, command-line app, etc.?      
+   browser extension, command-line app, etc.?
     * When describing the problem/need, give concrete examples of common use cases.
-    * Assume your the reader knows nothing about the problem domain and provide the necessary context. 
- * Focus on *what* your product does, and avoid discussing *how* you're going to implement it.      
+    * Assume your the reader knows nothing about the problem domain and provide the necessary context.
+ * Focus on *what* your product does, and avoid discussing *how* you're going to implement it.
    For example: This is not the time or the place to talk about which programming language and/or framework you are planning to use.
  * **Feel free (and very much encouraged) to include useful diagrams, mock-ups and/or links**.
 
 
 #### Q2: Who are your target users?
+
+Our target users are Researchers at the University of Toronto who are within the Toronto Early Cognition Lab, and who wish to view recordings from earlier dates.
 
   > Short (1 - 2 min' read max)
  * Be specific (e.g. a 'a third-year university student studying Computer Science' and not 'a student')
@@ -39,9 +43,9 @@
 #### Q4: How will you build it?
 
 > Short (1-2 min' read max)
- * What is the technology stack? Specify any and all languages, frameworks, libraries, PaaS products or tools. 
+ * What is the technology stack? Specify any and all languages, frameworks, libraries, PaaS products or tools.
  * How will you deploy the application?
- * Describe the architecture - what are the high level components or patterns you will use? Diagrams are useful here. 
+ * Describe the architecture - what are the high level components or patterns you will use? Diagrams are useful here.
  * Will you be using third party applications or APIs? If so, what are they?
  * What is your testing strategy?
 
@@ -53,13 +57,13 @@
  * If you have a partner, these must be reviewed and accepted by them. You need to include the evidence of partner approval (e.g., screenshot from email) or at least communication to the partner (e.g., email you sent)
 
 ----
-## Intellectual Property Confidentiality Agreement 
+## Intellectual Property Confidentiality Agreement
 > Note this section is **not marked** but must be completed briefly if you have a partner. If you have any questions, please ask on Piazza.
->  
+>
 **By default, you own any work that you do as part of your coursework.** However, some partners may want you to keep the project confidential after the course is complete. As part of your first deliverable, you should discuss and agree upon an option with your partner. Examples include:
 1. You can share the software and the code freely with anyone with or without a license, regardless of domain, for any use.
 2. You can upload the code to GitHub or other similar publicly available domains.
-3. You will only share the code under an open-source license with the partner but agree to not distribute it in any way to any other entity or individual. 
+3. You will only share the code under an open-source license with the partner but agree to not distribute it in any way to any other entity or individual.
 4. You will share the code under an open-source license and distribute it as you wish but only the partner can access the system deployed during the course.
 5. You will only reference the work you did in your resume, interviews, etc. You agree to not share the code or software in any capacity with anyone unless your partner has agreed to it.
 
@@ -71,8 +75,8 @@
 
 #### Q6: What are the roles & responsibilities on the team?
 
-Describe the different roles on the team and the responsibilities associated with each role. 
- * Roles should reflect the structure of your team and be appropriate for your project. Not necessarily one role to one team member.  
+Describe the different roles on the team and the responsibilities associated with each role.
+ * Roles should reflect the structure of your team and be appropriate for your project. Not necessarily one role to one team member.
  * Add role(s) to your Team-[Team_Number]-[Team_Name].csv file on the main folder
 
 List each team member and:
@@ -82,7 +86,7 @@ List each team member and:
 
 #### Q7: What operational events will you have as a team?
 
-Describe meetings (and other events) you are planning to have. 
+Describe meetings (and other events) you are planning to have.
  * When and where? Recurring or ad hoc? In-person or online?
  * What's the purpose of each meeting?
  * Other events could be coding sessions, code reviews, quick weekly sync meeting online, etc.
@@ -90,11 +94,11 @@ Describe meetings (and other events) you are planning to have.
    * What did you discuss during the meetings?
    * What were the outcomes of each meeting?
    * You must keep track of meeting minutes and add them to your repo.
-   * You must have a regular meeting schedule established by the second meeting.  
-  
+   * You must have a regular meeting schedule established by the second meeting.
+
 #### Q8: What artifacts will you use to self-organize?
 
-List/describe the artifacts you will produce in order to organize your team.       
+List/describe the artifacts you will produce in order to organize your team.
 
  * Artifacts can be To-Do lists, Task boards, schedule(s), meeting minutes, etc.
  * We want to understand:
@@ -108,9 +112,9 @@ List/describe the artifacts you will produce in order to organize your team.
 Describe your team's working culture.
 
 **Communications:**
- * What is the expected frequency? What methods/channels are appropriate? 
+ * What is the expected frequency? What methods/channels are appropriate?
  * If you have a partner project, what is your process (in detail) for communicating with your partner?
- 
+
 **Meetings:**
  * How are people held accountable for attending meetings, completing action items? Is there a moderator or process?
 
@@ -127,4 +131,4 @@ and/or collaborative process.
     * Present the arguments for each alternative.
     * Explain why the option you decided on makes the most sense for your team/product/users.
  * Essentially, we want to understand how (and why) you ended up with your current product and process plan.
- * This section is useful for important information regarding your decision making process that may not necessarily fit in other sections. 
+ * This section is useful for important information regarding your decision making process that may not necessarily fit in other sections.
