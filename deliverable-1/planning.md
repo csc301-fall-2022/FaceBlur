@@ -51,6 +51,10 @@ Our target users are Researchers at the University of Toronto who are within the
 
 #### Q5: What are the user stories that make up the MVP?
 
+1. As a researcher at the Toronto Early Cognition Lab, I want to be able to save the videos that have been blurred so that I can rewatch them at a later date.
+2. As a researcher at the Toronto Early Cognition Lab, I want to be able to upload videos so that the faces or backgrouds can be automatically blurred out.
+3. As a researcher at the Toronto Early Cognition Lab, I want to be able to automatically blur out the faces of the children in the videos so that their privacy is protected.
+ 
  * At least 5 user stories concerning the main features of the application - note that this can broken down further
  * You must follow proper user story format (as taught in lecture) ```As a <user of the app>, I want to <do something in the app> in order to <accomplish some goal>```
  * User stories must contain acceptance criteria. Examples of user stories with different formats can be found here: https://www.justinmind.com/blog/user-story-examples/. **It is important that you provide a link to an artifact containing your user stories**.
