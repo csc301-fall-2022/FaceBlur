@@ -29,9 +29,13 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run tsc`
+### `npm run dev`
 
-Compiles tsc.
+Runs app in development mode (refresh on change).
+
+### `npm run build`
+
+Compiles tsc with build.
 
 ### `npm run eject`
 
