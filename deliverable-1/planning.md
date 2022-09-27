@@ -51,12 +51,12 @@ Our target users are Researchers at the University of Toronto who are within the
 
 #### Q5: What are the user stories that make up the MVP?
 
-1. As a researcher at the Toronto Early Cognition Lab, I want to be able to save the videos that have been blurred so that I can rewatch them at a later date.
-2. As a researcher at the Toronto Early Cognition Lab, I want to be able to upload videos so that the faces or backgrouds can be automatically blurred out.
-3. As a researcher at the Toronto Early Cognition Lab, I want to be able to select whether to blur the faces of children or the backgroud so that I can control the variables in the study and focus on certain variables, for instance, facial expressions.
-4. As a researcher at the Toronto Early Cognition Lab, I want to be able to automatically blur out the faces of the children in the videos so that their privacy is protected.
-5. As a researcher at the Toronto Early Cognition Lab, I want to be able to search through the saved videos so that I can easily find a specific video I want to watch
-6. As a researcher at the Toronto Early Cognition Lab, I want to have a login/ authentication process so that only other researchers at the Toronto Early Cognition Lab and I have access to these videos and the children's privacy stays protected 
+1. As a researcher at the Toronto Early Cognition Lab, I want to be able to save the videos that have been blurred in order to rewatch them at a later date.
+2. As a researcher at the Toronto Early Cognition Lab, I want to be able to upload videos in order to automatically blur out faces or backgrounds.
+3. As a researcher at the Toronto Early Cognition Lab, I want to be able to select whether to blur the faces of children or the backgroud in order to control the variables in the study and focus on certain variables, for instance, facial expressions.
+4. As a researcher at the Toronto Early Cognition Lab, I want to be able to automatically blur out the faces of the children in the videos in order to protect their privacy.
+5. As a researcher at the Toronto Early Cognition Lab, I want to be able to search through the saved videos in order to easily find a specific video I want to watch
+6. As a researcher at the Toronto Early Cognition Lab, I want to have a login/authentication process in order to only allow other researchers at the Toronto Early Cognition Lab and I to have access to these videos so that the children's privacy stays protected 
  
  * At least 5 user stories concerning the main features of the application - note that this can broken down further
  * You must follow proper user story format (as taught in lecture) ```As a <user of the app>, I want to <do something in the app> in order to <accomplish some goal>```
