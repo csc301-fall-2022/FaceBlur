@@ -6,7 +6,7 @@
 
 #### Q1: What are you planning to build?
 
-We are planning to build a web-app that enables U of T Researchers to analyze videos of children while ignoring either the background of the video, or the face of the child. This allows viewers of videos to analyze the situation in the background of the video without being affected by the child, or to analyze the emotions and reactions of the child without knowledge of the background situation. It also anonymizes children, if our users wish to publish the videos to support research.
+We are planning to build a web-app that enables U of T Researchers to analyze videos of children while ignoring either the background of the video, or the face of the child. This allows viewers of videos to analyze the situation in the background of the video without being affected by the child, or to analyze the emotions and reactions of the child without knowledge of the background situation. It also anonymizes children, if our users wish to publish the videos to support research. The web-app will be similar to a file library where the user can upload, store, and watch the videos from the studies with the added feature of blurring the component the user wants blurred (faces/ background).
 
  > Short (1 - 2 min' read)
  * Start with a single sentence, high-level description of the product.
@@ -23,7 +23,7 @@ We are planning to build a web-app that enables U of T Researchers to analyze vi
 
 #### Q2: Who are your target users?
 
-Our target users are Researchers at the University of Toronto who are within the Toronto Early Cognition Lab, and who wish to view recordings from earlier dates.
+Our target users are Researchers at the University of Toronto who are within the Toronto Early Cognition Lab, and who wish to upload and/or view recordings from earlier dates.
 
   > Short (1 - 2 min' read max)
  * Be specific (e.g. a 'a third-year university student studying Computer Science' and not 'a student')
@@ -52,11 +52,29 @@ Our target users are Researchers at the University of Toronto who are within the
 #### Q5: What are the user stories that make up the MVP?
 
 1. As a researcher at the Toronto Early Cognition Lab, I want to be able to save the videos that have been blurred in order to rewatch them at a later date.
+
+Given the user has logged in, has uploaded a video file, and possibly selected to blur it, when the user selects to save the video, then the user is redirected back to the homepage, the video is saved to the database, and is displayed in the list of saved videos in the homepage.
+
+
 2. As a researcher at the Toronto Early Cognition Lab, I want to be able to upload videos in order to automatically blur out faces or backgrounds.
+
+Given the user has logged in and has a properly formatted video file (ex. JPEG), when the user chooses that file and selects to upload it on the webapp, then the video is displayed to the user on the web-app and the user is presented with the option of saving or blurring the file.
+
+
 3. As a researcher at the Toronto Early Cognition Lab, I want to be able to select whether to blur the faces of children or the backgroud in order to control the variables in the study and focus on certain variables, for instance, facial expressions.
-4. As a researcher at the Toronto Early Cognition Lab, I want to be able to automatically blur out the faces of the children in the videos in order to protect their privacy.
-5. As a researcher at the Toronto Early Cognition Lab, I want to be able to search through the saved videos in order to easily find a specific video I want to watch
-6. As a researcher at the Toronto Early Cognition Lab, I want to have a login/authentication process in order to only allow other researchers at the Toronto Early Cognition Lab and I to have access to these videos so that the children's privacy stays protected 
+
+Given the user has logged in and has uploaded a video file, when the user asks to blur the faces of the children in the video, then the blurring process takes place, the page is refreshed, the video with the faces blurred is displayed and the user is presented with the option to save the new video in place of the original video.
+
+Given the user has logged in and has uploaded a video file, when the user asks to blur the background in the video, then the blurring process takes place, the page is refreshed, the video with the background blurred is displayed and the user is presented with the option to save the new video in place of the original video.
+
+
+4. As a researcher at the Toronto Early Cognition Lab, I want to be able to search through the saved videos in order to easily find a specific video I want to watch.
+
+Given the webapp contains video files and the user has logged in, when the user searches the title of a video in the search bar, then ensure all videos whose title contains the searched words are found and those videos are displayed to the user.
+
+5. As a researcher at the Toronto Early Cognition Lab, I want to have a login/authentication process in order to only allow other researchers at the Toronto Early Cognition Lab and I to have access to these videos so that the children's privacy stays protected.
+
+Given that the user is a memeber of the Toronto Early Cognition Lab, when the user tries to log in, then ensure their login credentials are in the stored login data and redirect the user to the homepage of the webapp.
  
  * At least 5 user stories concerning the main features of the application - note that this can broken down further
  * You must follow proper user story format (as taught in lecture) ```As a <user of the app>, I want to <do something in the app> in order to <accomplish some goal>```
