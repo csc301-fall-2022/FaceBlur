@@ -31,6 +31,8 @@ Our target users are Researchers at the University of Toronto who are within the
 
 #### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
 
+Our product would save users time because they would no longer have to go in and manually blur either the children's faces or their backgrounds.
+
 > Short (1 - 2 min' read max)
  * We want you to "connect the dots" for us - Why does your product (as described in your answer to Q1) fits the needs of your users (as described in your answer to Q2)?
  * Explain the benefits of your product explicitly & clearly. For example:
@@ -110,6 +112,9 @@ List each team member and:
 
 
 #### Q7: What operational events will you have as a team?
+We plan on having short meetings twice a week online to update each other on which tasks we have completed. 
+
+In our meeting with our partner, we discussed an overview of the entire project. This included what was required and reach goals. In addition to this, we also discussed the tech stack we plan on using.
 
 Describe meetings (and other events) you are planning to have.
  * When and where? Recurring or ad hoc? In-person or online?
