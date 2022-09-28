@@ -3,6 +3,7 @@ import webpack, {Configuration} from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
+import packageJSON = require("./package.json");
 import {TsconfigPathsPlugin} from "tsconfig-paths-webpack-plugin";
 
 const webpackConfig = (env): Configuration => ({
@@ -34,8 +35,8 @@ const webpackConfig = (env): Configuration => ({
         }),
         new webpack.DefinePlugin({
             "process.env.PRODUCTION": env.production || !env.development,
-            "process.env.NAME": JSON.stringify(require("./package.json").name),
-            "process.env.VERSION": JSON.stringify(require("./package.json").version)
+            "process.env.NAME": JSON.stringify(packageJSON.name),
+            "process.env.VERSION": JSON.stringify(packageJSON.version)
         }),
         new ForkTsCheckerWebpackPlugin(),
         new ESLintPlugin({files: "./src/**/*.{ts,tsx,js,jsx}"})
