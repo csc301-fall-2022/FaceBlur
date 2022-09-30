@@ -1,0 +1,65 @@
+
+
+### DB
+-   User + password
+-   Metadata for videos (for displaying videos, making requests to AWS S3)
+    
+    
+### Reach goals:
+ -   Video Search   
+-   Annotation of video frames
+    
+
+###   Project overview:
+
+-   Authentication: 
+
+-   Store own user + password in DB
+    
+-   Just list out all videos that are uploaded, (Try and do search)
+    
+
+    
+-   Lots of Video recordings of experiments:
+    
+-   2 ways of doing the software (Code something w/o influence of face or background):
+    
+
+-   Blur child’s face (anonymize child) & preserve rest of the scene
+    
+-   Blur background, only focus on child’s face (Only care about facial reaction, & we don’t want viewer to know what happened in the environment)
+    
+
+###  Implementation Details:
+    
+
+-   No design doc rn (UI + Tech we can choose)
+    
+-   Frontend: Simple UI + Authentication.
+    
+
+-   Video player - basic but can add extra stuff to help RAs
+    
+-   Window with uploading file to DB
+    
+
+###   Backend:
+    
+
+-   Server takes video, does face processing, uploaded to S3
+    
+-   Python would be MediaPipe Facemesh
+    
+-   Baseline face detection API:
+    
+
+-   This might be kind of wrong, but that is wrong
+    
+
+-   Store both blurred & non-blurred
+    
+-   Research assistants should be able to get blurred + non-blurred
+###  Notes 
+-   Send them who is coming / who is online beforehand for meeting
+-   They cover AWS cost (Let them know)
+-  Can pull up to Jessica’s lab meetings (Thursdays 12-1) (Let know in advance)
