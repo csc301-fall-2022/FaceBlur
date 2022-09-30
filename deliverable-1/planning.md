@@ -102,6 +102,21 @@ Given that the user is a memeber of the Toronto Early Cognition Lab, when the us
 
 #### Q6: What are the roles & responsibilities on the team?
 
+**Lorena Buciu:** Scrum Master / Fullstack Dev
+- Will lead our progress meetings and identify any blockers that other team members may have and ensure our kanban board is accurately reflecting this. Determine ways to prevent backlogs/distractions 
+- Will add details to new tasks to ensure that instructions are clear for team members
+- Will work on tasks in both the backend and frontend components of the application 
+
+**Strengths**:
+- Agile
+- JavaScript
+- Vue.js
+
+**Weaknesses**:
+- Node.js
+- Express.js
+- Prisma
+
 Describe the different roles on the team and the responsibilities associated with each role.
  * Roles should reflect the structure of your team and be appropriate for your project. Not necessarily one role to one team member.
  * Add role(s) to your Team-[Team_Number]-[Team_Name].csv file on the main folder
@@ -129,6 +144,12 @@ Describe meetings (and other events) you are planning to have.
 #### Q8: What artifacts will you use to self-organize?
 
 List/describe the artifacts you will produce in order to organize your team.
+
+   - **Github Projects:** This will be our kanban board where we will manage our tasks and their progress. Tasks will be categorized by to-do, in progress, in review, blocked, and done. We plan on implementing a workflow to automatically update task status. For example, if an in review task PR gets merged in, then the task will move to done.  
+   - We will have weekly meetings with each other to discuss the next steps of our project and to determine what new tasks should be created. 
+   - Tasks will be prioritzed by feature importance. If a task is vital to bringing the project to MVP, this will be prioritized. Any critical bug fixes affecting usage of the platform will also be prioritized. 
+   - Tasks will get assigned to team members by discussion, we will distribute tasks amongst ourselves based on who is willing to do what and how comfortable they feel about the task. 
+   - New features will be marked as complete once they have been merged in and tested on our dev build.  
 
  * Artifacts can be To-Do lists, Task boards, schedule(s), meeting minutes, etc.
  * We want to understand:
