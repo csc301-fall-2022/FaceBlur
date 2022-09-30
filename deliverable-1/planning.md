@@ -175,7 +175,7 @@ Describe meetings (and other events) you are planning to have.
 List/describe the artifacts you will produce in order to organize your team.
 
    - **Github Projects:** This will be our kanban board where we will manage our tasks and their progress. Tasks will be categorized by to-do, in progress, in review, blocked, and done. We plan on implementing a workflow to automatically update task status. For example, if an in review task PR gets merged in, then the task will move to done.
-   - We will have weekly meetings with each other to discuss the next steps of our project and to determine what new tasks should be created.
+   - We will have weekly meetings with each other to discuss the next steps of our project and to determine what new tasks should be created. We will create meeting minutes for all our meetings. 
    - Tasks will be prioritzed by feature importance. If a task is vital to bringing the project to MVP, this will be prioritized. Any critical bug fixes affecting usage of the platform will also be prioritized.
    - Tasks will get assigned to team members by discussion, we will distribute tasks amongst ourselves based on who is willing to do what and how comfortable they feel about the task.
    - New features will be marked as complete once they have been merged in and tested on our dev build.
