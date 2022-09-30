@@ -77,7 +77,7 @@ Given the webapp contains video files and the user has logged in, when the user 
 5. As a researcher at the Toronto Early Cognition Lab, I want to have a login/authentication process in order to only allow other researchers at the Toronto Early Cognition Lab and I to have access to these videos so that the children's privacy stays protected.
 
 Given that the user is a memeber of the Toronto Early Cognition Lab, when the user tries to log in, then ensure their login credentials are in the stored login data and redirect the user to the homepage of the webapp.
- 
+
  * At least 5 user stories concerning the main features of the application - note that this can broken down further
  * You must follow proper user story format (as taught in lecture) ```As a <user of the app>, I want to <do something in the app> in order to <accomplish some goal>```
  * User stories must contain acceptance criteria. Examples of user stories with different formats can be found here: https://www.justinmind.com/blog/user-story-examples/. **It is important that you provide a link to an artifact containing your user stories**.
@@ -103,9 +103,9 @@ Given that the user is a memeber of the Toronto Early Cognition Lab, when the us
 #### Q6: What are the roles & responsibilities on the team?
 
 **Lorena Buciu:** Scrum Master / Fullstack Dev
-- Will lead our progress meetings and identify any blockers that other team members may have and ensure our kanban board is accurately reflecting this. Determine ways to prevent backlogs/distractions 
+- Will lead our progress meetings and identify any blockers that other team members may have and ensure our kanban board is accurately reflecting this. Determine ways to prevent backlogs/distractions
 - Will add details to new tasks to ensure that instructions are clear for team members
-- Will work on tasks in both the backend and frontend components of the application 
+- Will work on tasks in both the backend and frontend components of the application
 
 **Strengths**:
 - Agile
@@ -130,6 +130,21 @@ Given that the user is a memeber of the Toronto Early Cognition Lab, when the us
 - Node.js
 - Express.js
 - React
+
+**Kenneth Miura** Team Lead / Fullstack Dev
+- Will organize all meetings & facilitate meetings that are not lead by Scrum master.
+- Be aware of all components of project, serve to facilitate communication as needed for tickets
+- Work on tasks in both backend & frontend components
+
+**Strengths**
+- Agile
+- SQL
+- Javascript
+
+**Weaknesses**
+- Node.js
+- Express.js
+- Prisma
 
 Describe the different roles on the team and the responsibilities associated with each role.
  * Roles should reflect the structure of your team and be appropriate for your project. Not necessarily one role to one team member.
@@ -159,11 +174,11 @@ Describe meetings (and other events) you are planning to have.
 
 List/describe the artifacts you will produce in order to organize your team.
 
-   - **Github Projects:** This will be our kanban board where we will manage our tasks and their progress. Tasks will be categorized by to-do, in progress, in review, blocked, and done. We plan on implementing a workflow to automatically update task status. For example, if an in review task PR gets merged in, then the task will move to done.  
-   - We will have weekly meetings with each other to discuss the next steps of our project and to determine what new tasks should be created. 
-   - Tasks will be prioritzed by feature importance. If a task is vital to bringing the project to MVP, this will be prioritized. Any critical bug fixes affecting usage of the platform will also be prioritized. 
-   - Tasks will get assigned to team members by discussion, we will distribute tasks amongst ourselves based on who is willing to do what and how comfortable they feel about the task. 
-   - New features will be marked as complete once they have been merged in and tested on our dev build.  
+   - **Github Projects:** This will be our kanban board where we will manage our tasks and their progress. Tasks will be categorized by to-do, in progress, in review, blocked, and done. We plan on implementing a workflow to automatically update task status. For example, if an in review task PR gets merged in, then the task will move to done.
+   - We will have weekly meetings with each other to discuss the next steps of our project and to determine what new tasks should be created.
+   - Tasks will be prioritzed by feature importance. If a task is vital to bringing the project to MVP, this will be prioritized. Any critical bug fixes affecting usage of the platform will also be prioritized.
+   - Tasks will get assigned to team members by discussion, we will distribute tasks amongst ourselves based on who is willing to do what and how comfortable they feel about the task.
+   - New features will be marked as complete once they have been merged in and tested on our dev build.
 
  * Artifacts can be To-Do lists, Task boards, schedule(s), meeting minutes, etc.
  * We want to understand:
@@ -186,6 +201,20 @@ Describe your team's working culture.
 
 ----
 ## Highlights
+- decisions:
+   - Flow for uploading
+   - ORM vs direct to database?
+   - Deployment using Docker vs not?
+   -
+*
+
+1. We made key decisions regarding the user flow for processing & uploading blurred videos. We considered the following:
+   - any uploaded video be automatically processed such that we created & saved 3 videos, one with faces blurred, one with backgrounds blurred, and one unblurred. This meant the least user involvement, and was made under the assumption that researchers would want all 3 videos all the time.
+   - The upload dialogue allows users to choose to blur face or background, and then preview the result. This meant users could check the results before uploading.
+   Finally, we decided on a flow where an upload dialogue is opened, users can choose which blurs to apply, and then upload.
+2. We chose between an ORM and directly interfacing with our database. The positives of directly interfacing with our database are performance and control. However, we decided on using an ORM because our application does not need to be that performant. Also, the major bottleneck for runtime is going to be processing the video, so performance of our database is not that important. We also are slated to have ~11 users, so our scale is low, further lessening the importance of performance. Control is not relevant for similar reasons, so we chose the more developer friendly option of an ORM.
+3. We also decided between SQL and NoSQL. When considering the choice of a NoSQL DB, we considered the primary benefits, namely flexible schema and scalability. However, for our usecase, these are both not particularly relevant. Our schema is well-defined and unlikely to change, and also quite simple. Scalability is not important because our planned userbase is 11 users. Therefore, we chose to use SQL, because of it's stability & concrete schema, meaning our future development work will be simpler.
+
 
 Specify 3 - 5 key decisions and/or insights that came up during your meetings
 and/or collaborative process.
