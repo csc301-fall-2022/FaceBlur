@@ -31,7 +31,7 @@ Our target users are Researchers at the University of Toronto who are within the
 
 #### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
 
-Our product would save users time because they would no longer have to go in and manually blur either the children's faces or their backgrounds.
+By using our product the researchers at the University of Toronto Early Cognition Lab would be able to save time as they would be able to quickly upload a video and could choose to automatically blur either the background or the face of the people in the videos. They would be able to save the results into a database on the same web application where they can quickly find any previously uploaded and processed videos that they may want to use. Currently as the researchers aren’t using anything to solve their current problem, they would have to manually blur the faces or backgrounds of their videos using third party applications and then download and reupload the video file to a separate database which is a process that our product streamlines and condenses into one web application.
 
 > Short (1 - 2 min' read max)
  * We want you to "connect the dots" for us - Why does your product (as described in your answer to Q1) fits the needs of your users (as described in your answer to Q2)?
