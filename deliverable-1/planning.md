@@ -117,6 +117,20 @@ Given that the user is a memeber of the Toronto Early Cognition Lab, when the us
 - Express.js
 - Prisma
 
+**Emily Chang:** Fullstack Dev
+- Will work on tasks in both the backend and frontend components of the application
+- Will help plan how to create the components
+
+**Strengths**
+- Agile
+- Vue.js
+- Sql
+
+**Weaknesses**
+- Node.js
+- Express.js
+- React
+
 Describe the different roles on the team and the responsibilities associated with each role.
  * Roles should reflect the structure of your team and be appropriate for your project. Not necessarily one role to one team member.
  * Add role(s) to your Team-[Team_Number]-[Team_Name].csv file on the main folder
@@ -127,9 +141,9 @@ List each team member and:
 
 
 #### Q7: What operational events will you have as a team?
-We plan on having short meetings twice a week online to update each other on which tasks we have completed. 
+We plan on having short meetings twice a week online to update each other on which tasks we have completed and also to assign tasks.
 
-In our meeting with our partner, we discussed an overview of the entire project. This included what was required and reach goals. In addition to this, we also discussed the tech stack we plan on using.
+In our meeting with our partner, we discussed an overview of the entire project. This included what was required and our reach goals. In addition to this, we also recieved guidance on what tech stack we should use. We will continue to have meetings with our partner weekly on Mondays.
 
 Describe meetings (and other events) you are planning to have.
  * When and where? Recurring or ad hoc? In-person or online?
