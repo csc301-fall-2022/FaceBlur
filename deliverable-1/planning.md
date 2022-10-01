@@ -209,6 +209,21 @@ We have agreed with the partners to option 1: we can share the software and the 
 - Express.js
 - Node.js
 
+**Jason You:** Product Manager / Fullstack Dev
+- Will guide the team to ensure that the developmental team is following the product owner's product vision
+- Will create a product roadmap with the scrum master to plan and create deadlines for the devopment of the product
+- Will work on tasks in both the backend and frontend components of the application
+
+**Strengths**:
+- Bootstrap
+- JavaScript
+- PostgreSQL
+
+**Weaknesses**:
+- React
+- Express.js
+- AWS
+
 Describe the different roles on the team and the responsibilities associated with each role.
  * Roles should reflect the structure of your team and be appropriate for your project. Not necessarily one role to one team member.
  * Add role(s) to your Team-[Team_Number]-[Team_Name].csv file on the main folder
