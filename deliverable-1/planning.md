@@ -23,7 +23,9 @@ We are planning to build a web-app that enables U of T Researchers to analyze vi
 
 #### Q2: Who are your target users?
 
-Our target users are Researchers at the University of Toronto who are within the Toronto Early Cognition Lab, and who wish to upload and/or view recordings from earlier dates.
+Our target users are Researchers at the University of Toronto who are within the Toronto Early Cognition Lab, and who wish to upload and/or view recordings from earlier dates. The scope of this may eventually creep beyond the TECL to other labs such as the Child Development Lab, but will most likely remain U of T centric software.
+
+![Screen Shot 2022-09-30 at 8 41 43 PM](https://user-images.githubusercontent.com/32244859/193376297-1992db30-0422-44a1-ab66-9ad6cc81efab.png)
 
   > Short (1 - 2 min' read max)
  * Be specific (e.g. a 'a third-year university student studying Computer Science' and not 'a student')
@@ -31,7 +33,7 @@ Our target users are Researchers at the University of Toronto who are within the
 
 #### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
 
-By using our product the researchers at the University of Toronto Early Cognition Lab would be able to save time as they would be able to quickly upload a video and could choose to automatically blur either the background or the face of the people in the videos. They would be able to save the results into a database on the same web application where they can quickly find any previously uploaded and processed videos that they may want to use. Currently as the researchers aren’t using anything to solve their current problem, they would have to manually blur the faces or backgrounds of their videos using third party applications and then download and reupload the video file to a separate database which is a process that our product streamlines and condenses into one web application.
+By using our product the researchers at the University of Toronto Early Cognition Lab would be able to save time as they would be able to quickly upload a video and could choose to automatically blur either the background or the face of the people in the videos. They would be able to save the results into a database on the same web application where they can quickly find any previously uploaded and processed videos that they may want to use. Currently as the researchers aren’t using anything to solve their current problem, they would have to manually blur the faces or backgrounds of their videos using third party applications and then download and reupload the video file to a separate database which is a process that our product streamlines and condenses into one web application. This is either very tedious or outside their technical expertise.
 
 > Short (1 - 2 min' read max)
  * We want you to "connect the dots" for us - Why does your product (as described in your answer to Q1) fits the needs of your users (as described in your answer to Q2)?
@@ -43,6 +45,27 @@ By using our product the researchers at the University of Toronto Early Cognitio
     * How does this align with your partner's organization's values/mission/mandate?
 
 #### Q4: How will you build it?
+
+**Frontend**:
+React
+- RTL
+- Jest
+- Node
+- Webpack
+- ESLint
+- Prettier
+- Typescript
+
+**Backend**:
+
+**Third Parties**:
+- AWS
+- Docker
+
+We are currently using Webpack to serve the application. For deployment this application can then be packaged into a Docker container and served on local servers. The videos will be stored offline on an AWS S3 bucket. Our testing strategy for the frontend revolves around using RTL and Jest to verify components are being rendered and perform the correct functions on stimulus. We aim to keep detailed debug logs for easy troubleshooting.
+
+**Architecture**:
+![image](https://user-images.githubusercontent.com/32244859/193376601-e3e2c838-9aad-45fa-a20c-5a4bbafbf285.png)
 
 > Short (1-2 min' read max)
  * What is the technology stack? Specify any and all languages, frameworks, libraries, PaaS products or tools.
@@ -146,6 +169,21 @@ Given that the user is a memeber of the Toronto Early Cognition Lab, when the us
 - Express.js
 - Prisma
 
+**Siddarth Dagar** Fullstack Dev
+- Focus on the frontend, but will be available to help with the backend
+- Manage the third party applications used
+- Use Webpack to serve the application
+
+**Strengths**
+- React/TS
+- AWS/Docker
+- Node,js
+
+**Weaknesses**
+- Design Patterns
+- Express.js
+- Prisma
+
 Describe the different roles on the team and the responsibilities associated with each role.
  * Roles should reflect the structure of your team and be appropriate for your project. Not necessarily one role to one team member.
  * Add role(s) to your Team-[Team_Number]-[Team_Name].csv file on the main folder
@@ -174,11 +212,19 @@ Describe meetings (and other events) you are planning to have.
 
 List/describe the artifacts you will produce in order to organize your team.
 
-   - **Github Projects:** This will be our kanban board where we will manage our tasks and their progress. Tasks will be categorized by to-do, in progress, in review, blocked, and done. We plan on implementing a workflow to automatically update task status. For example, if an in review task PR gets merged in, then the task will move to done.
+**Github Projects:** 
+This will be our kanban board where we will manage our tasks and their progress. Tasks will be categorized by to-do, in progress, in review, blocked, and done. We plan on implementing a workflow to automatically update task status. For example, if an in review task PR gets merged in, then the task will move to done.
    - We will have weekly meetings with each other to discuss the next steps of our project and to determine what new tasks should be created. We will create meeting minutes for all our meetings. 
    - Tasks will be prioritzed by feature importance. If a task is vital to bringing the project to MVP, this will be prioritized. Any critical bug fixes affecting usage of the platform will also be prioritized.
    - Tasks will get assigned to team members by discussion, we will distribute tasks amongst ourselves based on who is willing to do what and how comfortable they feel about the task.
    - New features will be marked as complete once they have been merged in and tested on our dev build.
+ 
+ **Discord:** 
+ This will be our main communication platform where we can collectively organize information and communicate. We can also post announcements for everyone and get responses immediately.
+ - Whenever we meet or require assistance we can join a voice chat for a call.
+ - Organize relevant zoom links, google docs and meeting minutes.
+ - Post ui-mockups and designs for review.
+ - Conduct polls, gauge reactions and implement github webhooks.
 
  * Artifacts can be To-Do lists, Task boards, schedule(s), meeting minutes, etc.
  * We want to understand:
