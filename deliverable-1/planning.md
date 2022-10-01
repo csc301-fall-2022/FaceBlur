@@ -76,9 +76,11 @@ We are currently using Webpack to serve the application. For deployment this app
 
 #### Q5: What are the user stories that make up the MVP?
 
-1. As a researcher at the Toronto Early Cognition Lab, I want to be able to save the videos that have been blurred in order to rewatch them at a later date.
+1. As a researcher at the Toronto Early Cognition Lab, I want to be able to save the videos (in app or by downloading to local server) that have been blurred in order to rewatch them at a later date.
 
 Given the user has logged in, has uploaded a video file, and possibly selected to blur it, when the user selects to save the video, then the user is redirected back to the homepage, the video is saved to the database, and is displayed in the list of saved videos in the homepage.
+
+Given the user has logged in, has uploaded a video file, and possibly selected to blur it, when the user selects to download the video, then the user is redirected back to the homepage and the video is downloaded to the local machine.
 
 
 2. As a researcher at the Toronto Early Cognition Lab, I want to be able to upload videos in order to automatically blur out faces or backgrounds.
@@ -108,6 +110,10 @@ Given that the user is a memeber of the Toronto Early Cognition Lab, when the us
 
 ----
 ## Intellectual Property Confidentiality Agreement
+
+We have agreed with the partners to option 1: we can share the software and the code freely with anyone with or without a license, regardless of domain, for any use.
+
+
 > Note this section is **not marked** but must be completed briefly if you have a partner. If you have any questions, please ask on Piazza.
 >
 **By default, you own any work that you do as part of your coursework.** However, some partners may want you to keep the project confidential after the course is complete. As part of your first deliverable, you should discuss and agree upon an option with your partner. Examples include:
@@ -184,6 +190,22 @@ Given that the user is a memeber of the Toronto Early Cognition Lab, when the us
 - Express.js
 - Prisma
 
+**Michelle Chernyi** Fullstack Dev
+- Will work on tasks that have a frontend and backend component
+- will work with APIs
+- Person of contact for our partners 
+
+
+**Strengths**
+- SQL
+- AWS
+- javascript
+
+**Weaknesses**
+- React
+- Express.js
+- Node.js
+
 Describe the different roles on the team and the responsibilities associated with each role.
  * Roles should reflect the structure of your team and be appropriate for your project. Not necessarily one role to one team member.
  * Add role(s) to your Team-[Team_Number]-[Team_Name].csv file on the main folder
@@ -238,6 +260,30 @@ This will be our kanban board where we will manage our tasks and their progress.
    * How do you determine the status of work from inception to completion?
 
 #### Q9: What are the rules regarding how your team works?
+
+Our team's working culture is based on trust and independence. This means that people will vocalize what tasks they are comfortable with and/or would like to work on and how long they will think it should take them. If they give a reasonable timeline, follow that timeline, and provide quality work, this cycle of trust and independence will continue. If people are not meeting reasonable deadline or not providing quality work, then the team lead and/or scrum master will have to interfere. 
+**Communications:**
+* We communicate with each other mainly through two methods our standsups and our discord channel.
+   * Our stands up are expected to happen twice a week, at the beginning and end of the week
+   * Communication on the discord channel does not have an expected frequency, rather it is used as needed
+      * examples of this are if someone ran into an issue that cannot wait until our next stand up, if someone has a question that cannot wait until our next stand up, if someone has an annoucement to make, etc. 
+      * our discord group currently includes 8 channels:
+         * meetings: where one of us will post a link to our standsups or our meetings with the partner
+         * announcements: where a memeber will post information that is important or that will be needed later on as well
+         * docs: where we can send each other any revelent documents such as our google doc for our Deliverable 1 
+         * to-do: one person posts a list of discussed tasks after a meeting 
+         * ui-mockups: where we discussed our mock-up plans, comments, and concerns 
+         * tech: where we send relvent links for the tech stack we are using such as a guide on react or a tutorial on AWS
+         * github: in this channel an automated bot sends a message when someone makes a commit and a pull request 
+         * general: this channel is for any other matters, questions, issues, or concerns 
+* Communicating with our partner is done through our weekly online/ in person meetings and then follow up emails when necessary
+   * First, every week prior to our monday meeting we send our partner a zoom link
+   * In our meetings we fill them in on the previous weeks progress and our plan for the next week. They will provide us with feedback or comments on changes they want, and our scrum master will create tickets for those changes/ implementations and decide on their priority 
+   * Then, through out the week if we have questions about their feedback or about something we want to implement and we do not want to/ cannot wait until the next meeting, then these questions will be sent to the person of contact and they will send an email with those questions to our partner.
+
+**Meetings:**
+Our scrum master and/or team lead (dependeing on who is leading the meeting) will be our moderators. They will check that everyone showed up and finished the work they were supposed to finish by  going through the tasks in the sprint and ensuring they have all been moved from "in progress" to "under review". To hold people accountable for joining the meetings, we will choose/ be assigned tasks during the meeting, that way if someone doesn't show up, they do not get to choose a task. To hold people accountable for completing action items, the tasks will be assigned to certain sprints so people will know they have a deadline and if they do not complete it within around that deadline, our team lead will have to talk with them and ask what is going on with their task, why it is not completed, or if they need extra support.
+
 
 Describe your team's working culture.
 
