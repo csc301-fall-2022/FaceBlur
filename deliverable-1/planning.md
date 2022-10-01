@@ -194,10 +194,12 @@ List each team member and:
 
 
 #### Q7: What operational events will you have as a team?
-**Team Meetings**
+**Team Meetings:**
+
 Since we plan on having sprints, each week we will have a meeting where we will plan/assign tasks as well as a sprint update meeting at the end of the week. These meetings will be completed online. This will allow us to keep up to date on our progress and help each other with any blockers we may have.
 
-**Partner Meetings**
+**Partner Meetings:**
+
 In our meeting with our partner, we discussed an overview of the project. This included what was required and our reach goals. In addition to this, we also recieved guidance on what tech stack we should use. Full details on what we discussed can be found in the meeting-minutes directory under 09-26-2022.md. To continue to make sure that we are on track and meeting the specifications that our partner sets, we will meet with them every Monday to present our progress.
 
 Describe meetings (and other events) you are planning to have.
