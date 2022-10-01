@@ -103,6 +103,8 @@ Given the webapp contains video files and the user has logged in, when the user 
 
 Given that the user is a memeber of the Toronto Early Cognition Lab, when the user tries to log in, then ensure their login credentials are in the stored login data and redirect the user to the homepage of the webapp.
 
+![approved_user_stories](approved_user_stories.jpg)
+
  * At least 5 user stories concerning the main features of the application - note that this can broken down further
  * You must follow proper user story format (as taught in lecture) ```As a <user of the app>, I want to <do something in the app> in order to <accomplish some goal>```
  * User stories must contain acceptance criteria. Examples of user stories with different formats can be found here: https://www.justinmind.com/blog/user-story-examples/. **It is important that you provide a link to an artifact containing your user stories**.
@@ -113,6 +115,7 @@ Given that the user is a memeber of the Toronto Early Cognition Lab, when the us
 
 We have agreed with the partners to option 1: we can share the software and the code freely with anyone with or without a license, regardless of domain, for any use.
 
+![confidentiality_agreement](confidentiality_agreement.jpg)
 
 > Note this section is **not marked** but must be completed briefly if you have a partner. If you have any questions, please ask on Piazza.
 >
