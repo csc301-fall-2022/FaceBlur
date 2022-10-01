@@ -193,7 +193,7 @@ We have agreed with the partners to option 1: we can share the software and the 
 **Michelle Chernyi** Fullstack Dev
 - Will work on tasks that have a frontend and backend component
 - will work with APIs
-- Person of contact for our partners 
+- Person of contact for our partners
 
 
 **Strengths**
@@ -238,14 +238,14 @@ Describe meetings (and other events) you are planning to have.
 
 List/describe the artifacts you will produce in order to organize your team.
 
-**Github Projects:** 
+**Github Projects:**
 This will be our kanban board where we will manage our tasks and their progress. Tasks will be categorized by to-do, in progress, in review, blocked, and done. We plan on implementing a workflow to automatically update task status. For example, if an in review task PR gets merged in, then the task will move to done.
-   - We will have weekly meetings with each other to discuss the next steps of our project and to determine what new tasks should be created. We will create meeting minutes for all our meetings. 
+   - We will have weekly meetings with each other to discuss the next steps of our project and to determine what new tasks should be created. We will create meeting minutes for all our meetings.
    - Tasks will be prioritzed by feature importance. If a task is vital to bringing the project to MVP, this will be prioritized. Any critical bug fixes affecting usage of the platform will also be prioritized.
    - Tasks will get assigned to team members by discussion, we will distribute tasks amongst ourselves based on who is willing to do what and how comfortable they feel about the task.
    - New features will be marked as complete once they have been merged in and tested on our dev build.
- 
- **Discord:** 
+
+ **Discord:**
  This will be our main communication platform where we can collectively organize information and communicate. We can also post announcements for everyone and get responses immediately.
  - Whenever we meet or require assistance we can join a voice chat for a call.
  - Organize relevant zoom links, google docs and meeting minutes.
@@ -261,24 +261,24 @@ This will be our kanban board where we will manage our tasks and their progress.
 
 #### Q9: What are the rules regarding how your team works?
 
-Our team's working culture is based on trust and independence. This means that people will vocalize what tasks they are comfortable with and/or would like to work on and how long they will think it should take them. If they give a reasonable timeline, follow that timeline, and provide quality work, this cycle of trust and independence will continue. If people are not meeting reasonable deadline or not providing quality work, then the team lead and/or scrum master will have to interfere. 
+Our team's working culture is based on trust and independence. This means that people will vocalize what tasks they are comfortable with and/or would like to work on and how long they will think it should take them. If they give a reasonable timeline, follow that timeline, and provide quality work, this cycle of trust and independence will continue. If people are not meeting reasonable deadline or not providing quality work, then the team lead and/or scrum master will have to interfere.
 **Communications:**
 * We communicate with each other mainly through two methods our standsups and our discord channel.
    * Our stands up are expected to happen twice a week, at the beginning and end of the week
    * Communication on the discord channel does not have an expected frequency, rather it is used as needed
-      * examples of this are if someone ran into an issue that cannot wait until our next stand up, if someone has a question that cannot wait until our next stand up, if someone has an annoucement to make, etc. 
+      * examples of this are if someone ran into an issue that cannot wait until our next stand up, if someone has a question that cannot wait until our next stand up, if someone has an annoucement to make, etc.
       * our discord group currently includes 8 channels:
          * meetings: where one of us will post a link to our standsups or our meetings with the partner
          * announcements: where a memeber will post information that is important or that will be needed later on as well
-         * docs: where we can send each other any revelent documents such as our google doc for our Deliverable 1 
-         * to-do: one person posts a list of discussed tasks after a meeting 
-         * ui-mockups: where we discussed our mock-up plans, comments, and concerns 
+         * docs: where we can send each other any revelent documents such as our google doc for our Deliverable 1
+         * to-do: one person posts a list of discussed tasks after a meeting
+         * ui-mockups: where we discussed our mock-up plans, comments, and concerns
          * tech: where we send relvent links for the tech stack we are using such as a guide on react or a tutorial on AWS
-         * github: in this channel an automated bot sends a message when someone makes a commit and a pull request 
-         * general: this channel is for any other matters, questions, issues, or concerns 
+         * github: in this channel an automated bot sends a message when someone makes a commit and a pull request
+         * general: this channel is for any other matters, questions, issues, or concerns
 * Communicating with our partner is done through our weekly online/ in person meetings and then follow up emails when necessary
    * First, every week prior to our monday meeting we send our partner a zoom link
-   * In our meetings we fill them in on the previous weeks progress and our plan for the next week. They will provide us with feedback or comments on changes they want, and our scrum master will create tickets for those changes/ implementations and decide on their priority 
+   * In our meetings we fill them in on the previous weeks progress and our plan for the next week. They will provide us with feedback or comments on changes they want, and our scrum master will create tickets for those changes/ implementations and decide on their priority
    * Then, through out the week if we have questions about their feedback or about something we want to implement and we do not want to/ cannot wait until the next meeting, then these questions will be sent to the person of contact and they will send an email with those questions to our partner.
 
 **Meetings:**
@@ -297,12 +297,6 @@ Describe your team's working culture.
 
 ----
 ## Highlights
-- decisions:
-   - Flow for uploading
-   - ORM vs direct to database?
-   - Deployment using Docker vs not?
-   -
-*
 
 1. We made key decisions regarding the user flow for processing & uploading blurred videos. We considered the following:
    - any uploaded video be automatically processed such that we created & saved 3 videos, one with faces blurred, one with backgrounds blurred, and one unblurred. This meant the least user involvement, and was made under the assumption that researchers would want all 3 videos all the time.
@@ -312,13 +306,3 @@ Describe your team's working culture.
 3. We also decided between SQL and NoSQL. When considering the choice of a NoSQL DB, we considered the primary benefits, namely flexible schema and scalability. However, for our usecase, these are both not particularly relevant. Our schema is well-defined and unlikely to change, and also quite simple. Scalability is not important because our planned userbase is 11 users. Therefore, we chose to use SQL, because of it's stability & concrete schema, meaning our future development work will be simpler.
 
 
-Specify 3 - 5 key decisions and/or insights that came up during your meetings
-and/or collaborative process.
-
- * Short (5 min' read max)
- * Decisions can be related to the product and/or the team process.
-    * Mention which alternatives you were considering.
-    * Present the arguments for each alternative.
-    * Explain why the option you decided on makes the most sense for your team/product/users.
- * Essentially, we want to understand how (and why) you ended up with your current product and process plan.
- * This section is useful for important information regarding your decision making process that may not necessarily fit in other sections.
