@@ -262,6 +262,7 @@ This will be our kanban board where we will manage our tasks and their progress.
 #### Q9: What are the rules regarding how your team works?
 
 Our team's working culture is based on trust and independence. This means that people will vocalize what tasks they are comfortable with and/or would like to work on and how long they will think it should take them. If they give a reasonable timeline, follow that timeline, and provide quality work, this cycle of trust and independence will continue. If people are not meeting reasonable deadline or not providing quality work, then the team lead and/or scrum master will have to interfere.
+
 **Communications:**
 * We communicate with each other mainly through two methods our standsups and our discord channel.
    * Our stands up are expected to happen twice a week, at the beginning and end of the week
@@ -282,6 +283,7 @@ Our team's working culture is based on trust and independence. This means that p
    * Then, through out the week if we have questions about their feedback or about something we want to implement and we do not want to/ cannot wait until the next meeting, then these questions will be sent to the person of contact and they will send an email with those questions to our partner.
 
 **Meetings:**
+
 Our scrum master and/or team lead (dependeing on who is leading the meeting) will be our moderators. They will check that everyone showed up and finished the work they were supposed to finish by  going through the tasks in the sprint and ensuring they have all been moved from "in progress" to "under review". To hold people accountable for joining the meetings, we will choose/ be assigned tasks during the meeting, that way if someone doesn't show up, they do not get to choose a task. To hold people accountable for completing action items, the tasks will be assigned to certain sprints so people will know they have a deadline and if they do not complete it within around that deadline, our team lead will have to talk with them and ask what is going on with their task, why it is not completed, or if they need extra support.
 
 
