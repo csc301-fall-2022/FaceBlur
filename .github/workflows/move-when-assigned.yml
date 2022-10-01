@@ -18,6 +18,6 @@ jobs:
     steps:
       - uses: alex-page/github-project-automation-plus@5bcba1c1c091a222584d10913e5c060d32c44044
         with:
-          project: 18-uoft-1
+          project: Main
           column: In Progress
           repo-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
