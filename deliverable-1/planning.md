@@ -35,6 +35,16 @@ React
 - Typescript
 
 **Backend**:
+- Typescript
+- Express.js
+- Node
+- Jest
+- ESLint
+- Prettier
+- Prisma (ORM)
+
+**Database**
+- PostgreSQL
 
 **Third Parties**:
 - AWS
@@ -60,7 +70,7 @@ Given the user has logged in, has uploaded a video file, and possibly selected t
 Given the user has logged in and has a properly formatted video file (ex. JPEG), when the user chooses that file and selects to upload it on the webapp, then the video is displayed to the user on the web-app and the user is presented with the option of saving or blurring the file.
 
 
-3. As a researcher at the Toronto Early Cognition Lab, I want to be able to select whether to blur the faces of children or the backgroud in order to control the variables in the study and focus on certain variables, for instance, facial expressions.
+3. As a researcher at the Toronto Early Cognition Lab, I want to be able to select whether to blur the faces of children or the background in order to control the variables in the study and focus on certain variables, for instance, facial expressions.
 
 Given the user has logged in and has uploaded a video file, when the user asks to blur the faces of the children in the video, then the blurring process takes place, the page is refreshed, the video with the faces blurred is displayed and the user is presented with the option to save the new video in place of the original video.
 
@@ -73,7 +83,7 @@ Given the webapp contains video files and the user has logged in, when the user 
 
 5. As a researcher at the Toronto Early Cognition Lab, I want to have a login/authentication process in order to only allow other researchers at the Toronto Early Cognition Lab and I to have access to these videos so that the children's privacy stays protected.
 
-Given that the user is a memeber of the Toronto Early Cognition Lab, when the user tries to log in, then ensure their login credentials are in the stored login data and redirect the user to the homepage of the webapp.
+Given that the user is a member of the Toronto Early Cognition Lab, when the user tries to log in, then ensure their login credentials are in the stored login data and redirect the user to the homepage of the webapp.
 
 ![approved_user_stories](approved_user_stories.png)
 
@@ -180,6 +190,19 @@ We have agreed with the partners to option 1: we can share the software and the 
 - Express.js
 - AWS
 
+**Baker Jackson** Fullstack Dev
+
+**Strengths**:
+- PostgreSQL
+- Express.js
+- Database design
+- AWS
+
+**Weaknesses**:
+- React
+- Prisma (still learning)
+- Typescript
+
 
 #### Q7: What operational events will you have as a team?
 **Team Meetings:**
@@ -188,7 +211,7 @@ Since we plan on having sprints, each week we will have a meeting where we will 
 
 **Partner Meetings:**
 
-In our meeting with our partner, we discussed an overview of the project. This included what was required and our reach goals. In addition to this, we also recieved guidance on what tech stack we should use. Full details on what we discussed can be found in the meeting-minutes directory under 09-26-2022.md. To continue to make sure that we are on track and meeting the specifications that our partner sets, we will meet with them every Monday to present our progress.
+In our meeting with our partner, we discussed an overview of the project. This included what was required and our reach goals. In addition to this, we also received guidance on what tech stack we should use. Full details on what we discussed can be found in the meeting-minutes directory under 09-26-2022.md. To continue to make sure that we are on track and meeting the specifications that our partner sets, we will meet with them every Monday to present our progress.
 
 
 #### Q8: What artifacts will you use to self-organize?
@@ -223,11 +246,11 @@ Our team's working culture is based on trust and independence. This means that p
 * We communicate with each other mainly through two methods our standsups and our discord channel.
    * Our stands up are expected to happen twice a week, at the beginning and end of the week
    * Communication on the discord channel does not have an expected frequency, rather it is used as needed
-      * examples of this are if someone ran into an issue that cannot wait until our next stand up, if someone has a question that cannot wait until our next stand up, if someone has an annoucement to make, etc.
+      * examples of this are if someone ran into an issue that cannot wait until our next stand up, if someone has a question that cannot wait until our next stand up, if someone has an announcement to make, etc.
       * our discord group currently includes 8 channels:
          * meetings: where one of us will post a link to our standsups or our meetings with the partner
-         * announcements: where a memeber will post information that is important or that will be needed later on as well
-         * docs: where we can send each other any revelent documents such as our google doc for our Deliverable 1
+         * announcements: where a member will post information that is important or that will be needed later on as well
+         * docs: where we can send each other any relevant documents such as our google doc for our Deliverable 1
          * to-do: one person posts a list of discussed tasks after a meeting
          * ui-mockups: where we discussed our mock-up plans, comments, and concerns
          * tech: where we send relvent links for the tech stack we are using such as a guide on react or a tutorial on AWS
@@ -240,7 +263,7 @@ Our team's working culture is based on trust and independence. This means that p
 
 **Meetings:**
 
-Our scrum master and/or team lead (dependeing on who is leading the meeting) will be our moderators. They will check that everyone showed up and finished the work they were supposed to finish by  going through the tasks in the sprint and ensuring they have all been moved from "in progress" to "under review". To hold people accountable for joining the meetings, we will choose/ be assigned tasks during the meeting, that way if someone doesn't show up, they do not get to choose a task. To hold people accountable for completing action items, the tasks will be assigned to certain sprints so people will know they have a deadline and if they do not complete it within around that deadline, our team lead will have to talk with them and ask what is going on with their task, why it is not completed, or if they need extra support.
+Our scrum master and/or team lead (depending on who is leading the meeting) will be our moderators. They will check that everyone showed up and finished the work they were supposed to finish by  going through the tasks in the sprint and ensuring they have all been moved from "in progress" to "under review". To hold people accountable for joining the meetings, we will choose/ be assigned tasks during the meeting, that way if someone doesn't show up, they do not get to choose a task. To hold people accountable for completing action items, the tasks will be assigned to certain sprints so people will know they have a deadline and if they do not complete it within around that deadline, our team lead will have to talk with them and ask what is going on with their task, why it is not completed, or if they need extra support.
 
 
 
