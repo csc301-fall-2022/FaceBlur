@@ -1,6 +1,4 @@
 # University of Toronto / MBELKS
-> _Note:_ This document is meant to evolve throughout the planning phase of your project.   That is, it makes sense for you commit regularly to this file while working on the project (especially edits/additions/deletions to the _Highlights_ section). Most importantly, it is a reflection of all the planning you work you've done in the first iteration.
- > **This document will serve as a master plan between your team, your partner and your TA.**
 
 ## Product Details
 
