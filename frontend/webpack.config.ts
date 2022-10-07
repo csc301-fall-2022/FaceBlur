@@ -26,6 +26,24 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
                     transpileOnly: true
                 },
                 exclude: /dist/
+            },
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
+            },
+            {
+                test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: "[name].[ext]",
+                            outputPath: "public/",
+                            publicPath: "/",
+                            esModule: false
+                        }
+                    }
+                ]
             }
         ]
     },
