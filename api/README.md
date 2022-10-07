@@ -26,7 +26,7 @@ npm run start # runs the project from the /build folder
 Prisma is the ORM used in this project. All of our tables are in the prisma.schema file in the prisma folder. Read their documentation to understand how to edit or add tables. The following is the commands to use when making changes to our tables:
 
 ```bash
-npx prisma migrate dev # create migration for db, only use on finalized changes
+npx prisma migrate dev # applies new migrations to local db, also used for creating a new migration
 npx prisma db push # push the changes from the schema file to the db
 npx prisma studio # view database tables in browser
 ```
