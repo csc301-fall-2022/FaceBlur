@@ -1,0 +1,10 @@
+.btn {
+    flex-grow: 1;
+    background-color: "#ff811b";
+}
+
+.loginBtn:hover {
+    background-color: "#0069d9";
+    box-shadow: "none";
+}
+

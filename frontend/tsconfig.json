@@ -27,11 +27,14 @@
       ],
       "pages/*": [
         "src/pages/*"
-      ]
-    }
+      ],
+      "style/*": [ "src/static/*" ],
+    },
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "include": [
     "./src",
-    "./webpack.config.ts"
+    "./webpack.config.ts",
+    "./declaration.d.ts"
   ]
 }

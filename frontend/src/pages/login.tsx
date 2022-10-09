@@ -13,32 +13,8 @@ import {CardMedia} from "@mui/material";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const logo = require("../../public/logo.png").default;
 
-const styles = makeStyles((theme: Theme) =>
-    createStyles({
-        container: {
-            display: "flex",
-            flexWrap: "wrap",
-            width: 400,
-            margin: `${theme.spacing(0)} auto`
-        },
-        loginBtn: {
-            marginTop: theme.spacing(2),
-            flexGrow: 1
-        },
-        header: {
-            textAlign: "center"
-        },
-        card: {
-            marginTop: theme.spacing(10)
-        },
-        logo: {
-            height: 0,
-            width: "full",
-            paddingTop: "56.25%",
-            marginTop: "30"
-        }
-    })
-);
+import * as theme from "../static/theme.css";
+import * as login from "../static/login.css";
 
 //state type
 
@@ -96,7 +72,6 @@ const reducer = (state: State, action: Action): State => {
 };
 
 const Login = () => {
-    const classes = styles();
     const [state, dispatch] = useReducer(reducer, initialState);
 
     // This is temporary, use a login endpoint from the api here later
@@ -104,7 +79,7 @@ const Login = () => {
         if (state.email === "abc@email.com" && state.password === "password") {
             dispatch({
                 type: "loginSuccess",
-                payload: "Login Successfully"
+                payload: "Login Successful"
             });
         } else {
             dispatch({
@@ -137,54 +112,52 @@ const Login = () => {
         });
     };
     return (
-        <form className={classes.container} noValidate autoComplete="off">
-            <img src={logo} />
-            <Card className={classes.card}>
+        <form className={login.container} noValidate autoComplete="off">
+            <Card className={login.card} elevation={0}>
                 <CardMedia
-                    className={classes.logo}
+                    className={login.logo}
                     component="img"
                     alt="Toronto Early Cognition Lab"
                     image={logo}
+                    sx={{objectFit: "contain"}}
                 />
-                <CardHeader className={classes.header} title="Login App" />
+                <CardHeader className={login.header} title="Log into <App Name>" />
                 <CardContent>
                     <div>
                         <TextField
                             error={state.isError}
                             fullWidth
                             id="email"
-                            type="email"
-                            label="email"
+                            label="Email"
                             placeholder="Email"
                             margin="normal"
                             onChange={handleEmailChange}
                             onKeyPress={handleKeyPress}
+                            variant="outlined"
                         />
                         <TextField
                             error={state.isError}
                             fullWidth
                             id="password"
-                            type="password"
                             label="Password"
                             placeholder="Password"
                             margin="normal"
                             helperText={state.helperText}
                             onChange={handlePasswordChange}
                             onKeyPress={handleKeyPress}
+                            variant="outlined"
                         />
                     </div>
                 </CardContent>
                 <CardActions>
-                    <Button
-                        variant="contained"
-                        size="large"
-                        color="secondary"
-                        className={classes.loginBtn}
-                        onClick={handleLogin}
-                    >
-                        Login
+                    <Button variant="text" size="large" className={theme.btn} onClick={handleLogin}>
+                        Sign In
                     </Button>
                 </CardActions>
+                {/* Not implememented yet */}
+                <CardContent>
+                    <div>Forgot Password?</div>
+                </CardContent>
             </Card>
         </form>
     );

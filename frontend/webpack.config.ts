@@ -10,7 +10,7 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
     entry: "./src/index.tsx",
     ...(env.production || !env.development ? {} : {devtool: "eval-source-map"}),
     resolve: {
-        extensions: [".ts", ".tsx", ".js"],
+        extensions: [".ts", ".tsx", ".js", ".css", ".scss"],
         plugins: [new TsconfigPathsPlugin()]
     },
     output: {
@@ -29,7 +29,11 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
             },
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader"]
+                use: [
+                    {loader: "style-loader"},
+                    {loader: "typings-for-css-modules-loader"},
+                    {loader: "css-loader", options: {modules: true}}
+                ]
             },
             {
                 test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
