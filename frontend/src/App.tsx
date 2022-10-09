@@ -1,6 +1,6 @@
 import React from "react";
-import HelloWorld from "./pages/hello";
+import VideoPlayer from "./pages/videoPlayer";
 
-const App: React.FC = () => <HelloWorld />;
+const App: React.FC = () => <VideoPlayer />;
 
 export default App;
