@@ -1,6 +1,9 @@
 import React from "react";
-import VideoPlayer from "./pages/videoPlayer";
+import VideoPage from "./pages/videoPage";
 
-const App: React.FC = () => <VideoPlayer />;
+const videoLink =
+    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
+
+const App: React.FC = () => <VideoPage videoLink={videoLink} />;
 
 export default App;

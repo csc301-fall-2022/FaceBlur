@@ -13,6 +13,10 @@
     "lint:fix": "eslint './src/**/*.{ts,tsx,js,jsx}' --fix"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.8",
+    "file-saver": "^2.0.5",
     "react": "^18.0.2",
     "react-dom": "^18.0.2",
     "react-html5video": "^2.5.1",
