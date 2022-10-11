@@ -7,12 +7,12 @@ class NavBar extends React.Component {
     render() {
         return (
             <div>
-                <Stack direction="row" justifyContent="space-between">
+                <Stack direction="row" justifyContent="space-between" sx={{padding: 2}}>
                     <CardMedia
                         component="img"
                         alt="Toronto Early Cognition Lab"
                         image="/logo.png"
-                        sx={{width: 0.1, margin: 1}}
+                        sx={{width: 0.15}}
                     />
                     <IconButton
                         sx={{
@@ -20,7 +20,7 @@ class NavBar extends React.Component {
                             width: 40,
                             height: 40,
                             color: "white",
-                            margin: 1.5,
+                            marginTop: 1,
                             "&:hover": {bgcolor: "#747779"}
                         }}
                     >
