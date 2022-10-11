@@ -16,7 +16,7 @@ class NavBar extends React.Component {
                     />
                     <IconButton
                         sx={{
-                            bgcolor: "text.disabled",
+                            bgcolor: "#BDBDBD",
                             width: 40,
                             height: 40,
                             color: "white",
