@@ -1,36 +1,31 @@
 import React from "react";
-import SearchIcon from "@mui/icons-material/Search";
 //import Popover from '@mui/material/Popover';
 import PersonIcon from "@mui/icons-material/Person";
-import {CardMedia, InputAdornment, TextField, IconButton, Stack} from "@mui/material";
+import {CardMedia, IconButton, Stack} from "@mui/material";
 
 class NavBar extends React.Component {
     render() {
         return (
             <div>
-                <Stack direction="row">
+                <Stack direction="row" justifyContent="space-between">
                     <CardMedia
                         component="img"
                         alt="Toronto Early Cognition Lab"
-                        image="../../public/logo.png"
+                        image="/logo.png"
+                        sx={{width: 0.1, margin: 1}}
                     />
-                    <IconButton>
+                    <IconButton
+                        sx={{
+                            bgcolor: "text.disabled",
+                            width: 40,
+                            height: 40,
+                            color: "white",
+                            margin: 1
+                        }}
+                    >
                         <PersonIcon />
                     </IconButton>
                 </Stack>
-                <TextField
-                    id="outlined-start-adornment"
-                    variant="outlined"
-                    fullWidth
-                    placeholder="Search"
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchIcon />
-                            </InputAdornment>
-                        )
-                    }}
-                />
             </div>
         );
     }
