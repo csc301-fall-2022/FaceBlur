@@ -20,7 +20,8 @@ class NavBar extends React.Component {
                             width: 40,
                             height: 40,
                             color: "white",
-                            margin: 1
+                            margin: 1,
+                            "&:hover": {bgcolor: "#747779"}
                         }}
                     >
                         <PersonIcon />
