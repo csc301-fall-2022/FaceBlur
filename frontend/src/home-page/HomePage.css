@@ -1,0 +1,16 @@
+.searchbar {
+  background: #FA893C;
+  opacity: 60%;
+  width: 100%;
+  min-width: 540px;
+  margin-bottom: min(5em, 50px) !important;
+  border-radius: 10px;
+}
+.homepage-container{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+.display-container{
+  width:95%;
+}
