@@ -68,13 +68,13 @@ const VideoList = (): JSX.Element => {
     };
     return (
         <Paper sx={{width: "100%", overflow: "hidden"}}>
-            <TableContainer sx={{maxHeight: 720}}>
+            <TableContainer sx={{maxHeight: 600}}>
                 <Table stickyHeader aria-label="videos">
                     <TableHead>
                         <TableRow>
                             {columns.map((column) => (
                                 <TableCell key={column.id} style={{minWidth: column.minWidth}}>
-                                    {column.label}
+                                    <b>{column.label}</b>
                                 </TableCell>
                             ))}
                         </TableRow>
