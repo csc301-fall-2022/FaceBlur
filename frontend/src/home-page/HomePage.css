@@ -30,3 +30,9 @@
 .MuiTableRow-root {
   height: 80px;
 }
+
+.upload-dialogue {
+  position: absolute;
+  z-index: 100;
+  left: 40%;
+}

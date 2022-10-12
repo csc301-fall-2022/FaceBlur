@@ -13,6 +13,7 @@ import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Fab from "@mui/material/Fab";
+import UploadDialogue from "components/upload-dialogue";
 
 interface Column {
     id: "name" | "uploader" | "dateUploaded";
@@ -118,6 +119,12 @@ const VideoList = (): JSX.Element => {
 };
 
 export default function HomePage() {
+    const [upload, showUploadDialogue] = useState(false);
+
+    const handleClick = () => {
+        showUploadDialogue(false);
+    };
+
     return (
         <div className="homepage-container">
             <div className="display-container">
@@ -138,10 +145,16 @@ export default function HomePage() {
                         }}
                     />
                 </div>
-
+                <div className="upload-dialogue">
+                    {upload && <UploadDialogue handleClick={handleClick} />}
+                </div>
                 <VideoList />
             </div>
-            <Fab variant="extended" className="uploadButton">
+            <Fab
+                variant="extended"
+                className="uploadButton"
+                onClick={() => showUploadDialogue(true)}
+            >
                 Upload
                 <UploadFileIcon></UploadFileIcon>
             </Fab>
