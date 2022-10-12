@@ -1,0 +1,188 @@
+[
+  {
+    "id": 1,
+    "name": "video1",
+    "type": "FACE_BLURRED",
+    "uploaderId": 1,
+    "uploader": {
+      "id": 1,
+      "email": "test@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+  {
+    "id": 2,
+    "name": "video2",
+    "type": "BACKGROUND_BLURRED",
+    "uploaderId": 2,
+    "uploader": {
+      "id": 2,
+      "email": "test2@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+  {
+    "id": 3,
+    "name": "video3",
+    "type": "NO_BLUR",
+    "uploaderId": 3,
+    "uploader": {
+      "id": 3,
+      "email": "test3@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+
+  {
+    "id": 4,
+    "name": "video1",
+    "type": "FACE_BLURRED",
+    "uploaderId": 1,
+    "uploader": {
+      "id": 1,
+      "email": "test@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+  {
+    "id": 5,
+    "name": "video2",
+    "type": "BACKGROUND_BLURRED",
+    "uploaderId": 2,
+    "uploader": {
+      "id": 2,
+      "email": "test2@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+  {
+    "id": 6,
+    "name": "video3",
+    "type": "NO_BLUR",
+    "uploaderId": 3,
+    "uploader": {
+      "id": 3,
+      "email": "test3@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+
+  {
+    "id": 7,
+    "name": "video1",
+    "type": "FACE_BLURRED",
+    "uploaderId": 1,
+    "uploader": {
+      "id": 1,
+      "email": "test@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+  {
+    "id": 8,
+    "name": "video2",
+    "type": "BACKGROUND_BLURRED",
+    "uploaderId": 2,
+    "uploader": {
+      "id": 2,
+      "email": "test2@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+  {
+    "id": 9,
+    "name": "video3",
+    "type": "NO_BLUR",
+    "uploaderId": 3,
+    "uploader": {
+      "id": 3,
+      "email": "test3@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+
+  {
+    "id": 10,
+    "name": "video1",
+    "type": "FACE_BLURRED",
+    "uploaderId": 1,
+    "uploader": {
+      "id": 1,
+      "email": "test@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+  {
+    "id": 12,
+    "name": "video2",
+    "type": "BACKGROUND_BLURRED",
+    "uploaderId": 2,
+    "uploader": {
+      "id": 2,
+      "email": "test2@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+  {
+    "id": 13,
+    "name": "video3",
+    "type": "NO_BLUR",
+    "uploaderId": 3,
+    "uploader": {
+      "id": 3,
+      "email": "test3@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+
+  {
+    "id": 14,
+    "name": "video1",
+    "type": "FACE_BLURRED",
+    "uploaderId": 1,
+    "uploader": {
+      "id": 1,
+      "email": "test@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+  {
+    "id": 15,
+    "name": "video2",
+    "type": "BACKGROUND_BLURRED",
+    "uploaderId": 2,
+    "uploader": {
+      "id": 2,
+      "email": "test2@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  },
+  {
+    "id": 16,
+    "name": "video3",
+    "type": "NO_BLUR",
+    "uploaderId": 3,
+    "uploader": {
+      "id": 3,
+      "email": "test3@gmail.com",
+      "password": "pass"
+    },
+    "dateUploaded": "2022-06-12"
+  }
+
+
+]

@@ -1,7 +1,11 @@
 import React from "react";
-// import HelloWorld from "./pages/hello";
-import Test from "pages/test";
+import HomePage from "./home-page/HomePage";
+import NavBar from "components/common";
 
-const App: React.FC = () => <Test />;
-
+const App: React.FC = () => (
+    <div>
+        <NavBar />
+        <HomePage />
+    </div>
+);
 export default App;
