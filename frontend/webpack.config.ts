@@ -27,14 +27,37 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
                 },
                 exclude: /dist/
             },
+            // {
+            //     test: /\.css$/,
+            //     use: ["style-loader", "css-loader"]
+            // },
             {
                 test: /\.css$/,
                 use: [
-                    {loader: "style-loader"},
-                    {loader: "typings-for-css-modules-loader"},
-                    {loader: "css-loader", options: {modules: true}}
+                    {
+                        loader: require.resolve("style-loader"),
+                        options: {
+                            esModule: false
+                        }
+                    },
+                    {
+                        loader: require.resolve("dts-css-modules-loader"),
+                        options: {
+                            namedExport: true
+                        }
+                    },
+                    {
+                        loader: require.resolve("css-loader"),
+                        options: {
+                            modules: {
+                                exportLocalsConvention: "camelCaseOnly",
+                                localIdentName: "[hash:base64:5]"
+                            }
+                        }
+                    }
                 ]
             },
+
             {
                 test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
                 use: [

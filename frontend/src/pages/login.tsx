@@ -1,5 +1,4 @@
 import React, {useReducer} from "react";
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
@@ -9,11 +8,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
 import {CardMedia} from "@mui/material";
 
-// webpack workaround for images (disabling esloader did not work)
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const logo = require("../../public/logo.png").default;
-
-import * as theme from "../static/theme.css";
+import * as themes from "../static/themes.css";
 import * as login from "../static/login.css";
 
 //state type
@@ -118,7 +113,7 @@ const Login = () => {
                     className={login.logo}
                     component="img"
                     alt="Toronto Early Cognition Lab"
-                    image={logo}
+                    image={require("../../public/logo.png")}
                     sx={{objectFit: "contain"}}
                 />
                 <CardHeader className={login.header} title="Log into <App Name>" />
@@ -150,7 +145,12 @@ const Login = () => {
                     </div>
                 </CardContent>
                 <CardActions>
-                    <Button variant="text" size="large" className={theme.btn} onClick={handleLogin}>
+                    <Button
+                        variant="text"
+                        size="large"
+                        className={themes.btn}
+                        onClick={handleLogin}
+                    >
                         Sign In
                     </Button>
                 </CardActions>

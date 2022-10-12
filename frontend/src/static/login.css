@@ -1,18 +1,19 @@
 .header {
-    text-align: "left";
+    text-align: left;
 }
 
 .card {
-    width: 600
+    width: 600px
 }
 
 .logo {
-    height: 200;
-    width: 600;
+    height: 200px;
+    width: 600px;
 }
 
 .container {
-    display: "flex";
-    flex-wrap: "wrap";
-    width: 600;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
