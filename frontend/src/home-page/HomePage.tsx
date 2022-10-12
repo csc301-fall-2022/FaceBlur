@@ -131,17 +131,19 @@ export default function HomePage() {
                 <div className="search-container">
                     <TextField
                         id="filled-basic"
-                        variant="filled"
+                        variant="standard"
                         className="searchbar"
                         size="small"
                         placeholder="Search"
-                        inputProps={{justifyContent: "center"}} // the change is here
+                        sx={{ input: { color: "white", margin: "7px"}}}
+                        inputProps={{justifyContent: "center", style: { alignItems: 'center' }}} // the change is here
                         InputProps={{
                             startAdornment: (
-                                <InputAdornment position="start">
+                                <InputAdornment position="start" sx={{color: "white", margin: "5px"}}>
                                     <SearchIcon fontSize="large" />
                                 </InputAdornment>
-                            )
+                            ),
+                            disableUnderline: true
                         }}
                     />
                 </div>
