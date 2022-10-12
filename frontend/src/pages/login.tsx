@@ -11,8 +11,9 @@ import {CardMedia} from "@mui/material";
 import * as themes from "../static/themes.css";
 import * as login from "../static/login.css";
 
-//state type
+// https://surajsharma.net/blog/react-login-form-typescript
 
+// login state type
 type State = {
     email: string;
     password: string;
@@ -20,6 +21,7 @@ type State = {
     isError: boolean;
 };
 
+// initial state of login
 const initialState: State = {
     email: "",
     password: "",
@@ -27,6 +29,7 @@ const initialState: State = {
     isError: false
 };
 
+// possible actions to take for updating State
 type Action =
     | {type: "setEmail"; payload: string}
     | {type: "setPassword"; payload: string}
@@ -34,6 +37,7 @@ type Action =
     | {type: "loginFailed"; payload: string}
     | {type: "setIsError"; payload: boolean};
 
+// update function
 const reducer = (state: State, action: Action): State => {
     switch (action.type) {
         case "setEmail":
@@ -137,6 +141,7 @@ const Login = () => {
                             label="Password"
                             placeholder="Password"
                             margin="normal"
+                            type="password"
                             helperText={state.helperText}
                             onChange={handlePasswordChange}
                             onKeyPress={handleKeyPress}
