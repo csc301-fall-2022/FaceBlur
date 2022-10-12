@@ -11,6 +11,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import Fab from "@mui/material/Fab";
 
 interface Column {
     id: "name" | "uploader" | "dateUploaded";
@@ -66,7 +68,7 @@ const VideoList = (): JSX.Element => {
     };
     return (
         <Paper sx={{width: "100%", overflow: "hidden"}}>
-            <TableContainer sx={{maxHeight: 540}}>
+            <TableContainer sx={{maxHeight: 720}}>
                 <Table stickyHeader aria-label="videos">
                     <TableHead>
                         <TableRow>
@@ -125,6 +127,8 @@ export default function HomePage() {
                         variant="filled"
                         className="searchbar"
                         size="small"
+                        placeholder="Search"
+                        inputProps={{justifyContent: "center"}} // the change is here
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -137,6 +141,10 @@ export default function HomePage() {
 
                 <VideoList />
             </div>
+            <Fab variant="extended" className="uploadButton">
+                Upload
+                <UploadFileIcon></UploadFileIcon>
+            </Fab>
         </div>
     );
 }

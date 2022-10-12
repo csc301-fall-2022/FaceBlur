@@ -14,3 +14,19 @@
 .display-container{
   width:95%;
 }
+
+.css-lntp72-MuiButtonBase-root-MuiFab-root.uploadButton {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  background-color: #FA893C;
+  color:white;
+}
+.css-lntp72-MuiButtonBase-root-MuiFab-root.uploadButton:hover {
+  background-color: #f44336;
+
+}
+
+.MuiTableRow-root {
+  height: 80px;
+}
