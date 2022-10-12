@@ -14,5 +14,20 @@ model User {
   id Int @id @default(autoincrement())
   email String @unique
   password String
+  videos Video[]
+}
+
+model Video {
+  id Int @id @default(autoincrement())
   name String
+  type BlurType
+  uploaderId Int
+  uploader User @relation(fields: [uploaderId], references: [id])
+  dateUploaded DateTime @default(now())
+}
+
+enum BlurType {
+  FACE_BLURRED
+  BACKGROUND_BLURRED
+  NO_BLUR
 }

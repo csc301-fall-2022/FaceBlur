@@ -57,7 +57,6 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
                     }
                 ]
             },
-
             {
                 test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
                 use: [
