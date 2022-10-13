@@ -1,8 +1,8 @@
 import {InputAdornment, TextField} from "@mui/material";
 import React, {useEffect, useState} from "react";
-import "./HomePage.css";
+import "./Home.css";
 import SearchIcon from "@mui/icons-material/Search";
-import videos from "./DummyData.json";
+import videos from "../home-page/DummyData.json";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
