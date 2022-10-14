@@ -6,7 +6,7 @@ import ESLintPlugin from "eslint-webpack-plugin";
 import packageJSON = require("./package.json");
 import {TsconfigPathsPlugin} from "tsconfig-paths-webpack-plugin";
 
-const webpackConfig = (env): Configuration => ({
+const webpackConfig = (env: {production: any; development: any}): Configuration => ({
     entry: "./src/index.tsx",
     ...(env.production || !env.development ? {} : {devtool: "eval-source-map"}),
     resolve: {

@@ -25,7 +25,7 @@ const columns: readonly Column[] = [
     {id: "uploader", label: "Uploaded By", minWidth: 170},
     {id: "dateUploaded", label: "Date Uploaded", minWidth: 170}
 ];
-function getVideos(): Video[] {
+function getVideos(): (Video | undefined)[] {
     function getTypeAsLiteral(type: string) {
         if (type === "FACE_BLURRED") {
             return "FACE_BLURRED";
@@ -55,7 +55,7 @@ const VideoList = (): JSX.Element => {
     //https://mui.com/material-ui/react-table/
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [videosList, setVideosList] = useState([]);
+    const [videosList, setVideosList] = useState<Array<Video | undefined>>([]);
     useEffect(() => {
         setVideosList(getVideos());
     }, []);
@@ -83,6 +83,9 @@ const VideoList = (): JSX.Element => {
                         {videosList
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
+                                if (row === undefined) {
+                                    throw undefined;
+                                }
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                                         {columns.map((column) => {
