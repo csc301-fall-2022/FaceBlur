@@ -2,7 +2,6 @@ import multer, { FileFilterCallback, StorageEngine } from 'multer';
 import { Request } from 'express';
 import path from 'path';
 
-
 // Save to local storage: tentative solution
 export const storage: StorageEngine = multer.diskStorage({
     destination: (req, file, cb) => {
