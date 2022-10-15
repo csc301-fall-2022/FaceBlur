@@ -31,7 +31,7 @@ const webpackConfig = (env): Configuration => ({
                 rules: [
                     {
                         test: /\.css$/,
-                        use: [ 'style-loader', 'css-loader' ]
+                        use: ['style-loader', 'css-loader']
                     }
                 ]
             }
