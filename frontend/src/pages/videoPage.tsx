@@ -1,6 +1,6 @@
 import React from "react";
 import FileSaver from "file-saver";
-import VideoPlayer from "./videoPlayer";
+import VideoPlayer from "../components/videoPlayer";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
