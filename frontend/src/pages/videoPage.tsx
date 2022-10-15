@@ -1,5 +1,6 @@
 import React from "react";
 import FileSaver from "file-saver";
+import NavBar from "../components/common";
 import VideoPlayer from "../components/videoPlayer";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -12,30 +13,33 @@ const videoPage = ({videoLink}) => {
         FileSaver.saveAs(videoLink);
     }
     return (
-        <Grid
-            container
-            spacing={0}
-            alignItems="center"
-            justifyContent="center"
-            style={{minHeight: "100vh"}}
-        >
-            <Grid item xs={12}>
-                <Card sx={{width: 0.7, margin: "auto"}}>
-                    <CardContent>
-                        <VideoPlayer videoLink={videoLink} />
-                    </CardContent>
-                    <CardActions>
-                        <Button
-                            variant="contained"
-                            sx={{marginLeft: "auto"}}
-                            onClick={() => download()}
-                        >
-                            Download
-                        </Button>
-                    </CardActions>
-                </Card>
+        <>
+            <NavBar />
+            <Grid
+                container
+                spacing={0}
+                alignItems="center"
+                justifyContent="center"
+                style={{minHeight: "100vh"}}
+            >
+                <Grid item xs={12}>
+                    <Card sx={{width: 0.7, margin: "auto"}}>
+                        <CardContent>
+                            <VideoPlayer videoLink={videoLink} />
+                        </CardContent>
+                        <CardActions>
+                            <Button
+                                variant="contained"
+                                sx={{marginLeft: "auto"}}
+                                onClick={() => download()}
+                            >
+                                Download
+                            </Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
             </Grid>
-        </Grid>
+        </>
     );
 };
 
