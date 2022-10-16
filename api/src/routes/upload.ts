@@ -14,19 +14,37 @@ const upload = multer({storage: storage, fileFilter: fileFilter}).single('file')
 // Endpoint for uploading and processing a video
 router.post('/', (req: Request, res: Response) => {
     logger.info('Upload endpoint called');
-    // TODO: need to get blur type, then process video in the appropriate function 
     // Upload file with multer
-    upload(req, res, (err) => {
-        if (err instanceof multer.MulterError) {
+    upload(req, res, async (err) => {
+        if (err instanceof multer.MulterError || !req.file) {
             logger.error('Error uploading file: Multer error');
             res.status(400).send(err.message);
-        } else if (err) {
+        } else if (err || !req.file) {
             logger.error('Error uploading file: Unknown error');
             res.status(400).send(err.message);
         } else {
-            // TODO: populate schema with file metadata and save to local db
+            // Create video record and save to local db
+            const userId = parseInt(req.body.userId);
+            const blurType = req.body.blurType;
+            const video = await prisma.video.create({
+                data: {
+                    name: req.file.filename,
+                    type: blurType, 
+                    uploader: {
+                        connect: {
+                            id: userId
+                        }
+                    }, 
+                    dateUploaded: new Date(),
+                }
+            }); 
+            const resData = {
+                file: req.file,
+                blurType: blurType,
+                userId: userId
+            }
             logger.info('File uploaded successfully');
-            res.status(200).send(req.file);
+            res.status(200).send(resData);
         }
     });
 });

@@ -2,11 +2,8 @@ import multer, { FileFilterCallback, StorageEngine } from 'multer';
 import { Request } from 'express';
 import path from 'path';
 
-// Save to local storage: tentative solution
+// TODO: Need to save videos to S3 
 export const storage: StorageEngine = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './uploads');
-    },
     filename: (req, file, cb) => {
         cb(null, file.originalname); 
     }
