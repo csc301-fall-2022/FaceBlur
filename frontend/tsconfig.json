@@ -33,6 +33,7 @@
   },
   "include": [
     "./src",
-    "./webpack.config.ts"
+    "./webpack.config.ts",
+    "./typings-custom/**/*.ts"
   ]
 }
