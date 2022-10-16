@@ -14,7 +14,7 @@ app.use('/login', login)
 const port = process.env.PORT;
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('CSC311 Express Server');
+    res.send('CSC301 Express Server');
 });
 
 app.listen(port, () => {

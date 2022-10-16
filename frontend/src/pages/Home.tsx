@@ -13,7 +13,7 @@ import TablePagination from "@mui/material/TablePagination";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Fab from "@mui/material/Fab";
 
-import "./home.css";
+import "../static/home.css";
 
 interface Column {
     id: "name" | "uploader" | "dateUploaded";
@@ -56,7 +56,7 @@ const VideoList = (): JSX.Element => {
     //https://mui.com/material-ui/react-table/
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [videosList, setVideosList] = React.useState<Array<Video | undefined>>([]);
+    const [videosList, setVideosList] = useState<Array<Video | undefined>>([]);
     useEffect(() => {
         setVideosList(getVideos());
     }, []);
