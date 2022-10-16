@@ -1,5 +1,6 @@
 import path from "path";
 import webpack, {Configuration} from "webpack";
+import * as webpackDevServer from 'webpack-dev-server';
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
@@ -15,8 +16,12 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
     },
     output: {
         path: path.join(__dirname, "/dist"),
-        filename: "build.js"
+        filename: "build.js",
+        publicPath: "/"
     },
+    devServer: {
+        historyApiFallback: true,
+      },
     module: {
         rules: [
             {
