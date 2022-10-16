@@ -26,6 +26,7 @@ router.post('/', (req: Request, res: Response) => {
             // Create video record and save to local db
             const userId = parseInt(req.body.userId);
             const blurType = req.body.blurType;
+            // TODO: upsert? 
             const video = await prisma.video.create({
                 data: {
                     name: req.file.filename,
