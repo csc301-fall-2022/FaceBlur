@@ -1,6 +1,6 @@
 import React from "react";
+import HomePage from "./pages/Home";
 import NavBar from "components/common";
-import HomePage from "./home-page/HomePage";
 
 // const videoLink =
 //     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
