@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "main": "src/index.tsx",
   "repository": "https://github.com/csc301-fall-2022/team-project-18-uoft-t.git",
+  "proxy": "http://localhost:3000",
   "license": "MIT",
   "scripts": {
     "start": "ts-node",

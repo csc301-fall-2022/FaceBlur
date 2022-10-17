@@ -1,19 +1,16 @@
 import React from "react";
 import LoginForm from "./pages/login";
 import HomePage from "./pages/Home";
-// import NavBar from "components/common";
+import VideoPage from "pages/VideoPage";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
-// https://v5.reactrouter.com/web/guides/quick-start
-
-const App: React.FC = () => {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/" element={<LoginForm />} />
-            </Routes>
-        </Router>
-    );
-};
+const App: React.FC = () => (
+    <Router>
+        <Routes>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/video" element={<VideoPage />} />
+            <Route path="/" element={<LoginForm />} />
+        </Routes>
+    </Router>
+);
 export default App;

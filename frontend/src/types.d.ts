@@ -14,6 +14,5 @@ interface Video {
 }
 
 interface VideoProps {
-    videoLink: string
-
+    videoLink: string;
 }
