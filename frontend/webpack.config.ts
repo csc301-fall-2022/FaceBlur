@@ -1,10 +1,13 @@
 import path from "path";
 import webpack, {Configuration} from "webpack";
+import * as webpackDevServer from "webpack-dev-server";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
 import packageJSON = require("./package.json");
 import {TsconfigPathsPlugin} from "tsconfig-paths-webpack-plugin";
+
+const config: webpack.Configuration = {};
 
 const webpackConfig = (env: {production: any; development: any}): Configuration => ({
     entry: "./src/index.tsx",
@@ -15,7 +18,8 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
     },
     output: {
         path: path.join(__dirname, "/dist"),
-        filename: "build.js"
+        filename: "build.js",
+        publicPath: "/"
     },
     module: {
         rules: [
@@ -72,6 +76,16 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
                 ]
             }
         ]
+    },
+    devServer: {
+        historyApiFallback: true,
+        proxy: {
+            "/api": {
+                target: "http://localhost:8080",
+                router: () => "http://localhost:3000",
+                logLevel: "debug"
+            }
+        }
     },
     plugins: [
         new HtmlWebpackPlugin({

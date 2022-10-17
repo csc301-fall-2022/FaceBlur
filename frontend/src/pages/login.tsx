@@ -1,5 +1,5 @@
-import React, {useReducer} from "react";
-
+import React, {useReducer, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -72,14 +72,29 @@ const reducer = (state: State, action: Action): State => {
 
 const Login = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [response, setResponse] = useState(0);
+    const navigate = useNavigate();
 
     // This is temporary, use a login endpoint from the api here later
     const handleLogin = () => {
-        if (state.email === "abc@email.com" && state.password === "password") {
+        fetch("/api/auth/login", {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                email: state.email,
+                password: state.password
+            })
+        }).then((res) => setResponse(res.status));
+
+        if (response === 200) {
             dispatch({
                 type: "loginSuccess",
                 payload: "Login Successful"
             });
+            navigate("/home");
         } else {
             dispatch({
                 type: "loginFailed",

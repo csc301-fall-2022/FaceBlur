@@ -1,15 +1,18 @@
 import express, { Express, Request, Response } from 'express';
+import auth from './routes/auth';
 import dotenv from 'dotenv';
+import passport from 'passport';
+
 import { logger } from './utils/logger';
 
-import login from './routes/auth';
 
 dotenv.config();
 
 const app: Express = express();
 
-// login route
-app.use('/login', login)
+app.use(express.json());
+app.use(passport.initialize())
+app.use("/api/auth", auth);
 
 const port = process.env.PORT;
 

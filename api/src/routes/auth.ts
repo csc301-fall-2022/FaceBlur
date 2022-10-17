@@ -1,24 +1,33 @@
 import express, { Request, Response } from 'express';
-import dotenv from 'dotenv';
+import passport from 'passport';
+import Strategy from 'passport-local'
+import bodyParser from 'body-parser'
+
 import prisma from '../prisma';
-import bcrypt from "bcrypt";
 import { logger } from '../utils/logger';
+import { hash } from '../utils/encryption';
+import { LocalPassport } from '../middleware/passport';
 
-dotenv.config();
-
+LocalPassport(passport, Strategy.Strategy)
 const router = express.Router();
+
+router.use(passport.initialize())
+router.use(bodyParser.urlencoded({ extended: false }))
+router.use(bodyParser.json())
+
+router.get("/test", (req: Request, res: Response) => {
+    res.send('Auth Online');
+});
 
 // Endpoint for registering a user
 router.post('/register', async (req: Request, res: Response) => {
     const {email, password} = req.body;
-    // salting and hashing
-    const salt = await bcrypt.genSalt(10);
-    const encrypted_password = await bcrypt.hash(password, salt);
+    const encrypted_password = await hash(password)
     try {
         // create user, store encrypted password
         const user = await prisma.user.create({
         data: {
-            email,
+            email: email,
             password: encrypted_password
             },
         });
@@ -30,25 +39,16 @@ router.post('/register', async (req: Request, res: Response) => {
     }
 });
 
-// Endpoint for login authentication
-router.get('/login', async (req: Request, res: Response) => {
-    const {email, password} = req.body;
-    try {
-        const user = await prisma.user.findUniqueOrThrow({
-            where: { email },
-        });
-        const validated = await bcrypt.compare(password, user.password);
-        if (validated) {
-            res.status(200).json(({ status: "succeeded" }));
-            logger.info('Login Processed');
-        } else {
-            res.status(500).json(({ status: "failed", message: "Incorrect Password" }));
-            logger.info('Login Processed');
-        }
-    } catch (error) {
-        logger.error(error);
-        res.status(404).json(({ status: "failed", message: "Something went wrong" }));
-    } 
-});
+// no sessions for now
+router.post('/login', passport.authenticate('local', {session: false}), async (req, res) => {
+  try {
+    logger.info("Login Succeeded");
+    res.status(200).json({status: "success"})
+  } catch (err) {
+    logger.info("Login Failed");
+    logger.error(err)
+    res.status(500).json({status: "failed"})
+  }
+})
 
 export default router;
