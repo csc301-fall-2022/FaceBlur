@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "main": "src/index.tsx",
   "repository": "https://github.com/csc301-fall-2022/team-project-18-uoft-t.git",
+  "proxy": "http://localhost:3000",
   "license": "MIT",
   "scripts": {
     "start": "ts-node",
@@ -22,7 +23,8 @@
     "react": "^18.0.2",
     "react-dom": "^18.0.2",
     "react-html5video": "^2.5.1",
-    "react-router": "^6.4.1"
+    "react-router": "^6.4.1",
+    "react-router-dom": "^6.4.2"
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",

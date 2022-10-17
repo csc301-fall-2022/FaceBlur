@@ -8,9 +8,12 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 
+const VideoPage = () => {
+    //TODO: swap this out to get from params using useParams & add typeguard for undefined
+    const link =
+        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
 
-const videoPage = ({videoLink}: VideoProps) => {
-    function download() {
+    function download(videoLink: string) {
         FileSaver.saveAs(videoLink);
     }
     return (
@@ -26,13 +29,13 @@ const videoPage = ({videoLink}: VideoProps) => {
                 <Grid item xs={12}>
                     <Card sx={{width: 0.7, margin: "auto"}}>
                         <CardContent>
-                            <VideoPlayer videoLink={videoLink} />
+                            <VideoPlayer videoLink={link} />
                         </CardContent>
                         <CardActions>
                             <Button
                                 variant="contained"
                                 sx={{marginLeft: "auto"}}
-                                onClick={() => download()}
+                                onClick={() => download(link)}
                             >
                                 Download
                             </Button>
@@ -44,4 +47,4 @@ const videoPage = ({videoLink}: VideoProps) => {
     );
 };
 
-export default videoPage;
+export default VideoPage;

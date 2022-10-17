@@ -13,6 +13,7 @@ import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Fab from "@mui/material/Fab";
+import {useNavigate} from "react-router-dom";
 
 interface Column {
     id: "name" | "uploader" | "dateUploaded";
@@ -20,6 +21,11 @@ interface Column {
     minWidth?: number;
     align?: "right";
 }
+
+interface VideoList {
+    filteredList: Array<Video | undefined>;
+}
+
 const columns: readonly Column[] = [
     {id: "name", label: "Video Title", minWidth: 170},
     {id: "uploader", label: "Uploaded By", minWidth: 170},
@@ -51,14 +57,18 @@ function getVideos(): (Video | undefined)[] {
     });
 }
 
-const VideoList = (): JSX.Element => {
+const VideoList = ({filteredList}: VideoList): JSX.Element => {
     //https://mui.com/material-ui/react-table/
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [videosList, setVideosList] = useState<Array<Video | undefined>>([]);
-    useEffect(() => {
-        setVideosList(getVideos());
-    }, []);
+
+    const navigate = useNavigate();
+
+    const routeChange = () => {
+        const path = "/video";
+        navigate(path);
+    };
+
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -80,14 +90,20 @@ const VideoList = (): JSX.Element => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {videosList
+                        {filteredList
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 if (row === undefined) {
                                     throw undefined;
                                 }
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                    <TableRow
+                                        hover
+                                        role="checkbox"
+                                        onClick={routeChange}
+                                        tabIndex={-1}
+                                        key={row.id}
+                                    >
                                         {columns.map((column) => {
                                             let value;
 
@@ -98,7 +114,6 @@ const VideoList = (): JSX.Element => {
                                             } else {
                                                 value = row[column.id];
                                             }
-                                            console.log(value);
                                             return <TableCell key={column.id}>{value}</TableCell>;
                                         })}
                                     </TableRow>
@@ -110,7 +125,7 @@ const VideoList = (): JSX.Element => {
             <TablePagination
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
-                count={videosList.length}
+                count={filteredList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -121,6 +136,27 @@ const VideoList = (): JSX.Element => {
 };
 
 export default function HomePage() {
+    const [videosList, setVideosList] = useState<Array<Video | undefined>>([]);
+    const [filteredList, setFilteredList] = useState<Array<Video | undefined>>([]);
+
+    function filterList(e: React.ChangeEvent<HTMLInputElement>) {
+        const currentSearch = e.currentTarget.value.toLowerCase();
+        setFilteredList(
+            videosList.filter((val) => {
+                if (currentSearch === "") {
+                    return true;
+                } else {
+                    return val?.name.toLowerCase().includes(currentSearch);
+                }
+            })
+        );
+    }
+
+    useEffect(() => {
+        setVideosList(getVideos());
+        setFilteredList(getVideos());
+    }, []);
+
     return (
         <div className="homepage-container">
             <div className="display-container">
@@ -131,7 +167,7 @@ export default function HomePage() {
                         className="searchbar"
                         size="small"
                         placeholder="Search"
-                        inputProps={{justifyContent: "center"}} // the change is here
+                        onChange={filterList}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -142,7 +178,7 @@ export default function HomePage() {
                     />
                 </div>
 
-                <VideoList />
+                <VideoList filteredList={filteredList} />
             </div>
             <Fab variant="extended" className="uploadButton">
                 Upload
