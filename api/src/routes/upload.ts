@@ -19,9 +19,9 @@ router.post('/', (req: Request, res: Response) => {
         if (err instanceof multer.MulterError || !req.file) {
             logger.error('Error uploading file: Multer error');
             res.status(400).send(err.message);
-        } else if (err || !req.file) {
+        } else if (err) {
             logger.error('Error uploading file: Unknown error');
-            res.status(400).send(err.message);
+            res.status(500).send(err.message);
         } else {
             // Create video record and save to local db
             const userId = parseInt(req.body.userId);
