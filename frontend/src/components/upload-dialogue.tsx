@@ -107,7 +107,7 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
             <DragFile handleDrop={uploadFile}>
                 <div className="drag">
                     <UploadFileIcon className="icon" />
-                    <div>
+                    <div className="drag-text">
                         <Button variant="text" component="label" onClick={() => setUploaded(false)}>
                             Upload File
                             <input type="file" hidden onChange={selectFile} />
