@@ -12,3 +12,7 @@ interface Video {
     uploader: User;
     dateUploaded: Date;
 }
+
+interface VideoProps {
+    videoLink: string;
+}

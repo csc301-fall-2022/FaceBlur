@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "declaration": true,
     "module": "commonjs",
     "target": "es5",
     "lib": [
+      "es6",
       "esnext",
       "dom",
       "dom.iterable"
@@ -29,6 +33,7 @@
   },
   "include": [
     "./src",
-    "./webpack.config.ts"
+    "./webpack.config.ts",
+    "./typings-custom/**/*.ts"
   ]
 }
