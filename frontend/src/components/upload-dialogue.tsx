@@ -36,7 +36,7 @@ const DragFile = (props: any) => {
             e.stopPropagation();
             setDrag(false);
             if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-                // props.handleDrop(e.dataTransfer.files)
+                props.handleDrop(e.dataTransfer.files[0]);
                 e.dataTransfer.clearData();
             }
         };
@@ -74,7 +74,8 @@ const DragFile = (props: any) => {
 
 export default function UploadDialogue(props: {handleClick: () => void}) {
     const ref = useRef<HTMLInputElement>(null);
-    const [uploading, setUploading] = useState(false);
+    const [file, setFile] = useState({name: ""});
+    const [uploaded, setUploaded] = useState(false);
     useEffect(() => {
         const handleClickOutside = (event: any) => {
             if (ref.current && !ref.current.contains(event.target)) {
@@ -87,17 +88,23 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
         };
     });
 
+    const uploadFile = (newFile: any) => {
+        setFile(newFile);
+        return fetch("/upload", {
+            method: "POST",
+            body: JSON.stringify({file: file})
+        }).then((data) => {
+            setUploaded(true);
+        });
+    };
+
     return (
         <div ref={ref} className="popover">
-            <DragFile>
+            <DragFile handleDrop={uploadFile}>
                 <div className="drag">
                     <UploadFileIcon className="icon" />
                     <div>
-                        <Button
-                            variant="text"
-                            component="label"
-                            onClick={() => setUploading(false)}
-                        >
+                        <Button variant="text" component="label" onClick={() => setUploaded(false)}>
                             Upload File
                             <input type="file" hidden />
                         </Button>{" "}
@@ -105,7 +112,7 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
                     </div>
                 </div>
             </DragFile>
-            {uploading && <div>test</div>}
+            {uploaded && <div>{file.name}</div>}
             <div className="options">
                 <FormGroup className="checkbox">
                     <FormControlLabel control={<Checkbox />} label="Blur face" />
