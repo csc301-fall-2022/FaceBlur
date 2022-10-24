@@ -88,6 +88,10 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
         };
     });
 
+    const selectFile = (e: any) => {
+        uploadFile(e.target.files[0]);
+    };
+
     const uploadFile = (newFile: any) => {
         setFile(newFile);
         return fetch("/upload", {
@@ -106,7 +110,7 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
                     <div>
                         <Button variant="text" component="label" onClick={() => setUploaded(false)}>
                             Upload File
-                            <input type="file" hidden />
+                            <input type="file" hidden onChange={selectFile} />
                         </Button>{" "}
                         or drag and drop
                     </div>
