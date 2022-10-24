@@ -7,6 +7,11 @@
     font-family: Helvetica, sans-serif;
 }
 
+.drag {
+    display: flex;
+    flex-direction: column;
+}
+
 .icon {
     margin: 0em auto 0.5em auto;
     border-radius: 50%;
@@ -18,4 +23,9 @@
 
 .checkbox {
     margin: 0.5 auto 0.5 auto;
+}
+
+.options {
+    margin-top: 1em;
+    border-top: 1px solid;
 }

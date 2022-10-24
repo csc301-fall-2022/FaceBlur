@@ -197,7 +197,6 @@ export default function HomePage() {
                             size="small"
                             placeholder="Search"
                             sx={{input: {color: "white", margin: "7px"}}}
-                            // inputProps={{justifyContent: "center", style: { alignItems: 'center' }}} // the change is here
                             onChange={filterList}
                             InputProps={{
                                 startAdornment: (
