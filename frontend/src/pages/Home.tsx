@@ -13,6 +13,7 @@ import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Fab from "@mui/material/Fab";
+import NavBar from "../components/common";
 import {useNavigate} from "react-router-dom";
 
 interface Column {
@@ -160,6 +161,7 @@ export default function HomePage() {
     return (
         <div className="homepage-container">
             <div className="display-container">
+                <NavBar />
                 <div className="search-container">
                     <TextField
                         id="filled-basic"
