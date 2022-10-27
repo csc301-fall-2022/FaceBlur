@@ -29,6 +29,13 @@ const VideoPage = () => {
                 <Grid item xs={12}>
                     <Card sx={{width: 0.7, margin: "auto"}}>
                         <CardContent>
+                            <Button
+                                variant="contained"
+                                sx={{marginLeft: "auto", marginBottom: 1}}
+                                href={"/home"}
+                            >
+                                Back
+                            </Button>
                             <VideoPlayer videoLink={link} />
                         </CardContent>
                         <CardActions>
