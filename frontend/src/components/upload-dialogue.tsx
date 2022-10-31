@@ -76,6 +76,9 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
     const ref = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState({name: ""});
     const [uploaded, setUploaded] = useState(false);
+    const [faceBlur, setFaceBLur] = useState(false);
+    const [backgroundBlur, setBackgroundBlur] = useState(false);
+    const [url, setURL] = useState("");
     useEffect(() => {
         const handleClickOutside = (event: any) => {
             if (ref.current && !ref.current.contains(event.target)) {
@@ -94,12 +97,38 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
 
     const uploadFile = (newFile: any) => {
         setFile(newFile);
+        setUploaded(true);
+        setURL(URL.createObjectURL(newFile));
+    };
+
+    const postFile = () => {
         return fetch("/upload", {
             method: "POST",
-            body: JSON.stringify({file: file})
-        }).then((data) => {
-            setUploaded(true);
+            body: JSON.stringify({
+                file: {name: file.name, url: url},
+                blurType: {face: faceBlur, background: backgroundBlur}
+            })
+        }).then(() => {
+            setFaceBLur(false);
+            setBackgroundBlur(false);
+            props.handleClick();
         });
+    };
+
+    const handleFaceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.checked) {
+            setFaceBLur(true);
+        } else {
+            setFaceBLur(false);
+        }
+    };
+
+    const handleBackgroundChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.checked) {
+            setBackgroundBlur(true);
+        } else {
+            setBackgroundBlur(false);
+        }
     };
 
     return (
@@ -119,8 +148,14 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
             {uploaded && <div>{file.name}</div>}
             <div className="options">
                 <FormGroup className="checkbox">
-                    <FormControlLabel control={<Checkbox />} label="Blur face" />
-                    <FormControlLabel control={<Checkbox />} label="Blur background" />
+                    <FormControlLabel
+                        control={<Checkbox onChange={handleFaceChange} />}
+                        label="Blur face"
+                    />
+                    <FormControlLabel
+                        control={<Checkbox onChange={handleBackgroundChange} />}
+                        label="Blur background"
+                    />
                 </FormGroup>
                 <Button
                     variant="contained"
@@ -130,7 +165,7 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
                         width: "100%",
                         "&:hover": {backgroundColor: "#f44336"}
                     }}
-                    onClick={props.handleClick}
+                    onClick={postFile}
                 >
                     Submit
                 </Button>
