@@ -10,8 +10,8 @@ const app: Express = express();
 
 app.use(express.json());
 
-// upload route 
-app.use('/upload', upload);
+// upload route
+app.use('/api/upload', upload);
 
 const port = process.env.PORT;
 

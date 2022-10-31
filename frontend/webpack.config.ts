@@ -19,9 +19,6 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
         filename: "build.js",
         publicPath: "/"
     },
-    devServer: {
-        historyApiFallback: true,
-      },
     module: {
         rules: [
             {
@@ -41,6 +38,16 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
                 ]
             }
         ]
+    },
+    devServer: {
+        historyApiFallback: true,
+        proxy: {
+            "/api": {
+                target: "http://localhost:8080",
+                router: () => "http://localhost:3000",
+                logLevel: "debug"
+            }
+        }
     },
     plugins: [
         new HtmlWebpackPlugin({

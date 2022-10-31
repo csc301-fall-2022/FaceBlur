@@ -6,6 +6,7 @@ LABEL description="This is the base docker image for KidBlur backend"
 WORKDIR /home/node/app
 
 COPY ["package.json", "package-lock.json", "./"]
+COPY prisma ./prisma/
 
 
 RUN npm install
