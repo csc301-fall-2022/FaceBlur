@@ -11,7 +11,7 @@ const DragFile = (props: any) => {
     const [drag, setDrag] = useState(false);
 
     useEffect(() => {
-        let count = 0;
+        // let count = 0;
         const handleDrag = (e: {preventDefault: () => void; stopPropagation: () => void}) => {
             e.preventDefault();
             e.stopPropagation();
@@ -78,12 +78,16 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
     const ref = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState({name: ""});
     const [uploaded, setUploaded] = useState(false);
-    const [faceBlur, setFaceBLur] = useState(false);
+    const [faceBlur, setFaceBlur] = useState(false);
     const [backgroundBlur, setBackgroundBlur] = useState(false);
     const [url, setURL] = useState("");
     useEffect(() => {
-        const handleClickOutside = (event: any) => {
-            if (ref.current && !ref.current.contains(event.target)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (ref.current && !ref.current.contains(event.target as HTMLElement)) {
+                setUploaded(false);
+                setFaceBlur(false);
+                setBackgroundBlur(false);
+                setURL("");
                 props.handleClick();
             }
         };
@@ -111,17 +115,19 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
                 blurType: {face: faceBlur, background: backgroundBlur}
             })
         }).then(() => {
-            setFaceBLur(false);
+            setUploaded(false);
+            setFaceBlur(false);
             setBackgroundBlur(false);
+            setURL("");
             props.handleClick();
         });
     };
 
     const handleFaceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
-            setFaceBLur(true);
+            setFaceBlur(true);
         } else {
-            setFaceBLur(false);
+            setFaceBlur(false);
         }
     };
 
