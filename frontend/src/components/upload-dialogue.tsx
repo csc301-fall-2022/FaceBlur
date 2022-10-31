@@ -15,22 +15,23 @@ const DragFile = (props: any) => {
         const handleDrag = (e: {preventDefault: () => void; stopPropagation: () => void}) => {
             e.preventDefault();
             e.stopPropagation();
+            setDrag(true);
         };
-        const handleDragIn = (e: any) => {
-            e.preventDefault();
-            e.stopPropagation();
-            count++;
-            if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-                setDrag(true);
-            }
-        };
-        const handleDragOut = (e: {preventDefault: () => void; stopPropagation: () => void}) => {
-            e.preventDefault();
-            e.stopPropagation();
-            count--;
-            if (count > 0) return;
-            setDrag(false);
-        };
+        // const handleDragIn = (e: any) => {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     count++;
+        //     if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+        //         setDrag(true);
+        //     }
+        // };
+        // const handleDragOut = (e: {preventDefault: () => void; stopPropagation: () => void}) => {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     count--;
+        //     if (count > 0) return;
+        //     setDrag(false);
+        // };
         const handleDrop = (e: any) => {
             e.preventDefault();
             e.stopPropagation();
@@ -39,14 +40,15 @@ const DragFile = (props: any) => {
                 props.handleDrop(e.dataTransfer.files[0]);
                 e.dataTransfer.clearData();
             }
+            setDrag(false);
         };
-        ref.current?.addEventListener("dragenter", handleDragIn);
-        ref.current?.addEventListener("dragleave", handleDragOut);
+        // ref.current?.addEventListener("dragenter", handleDragIn);
+        // ref.current?.addEventListener("dragleave", handleDragOut);
         ref.current?.addEventListener("dragover", handleDrag);
         ref.current?.addEventListener("drop", handleDrop);
         return () => {
-            ref.current?.removeEventListener("dragenter", handleDragIn);
-            ref.current?.removeEventListener("dragleave", handleDragOut);
+            // ref.current?.removeEventListener("dragenter", handleDragIn);
+            // ref.current?.removeEventListener("dragleave", handleDragOut);
             ref.current?.removeEventListener("dragover", handleDrag);
             ref.current?.removeEventListener("drop", handleDrop);
         };
