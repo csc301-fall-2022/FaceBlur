@@ -3,7 +3,7 @@ version: '3.7'
 
 services:
   # Backend container
-  api:
+  backend:
     build:
       context: ./api
       dockerfile: Dockerfile
@@ -16,6 +16,8 @@ services:
       - '3000'
     ports:
       - '3000:3000'
+    depends_on:
+      - postgres
     command: npm run start
 
   postgres:
@@ -38,10 +40,10 @@ services:
     restart: always
     container_name: ui
     ports:
-      - "80:80"
+      - "8080:8080"
       - "443:443"
     depends_on:
-      - api
+      - backend
 
 volumes:
  pgdata:
