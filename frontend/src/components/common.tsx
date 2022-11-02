@@ -1,11 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 //import Popover from '@mui/material/Popover';
 import PersonIcon from "@mui/icons-material/Person";
-import {CardMedia, IconButton, Stack, CardActionArea} from "@mui/material";
+import {CardMedia, IconButton, Stack, Button, CardActionArea} from "@mui/material";
+import "./common.css";
 import {useNavigate} from "react-router-dom";
 
-const NavBar = () => {
+export default function NavBar() {
     const navigate = useNavigate();
+    const [showLogout, setShowLogout] = useState(false);
+
+    const handleHover = () => {
+        setShowLogout(true);
+    };
+
+    const handleExit = () => {
+        setShowLogout(false);
+    };
     return (
         <div>
             <Stack direction="row" justifyContent="space-between" sx={{padding: 2}}>
@@ -24,14 +34,20 @@ const NavBar = () => {
                         height: 40,
                         color: "white",
                         marginTop: 1,
-                        "&:hover": {bgcolor: "#747779"}
+                        "&:hover": {bgcolor: "#BDBDBD"}
                     }}
+                    onMouseEnter={handleHover}
                 >
                     <PersonIcon />
                 </IconButton>
+                {showLogout && (
+                    <div className="logout" onMouseLeave={handleExit}>
+                        <Button sx={{color: "white", "&:hover": {bgcolor: "#BDBDBD"}}}>
+                            Logout
+                        </Button>
+                    </div>
+                )}
             </Stack>
         </div>
     );
-};
-
-export default NavBar;
+}
