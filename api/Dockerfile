@@ -5,17 +5,16 @@ LABEL description="This is the base docker image for KidBlur backend"
 
 WORKDIR /home/node/app
 
-COPY ["package.json", "package-lock.json", "./"]
+COPY package*.json ./
+
 COPY prisma ./prisma/
 
 
 RUN npm install
 COPY . .
 
-FROM base as production
-
-ENV NODE_PATH=./build
-
 RUN npm run build
 
+EXPOSE 3000
+CMD ["npm", "start"]
 
