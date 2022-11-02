@@ -14,6 +14,9 @@ app.use(express.json());
 app.use('/api/upload', upload);
 
 const port = process.env.PORT;
+app.get("/api/sanity_check", (req: Request, res:Response) => {
+    res.send("CSC301 Sanity Check is working")
+})
 
 app.get('/', (req: Request, res: Response) => {
     res.send('CSC301 Express Server');
