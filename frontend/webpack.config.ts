@@ -1,11 +1,12 @@
 import path from "path";
 import webpack, {Configuration} from "webpack";
-import * as webpackDevServer from 'webpack-dev-server';
+import * as webpackDevServer from "webpack-dev-server";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
 import packageJSON = require("./package.json");
 import {TsconfigPathsPlugin} from "tsconfig-paths-webpack-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 
 const webpackConfig = (env: {production: any; development: any}): Configuration => ({
     entry: "./src/index.tsx",
@@ -20,8 +21,8 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
         publicPath: "/"
     },
     devServer: {
-        historyApiFallback: true,
-      },
+        historyApiFallback: true
+    },
     module: {
         rules: [
             {
@@ -36,7 +37,7 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
                 rules: [
                     {
                         test: /\.css$/,
-                        use: ['style-loader', 'css-loader']
+                        use: ["style-loader", "css-loader"]
                     }
                 ]
             }
@@ -44,7 +45,8 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./public/index.html"
+            template: "./public/index.html",
+            favicon: "./public/favicon.ico"
         }),
         new webpack.DefinePlugin({
             "process.env.PRODUCTION": env.production || !env.development,
@@ -52,7 +54,10 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
             "process.env.VERSION": JSON.stringify(packageJSON.version)
         }),
         new ForkTsCheckerWebpackPlugin(),
-        new ESLintPlugin({files: "./src/**/*.{ts,tsx,js,jsx}"})
+        new ESLintPlugin({files: "./src/**/*.{ts,tsx,js,jsx}"}),
+        new CopyWebpackPlugin({
+            patterns: [{from: "./public/favicon.ico"}]
+        })
     ]
 });
 
