@@ -8,7 +8,7 @@ workflows:
     backend-checks:
       jobs:
         - node/test:
-            app-dir: ~/api
+            app-dir: ~/project/api
             test-results-for: jest 
 
 # Invoke jobs via workflows
