@@ -1,10 +1,10 @@
 import express, { Request, Response } from 'express';
 import passport from 'passport';
 import Strategy from 'passport-local';
+import bcrypt from 'bcrypt';
 
 import prisma from '../prisma';
 import { logger } from '../utils/logger';
-import { hash } from '../utils/encryption';
 import { LocalPassport } from '../middleware/passport';
 import { Prisma } from '@prisma/client';
 
@@ -20,7 +20,8 @@ router.get("/test", (req: Request, res: Response) => {
 // Endpoint for registering a user
 router.post('/register', async (req: Request, res: Response) => {
     const {email, password} = req.body;
-    const encrypted_password = await hash(password)
+    const salt = process.env.SECRET!;
+    const encrypted_password = await bcrypt.hash(password, salt);
     try {
         // create user, store encrypted password
         const user = await prisma.user.findUnique({

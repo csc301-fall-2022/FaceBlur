@@ -1,5 +1,5 @@
 import prisma from "../prisma";
-import { compare } from "../utils/encryption";
+import bcrypt from 'bcrypt';
 import { logger } from "../utils/logger";
 import passport from "passport";
 
@@ -20,7 +20,7 @@ export const LocalPassport = (pass: typeof passport, strat: any) => {
                 if (!userFound) return cb(null, false, {
                     message: "No user found."
                 });
-                const validPassword = await compare(password, userFound.password);
+                const validPassword = await bcrypt.compare(password, userFound.password);
                 if (!validPassword) return cb(null, false, {
                     message: "Invalid credentials."
                 });
