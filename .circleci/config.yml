@@ -3,8 +3,12 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.3
+  github-super-linter: circleci/github-super-linter@1.0.1
 
 workflows:
+    lint-repository:
+      jobs:
+        - github-super-linter/lint
     backend-checks:
       jobs:
         - node/test:
