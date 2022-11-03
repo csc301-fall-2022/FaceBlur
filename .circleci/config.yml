@@ -5,10 +5,10 @@ orbs:
   node: circleci/node@5.0.3
 
 workflows:
-    example-workflow:
+    backend-checks:
       jobs:
         - node/test:
-            app-dir: ~/team-project-18-uoft-t/api 
+            app-dir: ~/api
             test-results-for: jest 
 
 # Invoke jobs via workflows
