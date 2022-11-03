@@ -1,34 +1,32 @@
-import multer, { FileFilterCallback, StorageEngine } from 'multer';
+import { FileFilterCallback, StorageEngine } from 'multer';
 import { Request } from 'express';
 import path from 'path';
 import multerS3 from 'multer-s3';
-import aws from 'aws-sdk';
+import {S3Client} from '@aws-sdk/client-s3';
+
+const region: string = process.env.AWS_BUCKET_REGION || '';
+const accessKey: string = process.env.AWS_ACCESS_KEY_ID || '';
+const secretKey: string = process.env.AWS_SECRET_ACCESS_KEY || '';
+const bucketName: string = process.env.AWS_BUCKET_NAME || '';
 
 // init s3 client
-const s3 = new aws.S3(
-    {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_KEY,
-        region: process.env.AWS_BUCKET_REGION
+const s3 = new S3Client({
+    region: region,
+    credentials: {
+        accessKeyId: accessKey,
+        secretAccessKey: secretKey
     }
-);
-
-// TODO: Need to save videos to S3 
-// export const storage: StorageEngine = multer.diskStorage({
-//     filename: (req, file, cb) => {
-//         cb(null, file.originalname); 
-//     }
-// });
+});
 
 export const storage: StorageEngine = multerS3({
     s3: s3,
-    bucket: process.env.AWS_BUCKET_NAME,
+    bucket: bucketName,
     acl: 'public-read',
-    metadata: function (req, file, cb) {
-        cb(null, { fieldName: "TESTING_METADATA" });
+    metadata: (req: Request, file: Express.MulterS3.File, cb: CallableFunction) => {
+        cb(null, { fieldName: file.fieldname });
     },
-    key: (req, file, cb) => {
-        cb(null, file.originalname);
+    key: (req: Request, file: Express.MulterS3.File, cb: CallableFunction) => {
+        cb(null, `${Date.now().toString()} - ${file.originalname}`);
     }
 });
 
