@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 const hash = async (password: string) => {
@@ -10,10 +9,11 @@ const hash = async (password: string) => {
 const compare = async (hash: string, pass: string) => {
     return bcrypt.compare(hash, pass);
 };
-const genToken = (id: number) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET as string, {
-        expiresIn: process.env.JWT_EXPIRE
-    });
-};
 
-export { hash, compare, genToken };
+// const genToken = (id: number) => {
+//     return jwt.sign({ id }, process.env.JWT_SECRET as string, {
+//         expiresIn: process.env.JWT_EXPIRE
+//     });
+// };
+
+export { hash, compare };

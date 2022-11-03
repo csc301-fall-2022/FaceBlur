@@ -1,16 +1,17 @@
 import prisma from "../prisma";
 import { compare } from "../utils/encryption";
 import { logger } from "../utils/logger";
+import passport from "passport";
 
-export const LocalPassport = (passport: any, strategy: any) => {
-    passport.use(
-        new strategy({
+export const LocalPassport = (pass: typeof passport, strat: any) => {
+    pass.use(
+        new strat({
             usernameField: 'email',
             passwordField: 'password',
             passReqToCallback: true,
             session: false,
         },
-        async function verify(req: Request, email: string, password: string, cb: any) {
+        async function verify(req: Request, email: string, password: string, cb: (nothing: null, success: boolean, msg: object | unknown) => void) {
             logger.info("Passport strategy used (login)");
             try {
                 const userFound = await prisma.user.findUnique({
@@ -23,10 +24,10 @@ export const LocalPassport = (passport: any, strategy: any) => {
                 if (!validPassword) return cb(null, false, {
                     message: "Invalid credentials."
                 });
-                return cb(null, userFound);
+                return cb(null, true, userFound);
             } catch (err) {
                 logger.error(err);
-                return cb(null, err);
+                return cb(null, false, err);
             }
         })
     )

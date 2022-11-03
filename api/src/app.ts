@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import auth from './routes/auth';
 import dotenv from 'dotenv';
 import passport from 'passport';
+import bodyParser from 'body-parser';
 
 import { logger } from './utils/logger';
 
@@ -13,6 +14,9 @@ const app: Express = express();
 app.use(express.json());
 app.use(passport.initialize())
 app.use("/api/auth", auth);
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 const port = process.env.PORT;
 
