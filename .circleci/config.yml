@@ -6,11 +6,10 @@ orbs:
   github-super-linter: circleci/github-super-linter@1.0.1
 
 workflows:
-    lint-repository:
-      jobs:
-        - github-super-linter/lint
     backend-checks:
       jobs:
+        - github-super-linter/lint:
+            scan-dir: ~/project/api
         - node/test:
             app-dir: ~/project/api
             test-results-for: jest 
