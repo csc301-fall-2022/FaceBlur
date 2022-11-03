@@ -16,8 +16,9 @@ jobs:
         pkg-manager: npm
       - run:
         command: npm run test
+        name: Test backend
       - persist_to_workspace:
-        rot: ~/team-project-18-uoft-t
+        root: ~/team-project-18-uoft-t
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
