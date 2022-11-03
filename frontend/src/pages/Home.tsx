@@ -12,6 +12,7 @@ import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Fab from "@mui/material/Fab";
+import NavBar from "../components/common";
 import {useNavigate} from "react-router-dom";
 
 import "../static/home.css";
@@ -159,32 +160,35 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div className="homepage-container">
-            <div className="display-container">
-                <div className="search-container">
-                    <TextField
-                        id="filled-basic"
-                        variant="filled"
-                        className="searchbar"
-                        size="small"
-                        placeholder="Search"
-                        onChange={filterList}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <SearchIcon fontSize="large" />
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                </div>
+        <div>
+            <NavBar />
+            <div className="homepage-container">
+                <div className="display-container">
+                    <div className="search-container">
+                        <TextField
+                            id="filled-basic"
+                            variant="filled"
+                            className="searchbar"
+                            size="small"
+                            placeholder="Search"
+                            onChange={filterList}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchIcon fontSize="large" />
+                                    </InputAdornment>
+                                )
+                            }}
+                        />
+                    </div>
 
-                <VideoList filteredList={filteredList} />
+                    <VideoList filteredList={filteredList} />
+                </div>
+                <Fab variant="extended" className="uploadButton">
+                    Upload
+                    <UploadFileIcon></UploadFileIcon>
+                </Fab>
             </div>
-            <Fab variant="extended" className="uploadButton">
-                Upload
-                <UploadFileIcon></UploadFileIcon>
-            </Fab>
         </div>
     );
 }

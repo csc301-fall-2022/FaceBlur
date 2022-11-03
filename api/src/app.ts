@@ -5,7 +5,7 @@ import passport from 'passport';
 import bodyParser from 'body-parser';
 
 import { logger } from './utils/logger';
-
+import upload from './routes/upload';
 
 dotenv.config();
 
@@ -17,6 +17,9 @@ app.use("/api/auth", auth);
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
+// upload route 
+app.use('/upload', upload);
 
 const port = process.env.PORT;
 
