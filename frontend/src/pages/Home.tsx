@@ -13,8 +13,8 @@ import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Fab from "@mui/material/Fab";
-import {useNavigate} from "react-router-dom";
 import NavBar from "../components/common";
+import {useNavigate} from "react-router-dom";
 
 interface Column {
     id: "name" | "uploader" | "dateUploaded";
