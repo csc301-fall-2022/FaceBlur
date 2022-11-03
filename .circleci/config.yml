@@ -4,25 +4,12 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.3
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-jobs:
-  test_api:
-    executor: node/default
-    working_directory: ~/team-project-18-uoft-t/api
-    steps:
-      - checkout
-      - node/install-packages:
-        pkg-manager: npm
-      - run:
-        command: npm run test
-        name: Test backend
-      - persist_to_workspace:
-        root: ~/team-project-18-uoft-t
+workflows:
+    example-workflow:
+      jobs:
+        - node/test:
+            app-dir: ~/team-project-18-uoft-t/api 
+            test-results-for: jest 
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
-workflows:
-  api-workflow:
-    jobs:
-      - test_api
