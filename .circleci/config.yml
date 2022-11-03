@@ -8,8 +8,6 @@ orbs:
 workflows:
     backend-checks:
       jobs:
-        - github-super-linter/lint:
-            scan-dir: ~/project/api
         - node/test:
             app-dir: ~/project/api
             test-results-for: jest 
