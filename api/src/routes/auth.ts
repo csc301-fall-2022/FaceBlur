@@ -20,13 +20,12 @@ router.get("/test", (req: Request, res: Response) => {
 // Endpoint for registering a user
 router.post('/register', async (req: Request, res: Response) => {
     const {email, password} = req.body;
-    const salt = process.env.SECRET!;
-    const encrypted_password = await bcrypt.hash(password, salt);
+    const encrypted_password = await bcrypt.hash(password, 10);
     try {
         // create user, store encrypted password
         const user = await prisma.user.findUnique({
           where: {
-            email: 'elsa@prisma.io',
+            email: email,
           },
         });
         if (user !== null) {
