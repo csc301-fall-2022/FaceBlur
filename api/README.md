@@ -12,6 +12,11 @@ Make a copy of the env.example file and rename it to .env. This file is used to 
 
 We are using PostgreSQL for this project, so install it through their installer or through Homebrew. Edit the .env file to have the proper database url.
 
+If you have not set up the schema on your PostgreSQL instance, run 
+```bash
+npx prisma migrate dev # push the changes from the schema file to the db
+
+```
 ## Usage
 
 ```bash
