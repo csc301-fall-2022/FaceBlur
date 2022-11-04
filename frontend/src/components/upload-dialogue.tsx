@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import "./upload-dialogue.css";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Checkbox from "@mui/material/Checkbox";
@@ -6,13 +6,16 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Button from "@mui/material/Button";
 
-const DragFile = (props: any) => {
+const DragFile = (props: {
+    handleDrop: (blob: Blob, string: string) => void;
+    children: JSX.Element;
+}) => {
     const ref = useRef<HTMLInputElement>(null);
     const [drag, setDrag] = useState(false);
 
     useEffect(() => {
         // let count = 0;
-        const handleDrag = (e: {preventDefault: () => void; stopPropagation: () => void}) => {
+        const handleDrag = (e: DragEvent) => {
             e.preventDefault();
             e.stopPropagation();
             setDrag(true);
@@ -32,25 +35,34 @@ const DragFile = (props: any) => {
         //     if (count > 0) return;
         //     setDrag(false);
         // };
-        const handleDrop = (e: any) => {
+        const handleDrop = (e: DragEvent) => {
             e.preventDefault();
             e.stopPropagation();
             setDrag(false);
-            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-                props.handleDrop(e.dataTransfer.files[0]);
-                e.dataTransfer.clearData();
+            if (e.dataTransfer != null) {
+                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                    props.handleDrop(e.dataTransfer.files[0], e.dataTransfer.files[0].name);
+                    e.dataTransfer.clearData();
+                }
             }
+
             setDrag(false);
         };
         // ref.current?.addEventListener("dragenter", handleDragIn);
         // ref.current?.addEventListener("dragleave", handleDragOut);
-        ref.current?.addEventListener("dragover", handleDrag);
-        ref.current?.addEventListener("drop", handleDrop);
+        const currentRef = ref.current;
+        if (currentRef != null) {
+            currentRef.addEventListener("dragover", handleDrag);
+            currentRef.addEventListener("drop", handleDrop);
+        }
+
         return () => {
             // ref.current?.removeEventListener("dragenter", handleDragIn);
             // ref.current?.removeEventListener("dragleave", handleDragOut);
-            ref.current?.removeEventListener("dragover", handleDrag);
-            ref.current?.removeEventListener("drop", handleDrop);
+            if (currentRef != null) {
+                currentRef.removeEventListener("dragover", handleDrag);
+                currentRef.removeEventListener("drop", handleDrop);
+            }
         };
     });
     return (
@@ -76,18 +88,18 @@ const DragFile = (props: any) => {
 
 export default function UploadDialogue(props: {handleClick: () => void}) {
     const ref = useRef<HTMLInputElement>(null);
-    const [file, setFile] = useState({name: ""});
+    const [file, setFile] = useState(new Blob([], {type: "video/mp4"}));
+    const [fileName, setFileName] = useState("");
     const [uploaded, setUploaded] = useState(false);
     const [faceBlur, setFaceBlur] = useState(false);
     const [backgroundBlur, setBackgroundBlur] = useState(false);
-    const [url, setURL] = useState("");
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (ref.current && !ref.current.contains(event.target as HTMLElement)) {
                 setUploaded(false);
                 setFaceBlur(false);
                 setBackgroundBlur(false);
-                setURL("");
                 props.handleClick();
             }
         };
@@ -97,28 +109,33 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
         };
     });
 
-    const selectFile = (e: any) => {
-        uploadFile(e.target.files[0]);
+    const selectFile = (e: ChangeEvent) => {
+        const target = e.target as HTMLInputElement;
+        if (target != null && target.files != null) {
+            uploadFile(target.files[0], target.files[0].name);
+        }
     };
 
-    const uploadFile = (newFile: any) => {
+    const uploadFile = (newFile: Blob, name: string) => {
         setFile(newFile);
+        setFileName(name);
         setUploaded(true);
-        setURL(URL.createObjectURL(newFile));
     };
 
     const postFile = () => {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("faceBlur", faceBlur.toString());
+        formData.append("backgroundBlur", backgroundBlur.toString());
+
         return fetch("/upload", {
             method: "POST",
-            body: JSON.stringify({
-                file: {name: file.name, url: url},
-                blurType: {face: faceBlur, background: backgroundBlur}
-            })
+            body: formData
         }).then(() => {
             setUploaded(false);
             setFaceBlur(false);
             setBackgroundBlur(false);
-            setURL("");
+            setFile(new Blob([], {type: "video/mp4"}));
             props.handleClick();
         });
     };
@@ -153,7 +170,7 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
                     </div>
                 </div>
             </DragFile>
-            {uploaded && <div>{file.name}</div>}
+            {uploaded && <div>{fileName}</div>}
             <div className="options">
                 <FormGroup className="checkbox">
                     <FormControlLabel
