@@ -1,0 +1,19 @@
+.header {
+    text-align: left;
+}
+
+.card {
+    width: 600px
+}
+
+.logo {
+    height: 200px;
+    width: 600px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
