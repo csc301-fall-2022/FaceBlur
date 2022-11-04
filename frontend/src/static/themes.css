@@ -1,0 +1,12 @@
+.btn {
+    flex-grow: 1;
+    background: #fa9c4f !important;
+    color: #fafafa !important;
+}
+
+.btn:hover {
+    background: #c36d21 !important;
+    color: #fafafa !important;
+    box-shadow: "none";
+}
+

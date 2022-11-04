@@ -28,8 +28,10 @@
       ],
       "pages/*": [
         "src/pages/*"
-      ]
-    }
+      ],
+      "style/*": [ "src/static/*" ],
+    },
+    "plugins": [{ "name": "dts-css-modules-loader" }]
   },
   "include": [
     "./src",
