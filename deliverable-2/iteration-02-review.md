@@ -1,27 +1,27 @@
-# YOUR PRODUCT/TEAM NAME
-
- > _Note:_ This document is meant to be written during (or shortly after) your review meeting, which should happen fairly close to the due date.      
- >      
- > _Suggestion:_ Have your review meeting a day or two before the due date. This way you will have some time to go over (and edit) this document, and all team members should have a chance to make their contribution.
+# KidBlur
 
 
-## Iteration XX - Review & Retrospect
 
- * When: FILL IN THE DATE WHEN YOU ACTUALLY HAD YOUR REVIEW MEETING
- * Where: PHYSICAL LOCATION AND/OR ONLINE
+## Iteration 02 - Review & Retrospect
+
+ * When: November 4th, 2022
+ * Where: Online via Discord Call
 
 ## Process - Reflection
 
 
 #### Q1. Decisions that turned out well
 
-List **process-related** (i.e. team organization and how you work) decisions that, in retrospect, turned out to be successful.
+**1. Weekly stand-up meetings:**
+* The decision to have weekly standups was successful because it allowed everyone on the team to get context on what was being worked on, and provided an oppourtunity for us to identify any blockers
+* It was a time for us to discuss the state of the current work and talk about future tasks 
 
+**2. Discord github workflow integration**
+* This provides real time notifications of new commits and PRs, and it is in the same place where we do all of our team communication
+* This makes it easy for us to view active branches and PR status, and makes our workflow faster 
 
- * 2 - 4 decisions.
- * Ordered from most to least important.
- * Explain why (i.e. give a supporting argument) you consider a decision to be successful.
- * Feel free to refer/link to process artifact(s).
+![image](https://user-images.githubusercontent.com/46202743/200064940-069b5b67-d38e-447f-977c-014b489de825.png)
+
 
 #### Q2. Decisions that did not turn out as well as we hoped
 
@@ -35,10 +35,9 @@ List **process-related** (i.e. team organization and how you work) decisions tha
 
 #### Q3. Planned changes
 
-List any **process-related** (i.e. team organization and how you work) changes you are planning to make (if there are any)
-
- * Ordered from most to least important.
- * Explain why you are making a change.
+1. We are planning to formalize having the weekly tutorial section also serve as a standup, in addition to our current weekly standup every Monday morning. We are making this change because we have had issues where people working on tickets that are dependent on each other are not aware of the status of each other's tickets, complicating development and ultimately slowing down progress. Currently we often have an informal standup during tutorial, but we plan to make it formal to ensure it happens each time.
+2. We currently use a discord bot that messages the server every time anyone commits. This isn't super useful because there is an overload of information. Ideally, it would just notify someone if they were requested for a PR review. We want to either configure the bot to do that, or simply make a policy of always DMing teammates whenever you want them to review your PR. This will tighten the review & resolve cycle
+3. We are going to do a better job of reaching out when someone has been on the same issue for a long time. This will just ensure no one gets stuck on a ticket.
 
 
 ## Product - Review
