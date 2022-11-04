@@ -3,7 +3,7 @@ version: '3.7'
 
 services:
   # Backend container
-  backend:
+  api:
     build:
       context: ./api
       dockerfile: Dockerfile
@@ -19,15 +19,14 @@ services:
 
   # Frontend Container
 
-  ui:
+  frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     restart: always
-    container_name: ui
     ports:
       - "8080:8080"
       - "443:443"
     depends_on:
-      - backend
+      - api
 
