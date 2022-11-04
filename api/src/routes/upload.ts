@@ -15,7 +15,7 @@ const upload = multer({ storage: storage, fileFilter: fileFilter }).single(
 // Endpoint for uploading and processing a video
 router.post('/', (req: Request, res: Response) => {
     logger.info('Upload endpoint called');
-    // Upload file with multer
+    // Upload file with multer - uploads to S3
     upload(req, res, async (err) => {
         if (err instanceof multer.MulterError || !req.file) {
             logger.error('Error uploading file: Multer error');
@@ -30,8 +30,8 @@ router.post('/', (req: Request, res: Response) => {
             // TODO: upsert?
             const video = await prisma.video.create({
                 data: {
-                    name: req.file.filename,
-                    type: blurType,
+                    name: req.file.originalname,
+                    type: blurType, 
                     uploader: {
                         connect: {
                             id: userId,

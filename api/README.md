@@ -30,3 +30,12 @@ npx prisma migrate dev # applies new migrations to local db, also used for creat
 npx prisma db push # push the changes from the schema file to the db
 npx prisma studio # view database tables in browser
 ```
+
+## Env
+
+Copy `env.example` to `.env`. Do not push `.env`
+
+Fill in AWS keys in `.env`. 
+```bash
+cp env.example .env
+```
