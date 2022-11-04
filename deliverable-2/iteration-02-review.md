@@ -12,8 +12,6 @@
 
 #### Q1. Decisions that turned out well
 
-List **process-related** (i.e. team organization and how you work) decisions that, in retrospect, turned out to be successful.
-
 **1. Weekly stand-up meetings:**
 * The decision to have weekly standups was successful because it allowed everyone on the team to get context on what was being worked on, and provided an oppourtunity for us to identify any blockers
 * It was a time for us to discuss the state of the current work and talk about future tasks 
@@ -21,6 +19,9 @@ List **process-related** (i.e. team organization and how you work) decisions tha
 **2. Discord github workflow integration**
 * This provides real time notifications of new commits and PRs, and it is in the same place where we do all of our team communication
 * This makes it easy for us to view active branches and PR status, and makes our workflow faster 
+
+![image](https://user-images.githubusercontent.com/46202743/200064940-069b5b67-d38e-447f-977c-014b489de825.png)
+
 
 #### Q2. Decisions that did not turn out as well as we hoped
 
