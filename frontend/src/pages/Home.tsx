@@ -1,6 +1,5 @@
 import {InputAdornment, TextField} from "@mui/material";
 import React, {useEffect, useState} from "react";
-import "./Home.css";
 import SearchIcon from "@mui/icons-material/Search";
 import videos from "./DummyData.json";
 import Paper from "@mui/material/Paper";
@@ -16,6 +15,8 @@ import Fab from "@mui/material/Fab";
 import UploadDialogue from "components/upload-dialogue";
 import {useNavigate} from "react-router-dom";
 import NavBar from "../components/common";
+
+import "../static/home.css";
 
 interface Column {
     id: "name" | "uploader" | "dateUploaded";
