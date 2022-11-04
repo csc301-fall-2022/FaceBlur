@@ -1,7 +1,10 @@
 import express, { Express, Request, Response } from 'express';
+import auth from './routes/auth';
 import dotenv from 'dotenv';
-import { logger } from './utils/logger';
+import passport from 'passport';
+import bodyParser from 'body-parser';
 
+import { logger } from './utils/logger';
 import upload from './routes/upload';
 
 dotenv.config();
@@ -9,6 +12,11 @@ dotenv.config();
 const app: Express = express();
 
 app.use(express.json());
+app.use(passport.initialize())
+app.use("/api/auth", auth);
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // upload route
 app.use('/api/upload', upload);
