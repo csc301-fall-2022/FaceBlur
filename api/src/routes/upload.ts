@@ -29,9 +29,15 @@ router.post('/', (req: Request, res: Response) => {
             // selected options 
             const doFaceBlur = req.body.faceBlur;
             const doBackgroundBlur = req.body.backgroundBlur;
-            // TODO: upsert?
-            const video = await prisma.video.create({
-                data: {
+
+            const video = await prisma.video.upsert({
+                where: {
+                    name: req.file.originalname,
+                },
+                update: {
+                    dateUploaded: new Date(),
+                },
+                create: {
                     name: req.file.originalname,
                     type: 'NO_BLUR', // no blur for now, processed videos will have the blur type 
                     uploader: {
