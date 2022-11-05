@@ -4,32 +4,31 @@
   width: 100%;
   min-width: 540px;
   margin-bottom: min(5em, 50px) !important;
-  border-radius: 10px;
 }
 
-.homepage-container {
+.homepageContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.display-container {
+.displayContainer {
   width: 95%;
 }
 
-.css-lntp72-MuiButtonBase-root-MuiFab-root.uploadButton {
+.uploadButton {
   position: absolute;
   right: 15px;
   bottom: 15px;
   background-color: #FA893C;
   color: white;
+  box-shadow: none !important;
 }
 
-.css-lntp72-MuiButtonBase-root-MuiFab-root.uploadButton:hover {
+.uploadButton:hover {
   background-color: #f44336;
-
 }
 
 .MuiTableRow-root {
-  height: 80px;
+  height: 10px;
 }
