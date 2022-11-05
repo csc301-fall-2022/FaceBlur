@@ -16,22 +16,17 @@
 * The decision to have weekly standups was successful because it allowed everyone on the team to get context on what was being worked on, and provided an oppourtunity for us to identify any blockers
 * It was a time for us to discuss the state of the current work and talk about future tasks 
 
-**2. Discord github workflow integration**
-* This provides real time notifications of new commits and PRs, and it is in the same place where we do all of our team communication
-* This makes it easy for us to view active branches and PR status, and makes our workflow faster 
-
-![image](https://user-images.githubusercontent.com/46202743/200064940-069b5b67-d38e-447f-977c-014b489de825.png)
-
+**2. GitHub projects board**
+* This allowed us to successfully track the progress of current tasks and see which tasks need to be worked on in the future
+* Tasks can be assigned to members and PRs can be linked to them
 
 #### Q2. Decisions that did not turn out as well as we hoped
 
-List **process-related** (i.e. team organization and how you work) decisions that, in retrospect, were not as successful as you thought they would be.
+**1. Discord github workflow integration**
+* The notifications tend to have too much information which isn't very useful to our workflow
 
- * 2 - 4 decisions.
- * Ordered from most to least important.
- * Explain why (i.e. give a supporting argument) you consider a decision to be unsuccessful
- * Feel free to refer/link to process artifact(s).
-
+**2. Tracking meeting minutes**
+ * This decision was unsuccessful because we weren't able to commit to documenting the meetings in our meeting-minutes folder, so we have no documentation of things that were discussed 
 
 #### Q3. Planned changes
 
