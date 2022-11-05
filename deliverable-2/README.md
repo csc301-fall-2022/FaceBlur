@@ -1,11 +1,11 @@
-# YOUR PRODUCT/TEAM NAME
+# KidBlur
 
 > _Note:_ This document is intended to be relatively short. Be concise and precise. Assume the reader has no prior knowledge of your application and is non-technical. 
 
 ## Description 
- * Provide a high-level description of your application and it's value from an end-user's perspective
- * What is the problem you're trying to solve?
- * Is there any context required to understand **why** the application solves this problem?
+
+Our application allows researchers in the child psychology space to anonymize children in any video, allowing them to publish these videos as supplements for any research publications. Without anonymization, it is a privacy issue to include videos of these children in publications, leaving publications missing helpful supplementation. It also serves a purpose during the research process, by blurring out everything but the child to help researchers only consider the child's reaction to unknown stimuli.
+
 
 ## Key Features
  * Described the key features in the application that the user can access
@@ -17,10 +17,19 @@
  * How do you access it? Are accounts pre-created or does a user register? Where do you start? etc. 
  * Provide clear steps for using each feature described above
  * This section is critical to testing your application and must be done carefully and thoughtfully
+
+The process starts at the login page where the user can either login or register for an account if they don't have one yet. Once they've logged in, they will be redirected to the home page which if they are a returning user, will show all the videos that they've uploaded in the past. On this home page, the user can search for videos by their names, using the search bar at the top. On this page, the user can also upload videos using the upload button in the bottom right. When the user clicks the upload button, an upload pop up will display. To exit the popup, the user will just click any where on the page that isn't the popup. To upload a video the user can either choose to select from their files or drag and drop a video in. After the user selects a video, they can choose from two blur types using the checkboxes. These blur types determine whether the face or the background gets blurred. After the user chooses a blur type, they can press the submit button to upload it. 
  
  ## Development requirements
  * If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
  * Briefly describe instructions for setting up and running the application (think a true README).
+
+As a developer,you are required to have Docker and Postgresql installed before the following process.
+
+1. Go into the /api directory.
+2. Follow the instructions under the **Setup** section of the README.md in that directory.
+3. Go back up to the root directory
+4. Run `docker-compose up --build`
  
  ## Deployment and Github Workflow
 
@@ -31,6 +40,12 @@ Describe your Git / GitHub workflow. Essentially, we want to understand how your
  * Describe your overall deployment process from writing code to viewing a live applicatioon
  * What deployment tool(s) are you using and how
  * Don't forget to **briefly explain why** you chose this workflow or particular aspects of it!
+
+We have everything tracked under Github Issues, which is also connected to our Kanban board. Team members are assigned issues, and create feature branches for each issue. Our scum master does her best to ensure these issues are not interdependent, preventing tickets being worked on in parallel from being blockers for each other. 
+
+PRs are made from these feature branches to the main branch. The person opening the PR review assigns a single PR reviewer. We don't allow merges till at least 1 reviewer has approved the feature. We chose this to minimize friction in terms of development, but also ensure that the PR had passed at least 1 person's review before being merged into main. The person who made the PR is responsible for merging their PR once it is accepted.
+
+TODO: Deployment (Siddarth)
 
  ## Licenses 
 
