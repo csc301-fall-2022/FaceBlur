@@ -6,13 +6,15 @@
   margin-bottom: min(5em, 50px) !important;
   border-radius: 10px;
 }
-.homepage-container{
-  display:flex;
+
+.homepage-container {
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
-.display-container{
-  width:95%;
+
+.display-container {
+  width: 95%;
 }
 
 .css-lntp72-MuiButtonBase-root-MuiFab-root.uploadButton {
@@ -20,8 +22,9 @@
   right: 15px;
   bottom: 15px;
   background-color: #FA893C;
-  color:white;
+  color: white;
 }
+
 .css-lntp72-MuiButtonBase-root-MuiFab-root.uploadButton:hover {
   background-color: #f44336;
 

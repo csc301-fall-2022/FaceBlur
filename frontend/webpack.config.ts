@@ -8,20 +8,19 @@ import packageJSON = require("./package.json");
 import {TsconfigPathsPlugin} from "tsconfig-paths-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
 
+const config: webpack.Configuration = {};
+
 const webpackConfig = (env: {production: any; development: any}): Configuration => ({
     entry: "./src/index.tsx",
     ...(env.production || !env.development ? {} : {devtool: "eval-source-map"}),
     resolve: {
-        extensions: [".ts", ".tsx", ".js"],
+        extensions: [".ts", ".tsx", ".js", ".css", ".scss"],
         plugins: [new TsconfigPathsPlugin()]
     },
     output: {
         path: path.join(__dirname, "/dist"),
         filename: "build.js",
         publicPath: "/"
-    },
-    devServer: {
-        historyApiFallback: true
     },
     module: {
         rules: [
@@ -33,15 +32,61 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
                 },
                 exclude: /dist/
             },
+            // {
+            //     test: /\.css$/,
+            //     use: ["style-loader", "css-loader"]
+            // },
             {
-                rules: [
+                test: /\.css$/,
+                use: [
                     {
-                        test: /\.css$/,
-                        use: ["style-loader", "css-loader"]
+                        loader: require.resolve("style-loader"),
+                        options: {
+                            esModule: false
+                        }
+                    },
+                    {
+                        loader: require.resolve("dts-css-modules-loader"),
+                        options: {
+                            namedExport: true
+                        }
+                    },
+                    {
+                        loader: require.resolve("css-loader"),
+                        options: {
+                            modules: {
+                                exportLocalsConvention: "camelCaseOnly",
+                                localIdentName: "[hash:base64:5]"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: "[name].[ext]",
+                            outputPath: "public/",
+                            publicPath: "/",
+                            esModule: false
+                        }
                     }
                 ]
             }
         ]
+    },
+    devServer: {
+        historyApiFallback: true,
+        proxy: {
+            "/api": {
+                target: "http://localhost:8080",
+                router: () => "http://localhost:3000",
+                logLevel: "debug"
+            }
+        }
     },
     plugins: [
         new HtmlWebpackPlugin({

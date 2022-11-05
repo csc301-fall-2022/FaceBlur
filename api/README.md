@@ -12,6 +12,11 @@ Make a copy of the env.example file and rename it to .env. This file is used to 
 
 We are using PostgreSQL for this project, so install it through their installer or through Homebrew. Edit the .env file to have the proper database url.
 
+If you have not set up the schema on your PostgreSQL instance, run 
+```bash
+npx prisma migrate dev # push the changes from the schema file to the db
+
+```
 ## Usage
 
 ```bash
@@ -29,4 +34,13 @@ Prisma is the ORM used in this project. All of our tables are in the prisma.sche
 npx prisma migrate dev # applies new migrations to local db, also used for creating a new migration
 npx prisma db push # push the changes from the schema file to the db
 npx prisma studio # view database tables in browser
+```
+
+## Env
+
+Copy `env.example` to `.env`. Do not push `.env`
+
+Fill in AWS keys in `.env`. 
+```bash
+cp env.example .env
 ```
