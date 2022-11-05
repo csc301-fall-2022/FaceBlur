@@ -20,6 +20,8 @@
 * This allowed us to successfully track the progress of current tasks and see which tasks need to be worked on in the future
 * Tasks can be assigned to members and PRs can be linked to them
 
+![image](https://user-images.githubusercontent.com/46202743/200140632-735de7e5-acb0-4152-8dc5-d63b1bce0ff8.png)
+
 #### Q2. Decisions that did not turn out as well as we hoped
 
 **1. Discord github workflow integration**
