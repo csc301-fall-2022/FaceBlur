@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from "react";
+import React, {useReducer} from "react";
 import {useNavigate} from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
@@ -72,7 +72,6 @@ const reducer = (state: State, action: Action): State => {
 
 const Login = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
-    const [response, setResponse] = useState(0);
     const navigate = useNavigate();
 
     // This is temporary, use a login endpoint from the api here later
@@ -87,20 +86,20 @@ const Login = () => {
                 email: state.email,
                 password: state.password
             })
-        }).then((res) => setResponse(res.status));
-
-        if (response === 200) {
-            dispatch({
-                type: "loginSuccess",
-                payload: "Login Successful"
-            });
-            navigate("/home");
-        } else {
-            dispatch({
-                type: "loginFailed",
-                payload: "Incorrect email or password"
-            });
-        }
+        }).then((res) => {
+            if (res.status === 200) {
+                dispatch({
+                    type: "loginSuccess",
+                    payload: "Login Successful"
+                });
+                navigate("/home");
+            } else {
+                dispatch({
+                    type: "loginFailed",
+                    payload: "Incorrect email or password"
+                });
+            }
+        });
     };
 
     // Handles pressing enter to submit

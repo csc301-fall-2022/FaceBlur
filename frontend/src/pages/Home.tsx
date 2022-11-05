@@ -1,4 +1,4 @@
-import {InputAdornment, TextField} from "@mui/material";
+import {Box, InputAdornment, TextField} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import videos from "./DummyData.json";
@@ -15,7 +15,7 @@ import Fab from "@mui/material/Fab";
 import NavBar from "../components/common";
 import {useNavigate} from "react-router-dom";
 
-import "../static/home.css";
+import * as home from "../static/home.css";
 
 interface Column {
     id: "name" | "uploader" | "dateUploaded";
@@ -162,13 +162,13 @@ export default function HomePage() {
     return (
         <div>
             <NavBar />
-            <div className="homepage-container">
-                <div className="display-container">
-                    <div className="search-container">
+            <div className={home.homepageContainer}>
+                <div className={home.displayContainer}>
+                    <Box sx={{}}>
                         <TextField
                             id="filled-basic"
                             variant="filled"
-                            className="searchbar"
+                            className={home.searchbar}
                             size="small"
                             placeholder="Search"
                             onChange={filterList}
@@ -180,11 +180,11 @@ export default function HomePage() {
                                 )
                             }}
                         />
-                    </div>
+                    </Box>
 
                     <VideoList filteredList={filteredList} />
                 </div>
-                <Fab variant="extended" className="uploadButton">
+                <Fab variant="extended" className={home.uploadButton}>
                     Upload
                     <UploadFileIcon></UploadFileIcon>
                 </Fab>
