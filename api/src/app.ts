@@ -19,7 +19,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // upload route 
-app.use('/upload', upload);
+app.use('/api/upload', upload);
 
 const port = process.env.PORT;
 
