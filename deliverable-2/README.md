@@ -17,6 +17,8 @@ Our application allows researchers in the child psychology space to anonymize ch
  * How do you access it? Are accounts pre-created or does a user register? Where do you start? etc. 
  * Provide clear steps for using each feature described above
  * This section is critical to testing your application and must be done carefully and thoughtfully
+
+The process starts at the login page where the user can either login or register for an account if they don't have one yet. Once they've logged in, they will be redirected to the home page which if they are a returning user, will show all the videos that they've uploaded in the past. On this home page, the user can search for videos by their names, using the search bar at the top. On this page, the user can also upload videos using the upload button in the bottom right. When the user clicks the upload button, an upload pop up will display. To exit the popup, the user will just click any where on the page that isn't the popup. To upload a video the user can either choose to select from their files or drag and drop a video in. After the user selects a video, they can choose from two blur types using the checkboxes. These blur types determine whether the face or the background gets blurred. After the user chooses a blur type, they can press the submit button to upload it. 
  
  ## Development requirements
  * If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
