@@ -14,7 +14,7 @@ const VideoPage = () => {
     if (key === undefined) {
         key = "";
     }
-    const link = "https://tecl-testing.s3.amazonaws.com/" + key.replace(/ /g, "+") + ".MP4";
+    const link = "https://tecl-testing.s3.amazonaws.com/" + key.replace(/ /g, "+");
 
     function download(videoLink: string) {
         FileSaver.saveAs(videoLink);

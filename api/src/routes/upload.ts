@@ -12,6 +12,10 @@ const upload = multer({ storage: storage, fileFilter: fileFilter }).single(
     'file'
 );
 
+interface MulterFile extends Express.Multer.File{
+    key: string;
+}
+
 // Endpoint for uploading and processing a video
 router.post('/', (req: Request, res: Response) => {
     logger.info('Upload endpoint called');
@@ -29,16 +33,15 @@ router.post('/', (req: Request, res: Response) => {
             // selected options 
             // const doFaceBlur = req.body.faceBlur;
             // const doBackgroundBlur = req.body.backgroundBlur;
-
             const video = await prisma.video.upsert({
                 where: {
-                    name: req.file.originalname,
+                    name: (req.file as MulterFile).key,
                 },
                 update: {
                     dateUploaded: new Date(),
                 },
                 create: {
-                    name: req.file.originalname,
+                    name: (req.file as MulterFile).key,
                     type: 'NO_BLUR', // no blur for now, processed videos will have the blur type 
                     uploader: {
                         connect: {
