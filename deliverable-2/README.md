@@ -27,7 +27,7 @@ Our application allows researchers in the child psychology space to anonymize ch
     * At the bottom of the page they can switch between pages or change the amount of rows on the page to see more of their uploaded videos (if they have more)
     * The user can click on a video row and they will be redirected to the videoplayer
     * The user can click on "Upload" 
-    *  ...
+    *  The user can then either drag and drop a picture and upload from computer 
 *  Search engine 
     * The search engine is located on the homepage at the top
     * The user can type in a video title, and only the video titles that match will show up
@@ -38,7 +38,7 @@ Our application allows researchers in the child psychology space to anonymize ch
     * The user can skip to a part in the video using the sliding bar under the play/pause button
     * The user can mute and unmute using the speaker button and change the volume using the sliding bar beneath it 
     * The user can make the video full screen by pressing on the full screen button
-    * Download ...
+    * The user can download the video to their computer by clicking on the download button
 
 ## Instructions
  * Clear instructions for how to use the application from the end-user's perspective
@@ -54,10 +54,12 @@ The process starts at the login page where the user can either login or register
 
 As a developer,you are required to have Docker and Postgresql installed before the following process.
 
-1. Go into the /api directory.
-2. Follow the instructions under the **Setup** section of the README.md in that directory.
-3. Go back up to the root directory
-4. Run `docker-compose up --build`
+1. Ensure that your local instance of postgres is started
+2. Go into the /api directory.
+3. Follow the instructions under the **Setup** section of the README.md in that directory.
+4. Go into the /frontend directory 
+5. Follow the instructions under the **Setup** section of the README.md in that directory.
+
  
  ## Deployment and Github Workflow
 
