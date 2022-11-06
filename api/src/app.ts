@@ -27,6 +27,8 @@ app.get('/', (req: Request, res: Response) => {
     res.send('CSC301 Express Server');
 });
 
-app.listen(port, () => {
-    logger.info(`Server started at port ${port}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => logger.info(`Server started at port ${port}`));
+}
+
+export default app;
