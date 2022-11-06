@@ -34,8 +34,6 @@ const columns: readonly Column[] = [
     {id: "dateUploaded", label: "Date Uploaded", minWidth: 170}
 ];
 
-
-
 const VideoList = ({filteredList}: VideoList): JSX.Element => {
     //https://mui.com/material-ui/react-table/
     const [page, setPage] = useState(0);
@@ -43,7 +41,7 @@ const VideoList = ({filteredList}: VideoList): JSX.Element => {
 
     const navigate = useNavigate();
 
-    const routeChange = (key:string) => {
+    const routeChange = (key: string) => {
         const path = `/video/${key}`;
         navigate(path);
     };
@@ -118,6 +116,7 @@ export default function HomePage() {
     const [videosList, setVideosList] = useState<Array<Video | undefined>>([]);
     const [filteredList, setFilteredList] = useState<Array<Video | undefined>>([]);
 
+    //Get videos from prisma
     function getVideos(): (Video | undefined)[] {
         function getTypeAsLiteral(type: string) {
             if (type === "FACE_BLURRED") {
@@ -129,7 +128,7 @@ export default function HomePage() {
             }
             return null;
         }
-        function vids(videos:  Video[]): (Video | undefined)[]{
+        function vids(videos: Video[]): (Video | undefined)[] {
             return (videos as Video[]).map((video) => {
                 const typeLiteral = getTypeAsLiteral(video.type);
                 if (typeLiteral !== null) {
@@ -144,23 +143,26 @@ export default function HomePage() {
                 }
             });
         }
-          
-        var videos 
+
+        let videos;
         fetch("/api/video_list/list", {
             headers: {
-                "Accept": "application/json",
+                Accept: "application/json",
                 "Content-Type": "application/json"
             },
             method: "GET"
-        }).then(res =>{return res.json()})
-        .then(data => {
-            setVideosList(vids(data));
-            setFilteredList(vids(data));
         })
-        if (videos === undefined){
-            return[]
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setVideosList(vids(data));
+                setFilteredList(vids(data));
+            });
+        if (videos === undefined) {
+            return [];
         }
-        return videos
+        return videos;
     }
 
     function filterList(e: React.ChangeEvent<HTMLInputElement>) {

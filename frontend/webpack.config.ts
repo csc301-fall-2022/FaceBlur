@@ -32,10 +32,6 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
                 },
                 exclude: /dist/
             },
-            // {
-            //     test: /\.css$/,
-            //     use: ["style-loader", "css-loader"]
-            // },
             {
                 test: /\.css$/,
                 use: [
@@ -83,8 +79,8 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
         host: "0.0.0.0",
         proxy: {
             "/api": {
-                target: "http://ui:8080",
-                router: () => "http://backend:3000",
+                target: "http://localhost:8080",
+                router: () => "http://localhost:3000",
                 logLevel: "debug"
             }
         }

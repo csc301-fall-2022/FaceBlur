@@ -9,15 +9,12 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import {useNavigate, useParams} from "react-router-dom";
 
-
 const VideoPage = () => {
-    //TODO: swap this out to get from params using useParams & add typeguard for undefined
-    var {key } = useParams()
-    if (key === undefined){
+    let {key} = useParams();
+    if (key === undefined) {
         key = "";
     }
-    const link =
-        "https://tecl-testing.s3.amazonaws.com/" + key.replace(/ /g,"+") + ".MP4";
+    const link = "https://tecl-testing.s3.amazonaws.com/" + key.replace(/ /g, "+") + ".MP4";
 
     function download(videoLink: string) {
         FileSaver.saveAs(videoLink);
@@ -31,7 +28,7 @@ const VideoPage = () => {
                 spacing={0}
                 alignItems="center"
                 justifyContent="center"
-                style={{minHeight: "100vh"}}
+                style={{maxHeight: "500px"}}
             >
                 <Grid item xs={12}>
                     <Card sx={{width: 0.7, margin: "auto"}}>
