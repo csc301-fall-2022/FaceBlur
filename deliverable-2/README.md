@@ -27,7 +27,8 @@ Our application allows researchers in the child psychology space to anonymize ch
     * At the bottom of the page they can switch between pages or change the amount of rows on the page to see more of their uploaded videos (if they have more)
     * The user can click on a video row and they will be redirected to the videoplayer
     * The user can click on "Upload" 
-    *  The user can then either drag and drop a picture and upload from computer 
+    * The user can then either drag and drop a video or upload from their files
+    * The user can choose which blur type they want for the uploaded video
 *  Search engine 
     * The search engine is located on the homepage at the top
     * The user can type in a video title, and only the video titles that match will show up
