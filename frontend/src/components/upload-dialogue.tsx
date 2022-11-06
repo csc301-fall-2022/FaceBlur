@@ -131,7 +131,7 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
         formData.append("backgroundBlur", backgroundBlur.toString());
         formData.append("userId", userId.toString());
 
-        return fetch("/upload", {
+        return fetch("/api/upload", {
             method: "POST",
             body: formData
         }).then(() => {
