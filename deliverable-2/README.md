@@ -54,3 +54,7 @@ TODO: Deployment (Siddarth)
  * What type of license will you apply to your codebase?
  * What affect does it have on the development and use of your codebase?
  * Why did you or your partner make this choice?
+ 
+ We wil be using the MIT license. Our dependencies, express and react, have MIT license, which is a permissive license, and our partners have agreed to share the code with anyone for any use without or without license; This allows us to choose any license we'd like. So, we chose MIT, meaning it can be distributed, modified, and used for any purpose, private or commercial. Now, any developer can modify or use our codebase. 
+ 
+ We chose to use a permissive license because we are building this application for a course in our university in collaboration with a research lab at our university; university is a place for learning and improving and as such we saw fit to allow other people to learn and improve on our codebase. We are also aware that we are still in school and still have a lot to learn, so we wantto allow experienced developers to modify our code and improve it for their use.
