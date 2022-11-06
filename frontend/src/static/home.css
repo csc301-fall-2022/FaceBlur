@@ -9,35 +9,36 @@
   color: white;
 }
 
-.homepage-container {
+.homepageContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.display-container {
+.displayContainer {
   width: 95%;
 }
 
-.css-lntp72-MuiButtonBase-root-MuiFab-root.uploadButton {
-  position: absolute;
+.uploadButton {
+  position: absolute !important;
   right: 15px;
   bottom: 15px;
-  background-color: #FA893C;
-  color: white;
+  background-color: #FA893C !important;
+  color: white !important;
+  box-shadow: none !important;
 }
 
-.css-lntp72-MuiButtonBase-root-MuiFab-root.uploadButton:hover {
-  background-color: #f44336;
-
+.uploadButton:hover {
+  background-color: #f44336 !important;
 }
 
 .MuiTableRow-root {
-  height: 80px;
+  height: 10px;
 }
 
-.upload-dialogue {
+.uploadDialogue {
   position: absolute;
   z-index: 100;
   left: 40%;
+  top: 30%;
 }

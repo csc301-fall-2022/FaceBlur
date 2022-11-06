@@ -1,10 +1,11 @@
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
-import "./upload-dialogue.css";
+import "../static/upload-dialogue.css";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Button from "@mui/material/Button";
+import * as upload from "../static/upload-dialogue.css";
 
 const DragFile = (props: {
     handleDrop: (blob: Blob, string: string) => void;
@@ -159,11 +160,11 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
     };
 
     return (
-        <div ref={ref} className="popover">
+        <div ref={ref} className={upload.popover}>
             <DragFile handleDrop={uploadFile}>
-                <div className="drag">
-                    <UploadFileIcon className="icon" />
-                    <div className="drag-text">
+                <div className={upload.drag}>
+                    <UploadFileIcon className={upload.icon} />
+                    <div className={upload.dragText}>
                         <Button variant="text" component="label" onClick={() => setUploaded(false)}>
                             Upload File
                             <input type="file" hidden onChange={selectFile} />
@@ -173,8 +174,8 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
                 </div>
             </DragFile>
             {uploaded && <div>{fileName}</div>}
-            <div className="options">
-                <FormGroup className="checkbox">
+            <div className={upload.options}>
+                <FormGroup className={upload.checkbox}>
                     <FormControlLabel
                         control={<Checkbox onChange={handleFaceChange} />}
                         label="Blur face"

@@ -17,14 +17,16 @@ import * as login from "../static/login.css";
 type State = {
     email: string;
     password: string;
+    confirmPassword: string;
     helperText: string;
     isError: boolean;
 };
 
-// initial state of login
+// initial state of register
 const initialState: State = {
     email: "",
     password: "",
+    confirmPassword: "",
     helperText: "",
     isError: false
 };
@@ -33,8 +35,10 @@ const initialState: State = {
 type Action =
     | {type: "setEmail"; payload: string}
     | {type: "setPassword"; payload: string}
-    | {type: "loginSuccess"; payload: string}
-    | {type: "loginFailed"; payload: string}
+    | {type: "setConfirmPassword"; payload: string}
+    | {type: "registrationSuccess"; payload: string}
+    | {type: "registrationFailed"; payload: string}
+    | {type: "passwordMatchFailed"; payload: string}
     | {type: "setIsError"; payload: boolean};
 
 // update function
@@ -50,13 +54,24 @@ const reducer = (state: State, action: Action): State => {
                 ...state,
                 password: action.payload
             };
-        case "loginSuccess":
+        case "setConfirmPassword":
+            return {
+                ...state,
+                confirmPassword: action.payload
+            };
+        case "registrationSuccess":
             return {
                 ...state,
                 helperText: action.payload,
                 isError: false
             };
-        case "loginFailed":
+        case "registrationFailed":
+            return {
+                ...state,
+                helperText: action.payload,
+                isError: true
+            };
+        case "passwordMatchFailed":
             return {
                 ...state,
                 helperText: action.payload,
@@ -70,47 +85,53 @@ const reducer = (state: State, action: Action): State => {
     }
 };
 
-const Login = () => {
+const Register = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const navigate = useNavigate();
 
     // This is temporary, use a login endpoint from the api here later
-    const handleLogin = () => {
-        fetch("/api/auth/login", {
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            method: "POST",
-            body: JSON.stringify({
-                email: state.email,
-                password: state.password
-            })
-        }).then((res) => {
-            if (res.status === 200) {
-                dispatch({
-                    type: "loginSuccess",
-                    payload: "Login Successful"
-                });
-                navigate("/home");
-            } else {
-                dispatch({
-                    type: "loginFailed",
-                    payload: "Incorrect email or password"
-                });
-            }
-        });
+    const handleRegister = () => {
+        if (state.password !== state.confirmPassword) {
+            dispatch({
+                type: "passwordMatchFailed",
+                payload: "Passwords do not match"
+            });
+        } else {
+            fetch("/api/auth/register", {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    email: state.email,
+                    password: state.password
+                })
+            }).then((res) => {
+                if (res.status === 200) {
+                    dispatch({
+                        type: "registrationSuccess",
+                        payload: "Registration Successful"
+                    });
+                    navigate("/home");
+                } else {
+                    dispatch({
+                        type: "registrationFailed",
+                        payload: "Email in use"
+                    });
+                }
+            });
+        }
     };
 
-    // Handles changing to registration screen
-    const handleNoAccount = () => {
-        navigate("/register");
+    // Handles changing to login screen
+    const handleExistingAccount = () => {
+        navigate("/");
     };
 
-    // Handles pressing enter to submit
     const handleKeyPress = (event: React.KeyboardEvent) => {
         if (event.key === "Enter") {
-            handleLogin();
+            handleRegister();
         }
     };
 
@@ -129,6 +150,13 @@ const Login = () => {
             payload: event.target.value
         });
     };
+    // Handles confirm password change in the input element
+    const handleConfirmPasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+        dispatch({
+            type: "setConfirmPassword",
+            payload: event.target.value
+        });
+    };
     return (
         <form className={login.container} noValidate autoComplete="off">
             <Card className={login.card} elevation={0}>
@@ -139,7 +167,7 @@ const Login = () => {
                     image={require("../../public/logo.png")}
                     sx={{objectFit: "contain"}}
                 />
-                <CardHeader className={login.header} title="Log into <App Name>" />
+                <CardHeader className={login.header} title="Register to <App Name>" />
                 <CardContent>
                     <div>
                         <TextField
@@ -161,8 +189,20 @@ const Login = () => {
                             placeholder="Password"
                             margin="normal"
                             type="password"
-                            helperText={state.helperText}
                             onChange={handlePasswordChange}
+                            onKeyPress={handleKeyPress}
+                            variant="outlined"
+                        />
+                        <TextField
+                            error={state.isError}
+                            fullWidth
+                            id="confirmPassword"
+                            label="Confirm Password"
+                            placeholder="Confirm Password"
+                            margin="normal"
+                            helperText={state.helperText}
+                            type="password"
+                            onChange={handleConfirmPasswordChange}
                             onKeyPress={handleKeyPress}
                             variant="outlined"
                         />
@@ -173,18 +213,15 @@ const Login = () => {
                         variant="text"
                         size="large"
                         className={themes.btn}
-                        onClick={handleLogin}
+                        onClick={handleRegister}
                     >
-                        Sign In
+                        Register
                     </Button>
                 </CardActions>
                 {/* Not implememented yet */}
                 <CardContent>
-                    <div>Forgot Password?</div>
-                </CardContent>
-                <CardContent>
-                    <a onClick={handleNoAccount}>
-                        <u>Don&#39;t have an account yet?</u>
+                    <a onClick={handleExistingAccount}>
+                        <u>Already have an account?</u>
                     </a>
                 </CardContent>
             </Card>
@@ -192,4 +229,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;

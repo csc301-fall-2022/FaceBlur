@@ -1,4 +1,4 @@
-import {InputAdornment, TextField} from "@mui/material";
+import {Box, InputAdornment, TextField} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import videos from "./DummyData.json";
@@ -16,7 +16,7 @@ import UploadDialogue from "components/upload-dialogue";
 import {useNavigate} from "react-router-dom";
 import NavBar from "../components/common";
 
-import "../static/home.css";
+import * as home from "../static/home.css";
 
 interface Column {
     id: "name" | "uploader" | "dateUploaded";
@@ -188,13 +188,13 @@ export default function HomePage() {
     return (
         <div>
             <NavBar />
-            <div className="homepage-container">
-                <div className="display-container">
-                    <div className="search-container">
+            <div className={home.homepageContainer}>
+                <div className={home.displayContainer}>
+                    <Box sx={{}}>
                         <TextField
                             id="filled-basic"
                             variant="standard"
-                            className="searchbar"
+                            className={home.searchbar}
                             size="small"
                             placeholder="Search"
                             sx={{input: {color: "white", margin: "7px"}}}
@@ -211,17 +211,17 @@ export default function HomePage() {
                                 disableUnderline: true
                             }}
                         />
-                    </div>
-                    <div className="upload-dialogue">
-                        {upload && <UploadDialogue handleClick={handleClick} />}
-                    </div>
-                    <VideoList disabled={disabled} filteredList={{filteredList: filteredList}} />
+                    </Box>
                 </div>
-                <Fab variant="extended" className="uploadButton" onClick={handleUpload}>
-                    Upload
-                    <UploadFileIcon></UploadFileIcon>
-                </Fab>
+                <div className={home.uploadDialogue}>
+                    {upload && <UploadDialogue handleClick={handleClick} />}
+                </div>
+                <VideoList disabled={disabled} filteredList={{filteredList: filteredList}} />
             </div>
+            <Fab variant="extended" className={home.uploadButton} onClick={handleUpload}>
+                Upload
+                <UploadFileIcon></UploadFileIcon>
+            </Fab>
         </div>
     );
 }
