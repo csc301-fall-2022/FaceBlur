@@ -1,7 +1,7 @@
 import {InputAdornment, TextField} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import videos from "./DummyData.json";
+// import videos from "./DummyData.json";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,12 +16,6 @@ import NavBar from "../components/common";
 import {useNavigate} from "react-router-dom";
 
 import "../static/home.css";
-import moment from "moment";
-
-type vid = {
-    LastModified: Date;
-    Key: string
- }
 
 interface Column {
     id: "name" | "uploader" | "dateUploaded";
@@ -39,6 +33,7 @@ const columns: readonly Column[] = [
     {id: "uploader", label: "Uploaded By", minWidth: 170},
     {id: "dateUploaded", label: "Date Uploaded", minWidth: 170}
 ];
+
 
 
 const VideoList = ({filteredList}: VideoList): JSX.Element => {
@@ -122,8 +117,35 @@ const VideoList = ({filteredList}: VideoList): JSX.Element => {
 export default function HomePage() {
     const [videosList, setVideosList] = useState<Array<Video | undefined>>([]);
     const [filteredList, setFilteredList] = useState<Array<Video | undefined>>([]);
-    
-    function getVideos() {
+
+    function getVideos(): (Video | undefined)[] {
+        function getTypeAsLiteral(type: string) {
+            if (type === "FACE_BLURRED") {
+                return "FACE_BLURRED";
+            } else if (type === "BACKGROUND_BLURRED") {
+                return "BACKGROUND_BLURRED";
+            } else if (type === "NO_BLUR") {
+                return "NO_BLUR";
+            }
+            return null;
+        }
+        function vids(videos:  Video[]): (Video | undefined)[]{
+            return (videos as Video[]).map((video) => {
+                const typeLiteral = getTypeAsLiteral(video.type);
+                if (typeLiteral !== null) {
+                    return {
+                        dateUploaded: new Date(video.dateUploaded),
+                        name: video.name,
+                        id: video.id,
+                        type: typeLiteral,
+                        uploaderId: video.uploaderId,
+                        uploader: video.uploader
+                    };
+                }
+            });
+        }
+          
+        var videos 
         fetch("/api/video_list/list", {
             headers: {
                 "Accept": "application/json",
@@ -132,39 +154,29 @@ export default function HomePage() {
             method: "GET"
         }).then(res =>{return res.json()})
         .then(data => {
-            setFilteredList((data["Contents"] as vid[]).map((video) => {
-                return {
-                    dateUploaded: moment(video.LastModified).toDate(),
-                    name: video.Key,
-                    id: 12,
-                    type: "FACE_BLURRED",
-                    uploaderId: 66,
-                    uploader: {
-                        "id": 3,
-                        "email": "test3@gmail.com",
-                        "password": "pass"
-                      }
-                };
-            }));
-         })
+            setVideosList(vids(data));
+            setFilteredList(vids(data));
+        })
+        if (videos === undefined){
+            return[]
+        }
+        return videos
     }
 
-    // function filterList(e: React.ChangeEvent<HTMLInputElement>) {
-    //     const currentSearch = e.currentTarget.value.toLowerCase();
-    //     setFilteredList(
-    //         videosList.filter((val) => {
-    //             if (currentSearch === "") {
-    //                 return true;
-    //             } else {
-    //                 return val?.name.toLowerCase().includes(currentSearch);
-    //             }
-    //         })
-    //     );
-    // }
+    function filterList(e: React.ChangeEvent<HTMLInputElement>) {
+        const currentSearch = e.currentTarget.value.toLowerCase();
+        setFilteredList(
+            videosList.filter((val) => {
+                if (currentSearch === "") {
+                    return true;
+                } else {
+                    return val?.name.toLowerCase().includes(currentSearch);
+                }
+            })
+        );
+    }
 
     useEffect(() => {
-        // setVideosList(getVideos());
-        // setFilteredList(getVideos());
         getVideos();
     }, []);
 
@@ -180,7 +192,7 @@ export default function HomePage() {
                             className="searchbar"
                             size="small"
                             placeholder="Search"
-                            // onChange={filterList}
+                            onChange={filterList}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">

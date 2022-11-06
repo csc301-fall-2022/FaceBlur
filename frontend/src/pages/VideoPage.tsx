@@ -12,9 +12,12 @@ import {useNavigate, useParams} from "react-router-dom";
 
 const VideoPage = () => {
     //TODO: swap this out to get from params using useParams & add typeguard for undefined
-    const {key } = useParams()
+    var {key } = useParams()
+    if (key === undefined){
+        key = "";
+    }
     const link =
-        "https://tecl-testing.s3.amazonaws.com/" + key;
+        "https://tecl-testing.s3.amazonaws.com/" + key.replace(/ /g,"+") + ".MP4";
 
     function download(videoLink: string) {
         FileSaver.saveAs(videoLink);
