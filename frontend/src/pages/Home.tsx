@@ -17,6 +17,10 @@ import {useNavigate} from "react-router-dom";
 
 import "../static/home.css";
 
+type vid = {
+    Key: string
+ }
+
 interface Column {
     id: "name" | "uploader" | "dateUploaded";
     label: string;
@@ -33,31 +37,7 @@ const columns: readonly Column[] = [
     {id: "uploader", label: "Uploaded By", minWidth: 170},
     {id: "dateUploaded", label: "Date Uploaded", minWidth: 170}
 ];
-function getVideos(): (Video | undefined)[] {
-    function getTypeAsLiteral(type: string) {
-        if (type === "FACE_BLURRED") {
-            return "FACE_BLURRED";
-        } else if (type === "BACKGROUND_BLURRED") {
-            return "BACKGROUND_BLURRED";
-        } else if (type === "NO_BLUR") {
-            return "NO_BLUR";
-        }
-        return null;
-    }
-    return videos.map((video) => {
-        const typeLiteral = getTypeAsLiteral(video.type);
-        if (typeLiteral !== null) {
-            return {
-                dateUploaded: new Date(video.dateUploaded),
-                name: video.name,
-                id: video.id,
-                type: typeLiteral,
-                uploaderId: video.uploaderId,
-                uploader: video.uploader
-            };
-        }
-    });
-}
+
 
 const VideoList = ({filteredList}: VideoList): JSX.Element => {
     //https://mui.com/material-ui/react-table/
@@ -66,8 +46,8 @@ const VideoList = ({filteredList}: VideoList): JSX.Element => {
 
     const navigate = useNavigate();
 
-    const routeChange = () => {
-        const path = "/video";
+    const routeChange = (key:string) => {
+        const path = `/video/${key}`;
         navigate(path);
     };
 
@@ -102,7 +82,7 @@ const VideoList = ({filteredList}: VideoList): JSX.Element => {
                                     <TableRow
                                         hover
                                         role="checkbox"
-                                        onClick={routeChange}
+                                        onClick={() => routeChange(row["name"])}
                                         tabIndex={-1}
                                         key={row.id}
                                     >
@@ -140,23 +120,102 @@ const VideoList = ({filteredList}: VideoList): JSX.Element => {
 export default function HomePage() {
     const [videosList, setVideosList] = useState<Array<Video | undefined>>([]);
     const [filteredList, setFilteredList] = useState<Array<Video | undefined>>([]);
-
-    function filterList(e: React.ChangeEvent<HTMLInputElement>) {
-        const currentSearch = e.currentTarget.value.toLowerCase();
-        setFilteredList(
-            videosList.filter((val) => {
-                if (currentSearch === "") {
-                    return true;
-                } else {
-                    return val?.name.toLowerCase().includes(currentSearch);
-                }
-            })
-        );
+    
+    function getVideos() {
+        fetch("/api/video_list/list", {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            method: "GET"
+        }).then(res =>{return res.json()})
+        .then(data => {
+            setFilteredList((data["Contents"] as vid[]).map((video) => {
+                // const typeLiteral = getTypeAsLiteral(video.type);
+                // if (typeLiteral !== null) {
+                    // return {
+                    //     dateUploaded: Date.now(),
+                    //     name: video.name,
+                    //     id: video.id,
+                    //     type: typeLiteral,
+                    //     uploaderId: video.uploaderId,
+                    //     uploader: video.uploader
+                    // };
+                // }
+                return {
+                    dateUploaded: new Date('1995-12-17T03:24:00'),
+                    name: video.Key,
+                    id: 12,
+                    type: "FACE_BLURRED",
+                    uploaderId: 66,
+                    uploader: {
+                        "id": 3,
+                        "email": "test3@gmail.com",
+                        "password": "pass"
+                      }
+                };
+            }));
+         })
+        // function getTypeAsLiteral(type: string) {
+        //     if (type === "FACE_BLURRED") {
+        //         return "FACE_BLURRED";
+        //     } else if (type === "BACKGROUND_BLURRED") {
+        //         return "BACKGROUND_BLURRED";
+        //     } else if (type === "NO_BLUR") {
+        //         return "NO_BLUR";
+        //     }
+        //     return null;
+        // }
+        // console.log(typeof obj)
+        // console.log(obj)
+        // if (typeof obj == 'undefined'){
+        //     return []
+        // }
+        // setFilteredList((obj["Contents"] as vid[]).map((video) => {
+        //     // const typeLiteral = getTypeAsLiteral(video.type);
+        //     // if (typeLiteral !== null) {
+        //         // return {
+        //         //     dateUploaded: Date.now(),
+        //         //     name: video.name,
+        //         //     id: video.id,
+        //         //     type: typeLiteral,
+        //         //     uploaderId: video.uploaderId,
+        //         //     uploader: video.uploader
+        //         // };
+        //     // }
+        //     return {
+        //         dateUploaded: new Date('1995-12-17T03:24:00'),
+        //         name: video.Key,
+        //         id: 12,
+        //         type: "FACE_BLURRED",
+        //         uploaderId: 66,
+        //         uploader: {
+        //             "id": 3,
+        //             "email": "test3@gmail.com",
+        //             "password": "pass"
+        //           }
+        //     };
+        // }));
+        console.log(filteredList)
     }
 
+    // function filterList(e: React.ChangeEvent<HTMLInputElement>) {
+    //     const currentSearch = e.currentTarget.value.toLowerCase();
+    //     setFilteredList(
+    //         videosList.filter((val) => {
+    //             if (currentSearch === "") {
+    //                 return true;
+    //             } else {
+    //                 return val?.name.toLowerCase().includes(currentSearch);
+    //             }
+    //         })
+    //     );
+    // }
+
     useEffect(() => {
-        setVideosList(getVideos());
-        setFilteredList(getVideos());
+        // setVideosList(getVideos());
+        // setFilteredList(getVideos());
+        getVideos();
     }, []);
 
     return (
@@ -171,7 +230,7 @@ export default function HomePage() {
                             className="searchbar"
                             size="small"
                             placeholder="Search"
-                            onChange={filterList}
+                            // onChange={filterList}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">

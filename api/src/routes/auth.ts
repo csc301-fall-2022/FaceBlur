@@ -13,6 +13,10 @@ const router = express.Router();
 
 router.use(passport.initialize())
 
+//?????
+router.use(express.json());             
+router.use(express.urlencoded()); 
+
 router.get("/test", (req: Request, res: Response) => {
     res.send('Auth Online');
 });
@@ -20,6 +24,7 @@ router.get("/test", (req: Request, res: Response) => {
 // Endpoint for registering a user
 router.post('/register', async (req: Request, res: Response) => {
     const {email, password} = req.body;
+    console.log(req.body)
     const encrypted_password = await bcrypt.hash(password, 10);
     try {
         // create user, store encrypted password
@@ -28,7 +33,7 @@ router.post('/register', async (req: Request, res: Response) => {
             email: email,
           },
         });
-        if (user !== null) {
+        if (user == null) {
           await prisma.user.create({
           data: {
             email: email,

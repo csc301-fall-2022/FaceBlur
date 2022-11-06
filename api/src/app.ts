@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from 'express';
+import video_list from './routes/video_list'
 import auth from './routes/auth';
 import dotenv from 'dotenv';
 import passport from 'passport';
@@ -20,6 +21,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // upload route 
 app.use('/upload', upload);
+
+app.use("/api/video_list", video_list);
 
 const port = process.env.PORT;
 
