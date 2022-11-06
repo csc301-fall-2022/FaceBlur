@@ -12,6 +12,34 @@ Our application allows researchers in the child psychology space to anonymize ch
  * Provide a breakdown or detail for each feature that is most appropriate for your application
  * This section will be used to assess the value of the features built
 
+*  Accounts (Login / register)
+    * The user is first presented with the login page
+    * They can fill in their email and password then click on "Sign In"
+    * If their account exists they will be redirected to the home page 
+    * If it doesn't exist they will see the message "Incorrect email or password"
+    * If they do not have an account yet they can click on the "Don't have an account yet?" link and they will be redirected to the registration page
+    * On the registration page the user can fill out their email, the password they want to use and again the same password
+    * If the password is not the same in both fields, they will see the message "Passwords do not match"
+    * If the email is already in use they will see the message "Email in use"
+    * If neither of those things happen and an error does not occur the account will be saved and they will be redirected to the hompage
+*  Upload videos
+    * On the homepage, the user can the list of videos they have uploaded
+    * At the bottom of the page they can switch between pages or change the amount of rows on the page to see more of their uploaded videos (if they have more)
+    * The user can click on a video row and they will be redirected to the videoplayer
+    * The user can click on "Upload" 
+    *  ...
+*  Search engine 
+    * The search engine is located on the homepage at the top
+    * The user can type in a video title, and only the video titles that match will show up
+    * The user doesn't have to press search, the search engine searches as they are typing
+*  Video Player
+    * The user can click on button "back" to return to homepage
+    * The user can play or pause the video using the play/pause button
+    * The user can skip to a part in the video using the sliding bar under the play/pause button
+    * The user can mute and unmute using the speaker button and change the volume using the sliding bar beneath it 
+    * The user can make the video full screen by pressing on the full screen button
+    * Download ...
+
 ## Instructions
  * Clear instructions for how to use the application from the end-user's perspective
  * How do you access it? Are accounts pre-created or does a user register? Where do you start? etc. 
