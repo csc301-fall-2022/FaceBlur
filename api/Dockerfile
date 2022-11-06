@@ -1,20 +1,21 @@
 # Builder stage
-FROM node:16-alpine AS base
-LABEL version="1.0"
-LABEL description="This is the base docker image for KidBlur backend"
+# https://github.com/prisma/prisma/issues/7755
+FROM node:16-alpine as build
 
 WORKDIR /home/node/app
 
 COPY package*.json ./
 
 COPY prisma ./prisma/
+COPY .env ./
+COPY tsconfig.json ./
 
-
-RUN npm install
+RUN npm install --force
 COPY . .
+
+RUN npx prisma generate
 
 RUN npm run build
 
 EXPOSE 3000
-CMD ["npm", "start"]
-
+CMD ["npm", "run", "dev"]

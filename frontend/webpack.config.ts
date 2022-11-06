@@ -80,7 +80,7 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
     },
     devServer: {
         historyApiFallback: true,
-        host: '0.0.0.0',
+        host: "0.0.0.0",
         proxy: {
             "/api": {
                 target: "http://ui:8080",

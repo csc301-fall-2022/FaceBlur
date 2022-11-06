@@ -8,9 +8,11 @@ WORKDIR /usr/src/app
 
 # Copies package.json and package-lock.json to Docker environment
 COPY package*.json ./
+COPY .env ./
+COPY tsconfig.json ./
 
 # Installs all node packages
-RUN npm install --silent
+RUN npm install --force
 
 # Copies everything over to Docker environment
 COPY . .

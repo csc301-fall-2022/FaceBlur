@@ -27,8 +27,8 @@ router.post('/', (req: Request, res: Response) => {
             // Create video record and save to local db
             const userId = parseInt(req.body.userId);
             // selected options 
-            const doFaceBlur = req.body.faceBlur;
-            const doBackgroundBlur = req.body.backgroundBlur;
+            // const doFaceBlur = req.body.faceBlur;
+            // const doBackgroundBlur = req.body.backgroundBlur;
 
             const video = await prisma.video.upsert({
                 where: {
