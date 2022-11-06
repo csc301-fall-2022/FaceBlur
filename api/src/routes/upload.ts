@@ -26,12 +26,20 @@ router.post('/', (req: Request, res: Response) => {
         } else {
             // Create video record and save to local db
             const userId = parseInt(req.body.userId);
-            const blurType = req.body.blurType;
-            // TODO: upsert?
-            const video = await prisma.video.create({
-                data: {
+            // selected options 
+            const doFaceBlur = req.body.faceBlur;
+            const doBackgroundBlur = req.body.backgroundBlur;
+
+            const video = await prisma.video.upsert({
+                where: {
                     name: req.file.originalname,
-                    type: blurType, 
+                },
+                update: {
+                    dateUploaded: new Date(),
+                },
+                create: {
+                    name: req.file.originalname,
+                    type: 'NO_BLUR', // no blur for now, processed videos will have the blur type 
                     uploader: {
                         connect: {
                             id: userId,
@@ -42,7 +50,7 @@ router.post('/', (req: Request, res: Response) => {
             });
             const resData = {
                 file: req.file,
-                blurType: blurType,
+                blurType: video.type,
                 userId: userId,
             };
             logger.info('File uploaded successfully');

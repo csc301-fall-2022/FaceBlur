@@ -19,7 +19,7 @@ model User {
 
 model Video {
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
   type BlurType
   uploaderId Int
   uploader User @relation(fields: [uploaderId], references: [id])
