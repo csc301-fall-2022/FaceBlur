@@ -102,6 +102,11 @@ const Login = () => {
         });
     };
 
+    // Handles changing to registration screen
+    const handleNoAccount = () => {
+        navigate("/register");
+    };
+
     // Handles pressing enter to submit
     const handleKeyPress = (event: React.KeyboardEvent) => {
         if (event.key === "Enter") {
@@ -178,7 +183,9 @@ const Login = () => {
                     <div>Forgot Password?</div>
                 </CardContent>
                 <CardContent>
-                    <a href="/register">Don&#39;t have an account yet?</a>
+                    <a onClick={handleNoAccount}>
+                        <u>Don&#39;t have an account yet?</u>
+                    </a>
                 </CardContent>
             </Card>
         </form>

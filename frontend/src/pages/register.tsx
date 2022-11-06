@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from "react";
+import React, {useReducer} from "react";
 import {useNavigate} from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
@@ -17,14 +17,16 @@ import * as login from "../static/login.css";
 type State = {
     email: string;
     password: string;
+    confirmPassword: string;
     helperText: string;
     isError: boolean;
 };
 
-// initial state of login
+// initial state of register
 const initialState: State = {
     email: "",
     password: "",
+    confirmPassword: "",
     helperText: "",
     isError: false
 };
@@ -33,8 +35,10 @@ const initialState: State = {
 type Action =
     | {type: "setEmail"; payload: string}
     | {type: "setPassword"; payload: string}
+    | {type: "setConfirmPassword"; payload: string}
     | {type: "registrationSuccess"; payload: string}
     | {type: "registrationFailed"; payload: string}
+    | {type: "passwordMatchFailed"; payload: string}
     | {type: "setIsError"; payload: boolean};
 
 // update function
@@ -50,6 +54,11 @@ const reducer = (state: State, action: Action): State => {
                 ...state,
                 password: action.payload
             };
+        case "setConfirmPassword":
+            return {
+                ...state,
+                confirmPassword: action.payload
+            };
         case "registrationSuccess":
             return {
                 ...state,
@@ -57,6 +66,12 @@ const reducer = (state: State, action: Action): State => {
                 isError: false
             };
         case "registrationFailed":
+            return {
+                ...state,
+                helperText: action.payload,
+                isError: true
+            };
+        case "passwordMatchFailed":
             return {
                 ...state,
                 helperText: action.payload,
@@ -72,38 +87,48 @@ const reducer = (state: State, action: Action): State => {
 
 const Register = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
-    const [response, setResponse] = useState(0);
     const navigate = useNavigate();
 
     // This is temporary, use a login endpoint from the api here later
     const handleRegister = () => {
-        fetch("/api/auth/register", {
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            method: "POST",
-            body: JSON.stringify({
-                email: state.email,
-                password: state.password
-            })
-        }).then((res) => setResponse(res.status));
-
-        if (response === 200) {
+        if (state.password !== state.confirmPassword) {
             dispatch({
-                type: "registrationSuccess",
-                payload: "Registration Successful"
+                type: "passwordMatchFailed",
+                payload: "Passwords do not match"
             });
-            navigate("/home");
         } else {
-            dispatch({
-                type: "registrationFailed",
-                payload: "Email in use"
+            fetch("/api/auth/register", {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    email: state.email,
+                    password: state.password
+                })
+            }).then((res) => {
+                if (res.status === 200) {
+                    dispatch({
+                        type: "registrationSuccess",
+                        payload: "Registration Successful"
+                    });
+                    navigate("/home");
+                } else {
+                    dispatch({
+                        type: "registrationFailed",
+                        payload: "Email in use"
+                    });
+                }
             });
         }
     };
 
-    // Handles pressing enter to submit
+    // Handles changing to login screen
+    const handleExistingAccount = () => {
+        navigate("/");
+    };
+
     const handleKeyPress = (event: React.KeyboardEvent) => {
         if (event.key === "Enter") {
             handleRegister();
@@ -122,6 +147,13 @@ const Register = () => {
     const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         dispatch({
             type: "setPassword",
+            payload: event.target.value
+        });
+    };
+    // Handles confirm password change in the input element
+    const handleConfirmPasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+        dispatch({
+            type: "setConfirmPassword",
             payload: event.target.value
         });
     };
@@ -157,8 +189,20 @@ const Register = () => {
                             placeholder="Password"
                             margin="normal"
                             type="password"
-                            helperText={state.helperText}
                             onChange={handlePasswordChange}
+                            onKeyPress={handleKeyPress}
+                            variant="outlined"
+                        />
+                        <TextField
+                            error={state.isError}
+                            fullWidth
+                            id="confirmPassword"
+                            label="Confirm Password"
+                            placeholder="Confirm Password"
+                            margin="normal"
+                            helperText={state.helperText}
+                            type="password"
+                            onChange={handleConfirmPasswordChange}
                             onKeyPress={handleKeyPress}
                             variant="outlined"
                         />
@@ -176,7 +220,9 @@ const Register = () => {
                 </CardActions>
                 {/* Not implememented yet */}
                 <CardContent>
-                    <a href="/">Already have an account?</a>
+                    <a onClick={handleExistingAccount}>
+                        <u>Already have an account?</u>
+                    </a>
                 </CardContent>
             </Card>
         </form>
