@@ -1,0 +1,32 @@
+# based on https://dev.to/dariansampare/setting-up-docker-typescript-node-hot-reloading-code-changes-in-a-running-container-2b2f
+version: '3.7'
+
+services:
+  # Backend container
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - ./api/src:/home/node/app/src
+      - ./api/nodemon.json:/home/node/app/nodemon.json
+    expose:
+      - '3000'
+    ports:
+      - '3000:3000'
+
+
+  # Frontend Container
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+      - "443:443"
+    depends_on:
+      - api
+
