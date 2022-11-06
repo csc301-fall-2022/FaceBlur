@@ -6,6 +6,7 @@ import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
 import packageJSON = require("./package.json");
 import {TsconfigPathsPlugin} from "tsconfig-paths-webpack-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 
 const config: webpack.Configuration = {};
 
@@ -79,17 +80,19 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
     },
     devServer: {
         historyApiFallback: true,
+        host: "0.0.0.0",
         proxy: {
             "/api": {
-                target: "http://localhost:8080",
-                router: () => "http://localhost:3000",
+                target: "http://ui:8080",
+                router: () => "http://backend:3000",
                 logLevel: "debug"
             }
         }
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./public/index.html"
+            template: "./public/index.html",
+            favicon: "./public/favicon.ico"
         }),
         new webpack.DefinePlugin({
             "process.env.PRODUCTION": env.production || !env.development,
@@ -97,7 +100,10 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
             "process.env.VERSION": JSON.stringify(packageJSON.version)
         }),
         new ForkTsCheckerWebpackPlugin(),
-        new ESLintPlugin({files: "./src/**/*.{ts,tsx,js,jsx}"})
+        new ESLintPlugin({files: "./src/**/*.{ts,tsx,js,jsx}"}),
+        new CopyWebpackPlugin({
+            patterns: [{from: "./public/favicon.ico"}]
+        })
     ]
 });
 
