@@ -3,3 +3,4 @@ export const homepageContainer: string;
 export const displayContainer: string;
 export const uploadButton: string;
 export const muiTableRowRoot: string;
+export const uploadDialogue: string;
