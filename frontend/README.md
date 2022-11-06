@@ -1,8 +1,14 @@
-# PROJECT BLAH BLAH
+# Project
 
 ## Requirements
+Node
 
-Run `npm install` in the frontend folder. Requires Node.
+
+## Setup:
+1. Run `npm install` in the frontend folder. Requires Node.
+2. Run `npm run build` to generate required .css.d.ts file for external css rules.
+3. run `npm run dev` to start the application
+
 
 ## Start in development
 
