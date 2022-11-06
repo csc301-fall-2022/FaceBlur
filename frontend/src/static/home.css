@@ -17,16 +17,16 @@
 }
 
 .uploadButton {
-  position: absolute;
+  position: absolute !important;
   right: 15px;
   bottom: 15px;
-  background-color: #FA893C;
-  color: white;
+  background-color: #FA893C !important;
+  color: white !important;
   box-shadow: none !important;
 }
 
 .uploadButton:hover {
-  background-color: #f44336;
+  background-color: #f44336 !important;
 }
 
 .MuiTableRow-root {
