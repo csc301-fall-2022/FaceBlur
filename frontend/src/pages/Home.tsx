@@ -1,7 +1,6 @@
 import {Box, InputAdornment, TextField} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
-// import videos from "./DummyData.json";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -143,7 +142,7 @@ export default function HomePage() {
     const [filteredList, setFilteredList] = useState<Array<Video | undefined>>([]);
 
     //Get videos from prisma
-    function getVideos(): (Video | undefined)[] {
+    function getVideos() {
         function getTypeAsLiteral(type: string) {
             if (type === "FACE_BLURRED") {
                 return "FACE_BLURRED";
@@ -170,7 +169,6 @@ export default function HomePage() {
             });
         }
 
-        let videos;
         fetch("/api/video_list/list", {
             headers: {
                 Accept: "application/json",
@@ -185,10 +183,6 @@ export default function HomePage() {
                 setVideosList(vids(data));
                 setFilteredList(vids(data));
             });
-        if (videos === undefined) {
-            return [];
-        }
-        return videos;
     }
 
     function filterList(e: React.ChangeEvent<HTMLInputElement>) {
