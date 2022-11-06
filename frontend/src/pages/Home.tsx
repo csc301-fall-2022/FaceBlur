@@ -12,8 +12,9 @@ import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Fab from "@mui/material/Fab";
-import NavBar from "../components/common";
+import UploadDialogue from "components/upload-dialogue";
 import {useNavigate} from "react-router-dom";
+import NavBar from "../components/common";
 
 import * as home from "../static/home.css";
 
@@ -28,13 +29,18 @@ interface VideoList {
     filteredList: Array<Video | undefined>;
 }
 
+interface VideoProps {
+    filteredList: VideoList;
+    disabled: boolean;
+}
+
 const columns: readonly Column[] = [
     {id: "name", label: "Video Title", minWidth: 170},
     {id: "uploader", label: "Uploaded By", minWidth: 170},
     {id: "dateUploaded", label: "Date Uploaded", minWidth: 170}
 ];
 
-const VideoList = ({filteredList}: VideoList): JSX.Element => {
+const VideoList = (props: VideoProps): JSX.Element => {
     //https://mui.com/material-ui/react-table/
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -42,8 +48,10 @@ const VideoList = ({filteredList}: VideoList): JSX.Element => {
     const navigate = useNavigate();
 
     const routeChange = (key: string) => {
-        const path = `/video/${key}`;
-        navigate(path);
+        if (!props.disabled) {
+            const path = `/video/${key}`;
+            navigate(path);
+        }
     };
 
     const handleChangePage = (event: unknown, newPage: number) => {
@@ -67,7 +75,7 @@ const VideoList = ({filteredList}: VideoList): JSX.Element => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {filteredList
+                        {props.filteredList.filteredList
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 if (row === undefined) {
@@ -75,7 +83,7 @@ const VideoList = ({filteredList}: VideoList): JSX.Element => {
                                 }
                                 return (
                                     <TableRow
-                                        hover
+                                        hover={!props.disabled}
                                         role="checkbox"
                                         onClick={() => routeChange(row["name"])}
                                         tabIndex={-1}
@@ -102,7 +110,7 @@ const VideoList = ({filteredList}: VideoList): JSX.Element => {
             <TablePagination
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
-                count={filteredList.length}
+                count={props.filteredList.filteredList.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -113,6 +121,24 @@ const VideoList = ({filteredList}: VideoList): JSX.Element => {
 };
 
 export default function HomePage() {
+    const [upload, showUploadDialogue] = useState(false);
+    const [disabled, setDisabled] = useState(false);
+
+    const sleep = (milliseconds: number) => {
+        return new Promise((resolve) => setTimeout(resolve, milliseconds));
+    };
+
+    const handleClick = async () => {
+        showUploadDialogue(false);
+        await sleep(500);
+        setDisabled(false);
+    };
+
+    const handleUpload = () => {
+        showUploadDialogue(true);
+        setDisabled(true);
+    };
+
     const [videosList, setVideosList] = useState<Array<Video | undefined>>([]);
     const [filteredList, setFilteredList] = useState<Array<Video | undefined>>([]);
 
@@ -190,28 +216,35 @@ export default function HomePage() {
                     <Box sx={{}}>
                         <TextField
                             id="filled-basic"
-                            variant="filled"
+                            variant="standard"
                             className={home.searchbar}
                             size="small"
                             placeholder="Search"
+                            sx={{input: {color: "white", margin: "7px"}}}
                             onChange={filterList}
                             InputProps={{
                                 startAdornment: (
-                                    <InputAdornment position="start">
+                                    <InputAdornment
+                                        position="start"
+                                        sx={{color: "white", margin: "5px"}}
+                                    >
                                         <SearchIcon fontSize="large" />
                                     </InputAdornment>
-                                )
+                                ),
+                                disableUnderline: true
                             }}
                         />
                     </Box>
-
-                    <VideoList filteredList={filteredList} />
                 </div>
-                <Fab variant="extended" className={home.uploadButton}>
-                    Upload
-                    <UploadFileIcon></UploadFileIcon>
-                </Fab>
+                <div className={home.uploadDialogue}>
+                    {upload && <UploadDialogue handleClick={handleClick} />}
+                </div>
+                <VideoList disabled={disabled} filteredList={{filteredList: filteredList}} />
             </div>
+            <Fab variant="extended" className={home.uploadButton} onClick={handleUpload}>
+                Upload
+                <UploadFileIcon></UploadFileIcon>
+            </Fab>
         </div>
     );
 }
