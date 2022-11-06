@@ -7,7 +7,7 @@
   "proxy": "http://localhost:3000",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node",
+    "start": "ts-node index.ts",
     "dev": "webpack-cli serve --mode=development --env development --open --hot",
     "build": "webpack --mode=production --env production --progress",
     "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'",
@@ -37,7 +37,7 @@
     "@typescript-eslint/eslint-plugin": "5.38.1",
     "@typescript-eslint/parser": "5.38.1",
     "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "1.0.0",
+    "css-loader": "^6.7.1",
     "dts-css-modules-loader": "^2.0.1",
     "eslint": "8.24.0",
     "eslint-config-prettier": "8.5.0",

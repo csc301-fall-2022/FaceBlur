@@ -2,6 +2,7 @@
 version: '3.7'
 
 services:
+
   # Backend container
   api:
     build:
@@ -16,7 +17,6 @@ services:
     ports:
       - '3000:3000'
 
-
   # Frontend Container
 
   frontend:
@@ -30,3 +30,35 @@ services:
     depends_on:
       - api
 
+  # DB Container
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    hostname: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+  
+  # prisma container
+
+  prisma-postgres-api:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: prisma-postgres-api
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    restart: always
+  
+volumes:
+  postgres-data:
