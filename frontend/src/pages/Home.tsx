@@ -16,8 +16,10 @@ import NavBar from "../components/common";
 import {useNavigate} from "react-router-dom";
 
 import "../static/home.css";
+import moment from "moment";
 
 type vid = {
+    LastModified: Date;
     Key: string
  }
 
@@ -131,19 +133,8 @@ export default function HomePage() {
         }).then(res =>{return res.json()})
         .then(data => {
             setFilteredList((data["Contents"] as vid[]).map((video) => {
-                // const typeLiteral = getTypeAsLiteral(video.type);
-                // if (typeLiteral !== null) {
-                    // return {
-                    //     dateUploaded: Date.now(),
-                    //     name: video.name,
-                    //     id: video.id,
-                    //     type: typeLiteral,
-                    //     uploaderId: video.uploaderId,
-                    //     uploader: video.uploader
-                    // };
-                // }
                 return {
-                    dateUploaded: new Date('1995-12-17T03:24:00'),
+                    dateUploaded: moment(video.LastModified).toDate(),
                     name: video.Key,
                     id: 12,
                     type: "FACE_BLURRED",
@@ -156,47 +147,6 @@ export default function HomePage() {
                 };
             }));
          })
-        // function getTypeAsLiteral(type: string) {
-        //     if (type === "FACE_BLURRED") {
-        //         return "FACE_BLURRED";
-        //     } else if (type === "BACKGROUND_BLURRED") {
-        //         return "BACKGROUND_BLURRED";
-        //     } else if (type === "NO_BLUR") {
-        //         return "NO_BLUR";
-        //     }
-        //     return null;
-        // }
-        // console.log(typeof obj)
-        // console.log(obj)
-        // if (typeof obj == 'undefined'){
-        //     return []
-        // }
-        // setFilteredList((obj["Contents"] as vid[]).map((video) => {
-        //     // const typeLiteral = getTypeAsLiteral(video.type);
-        //     // if (typeLiteral !== null) {
-        //         // return {
-        //         //     dateUploaded: Date.now(),
-        //         //     name: video.name,
-        //         //     id: video.id,
-        //         //     type: typeLiteral,
-        //         //     uploaderId: video.uploaderId,
-        //         //     uploader: video.uploader
-        //         // };
-        //     // }
-        //     return {
-        //         dateUploaded: new Date('1995-12-17T03:24:00'),
-        //         name: video.Key,
-        //         id: 12,
-        //         type: "FACE_BLURRED",
-        //         uploaderId: 66,
-        //         uploader: {
-        //             "id": 3,
-        //             "email": "test3@gmail.com",
-        //             "password": "pass"
-        //           }
-        //     };
-        // }));
-        console.log(filteredList)
     }
 
     // function filterList(e: React.ChangeEvent<HTMLInputElement>) {

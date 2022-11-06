@@ -4,6 +4,7 @@ import AWS from 'aws-sdk';
 
 
 import { logger } from '../utils/logger';
+import prisma from '../prisma';
 
 
 const router = express.Router();
@@ -16,7 +17,7 @@ router.get("/test", (req: Request, res: Response) => {
 router.use(express.json());             
 router.use(express.urlencoded()); 
 
-// Endpoint for registering a user
+
 router.get('/list', (req: Request, res: Response) => {
     logger.info('Upload endpoint called');
     AWS.config.update({accessKeyId: process.env.AWS_ACCESS_KEY_ID || '', secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '', region: process.env.AWS_BUCKET_REGION || ''});
@@ -35,6 +36,7 @@ router.get('/list', (req: Request, res: Response) => {
      res.json(data);
     });
 });
+
 
 // no sessions for now
 
