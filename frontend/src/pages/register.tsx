@@ -1,4 +1,4 @@
-import React, {useReducer} from "react";
+import React, {useReducer, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
@@ -33,8 +33,8 @@ const initialState: State = {
 type Action =
     | {type: "setEmail"; payload: string}
     | {type: "setPassword"; payload: string}
-    | {type: "loginSuccess"; payload: string}
-    | {type: "loginFailed"; payload: string}
+    | {type: "registrationSuccess"; payload: string}
+    | {type: "registrationFailed"; payload: string}
     | {type: "setIsError"; payload: boolean};
 
 // update function
@@ -50,13 +50,13 @@ const reducer = (state: State, action: Action): State => {
                 ...state,
                 password: action.payload
             };
-        case "loginSuccess":
+        case "registrationSuccess":
             return {
                 ...state,
                 helperText: action.payload,
                 isError: false
             };
-        case "loginFailed":
+        case "registrationFailed":
             return {
                 ...state,
                 helperText: action.payload,
@@ -70,13 +70,14 @@ const reducer = (state: State, action: Action): State => {
     }
 };
 
-const Login = () => {
+const Register = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [response, setResponse] = useState(0);
     const navigate = useNavigate();
 
     // This is temporary, use a login endpoint from the api here later
-    const handleLogin = () => {
-        fetch("/api/auth/login", {
+    const handleRegister = () => {
+        fetch("/api/auth/register", {
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
@@ -86,26 +87,26 @@ const Login = () => {
                 email: state.email,
                 password: state.password
             })
-        }).then((res) => {
-            if (res.status === 200) {
-                dispatch({
-                    type: "loginSuccess",
-                    payload: "Login Successful"
-                });
-                navigate("/home");
-            } else {
-                dispatch({
-                    type: "loginFailed",
-                    payload: "Incorrect email or password"
-                });
-            }
-        });
+        }).then((res) => setResponse(res.status));
+
+        if (response === 200) {
+            dispatch({
+                type: "registrationSuccess",
+                payload: "Registration Successful"
+            });
+            navigate("/home");
+        } else {
+            dispatch({
+                type: "registrationFailed",
+                payload: "Email in use"
+            });
+        }
     };
 
     // Handles pressing enter to submit
     const handleKeyPress = (event: React.KeyboardEvent) => {
         if (event.key === "Enter") {
-            handleLogin();
+            handleRegister();
         }
     };
 
@@ -134,7 +135,7 @@ const Login = () => {
                     image={require("../../public/logo.png")}
                     sx={{objectFit: "contain"}}
                 />
-                <CardHeader className={login.header} title="Log into <App Name>" />
+                <CardHeader className={login.header} title="Register to <App Name>" />
                 <CardContent>
                     <div>
                         <TextField
@@ -168,21 +169,18 @@ const Login = () => {
                         variant="text"
                         size="large"
                         className={themes.btn}
-                        onClick={handleLogin}
+                        onClick={handleRegister}
                     >
-                        Sign In
+                        Register
                     </Button>
                 </CardActions>
                 {/* Not implememented yet */}
                 <CardContent>
-                    <div>Forgot Password?</div>
-                </CardContent>
-                <CardContent>
-                    <a href="/register">Don&#39;t have an account yet?</a>
+                    <a href="/">Already have an account?</a>
                 </CardContent>
             </Card>
         </form>
     );
 };
 
-export default Login;
+export default Register;
