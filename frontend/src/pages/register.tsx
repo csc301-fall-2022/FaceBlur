@@ -173,7 +173,7 @@ const Register = () => {
                     image={require("../../public/logo.png")}
                     sx={{objectFit: "contain"}}
                 />
-                <CardHeader className={login.header} title="Register to <App Name>" />
+                <CardHeader className={login.header} title="Register for KidBlur" />
                 <CardContent>
                     <div>
                         <TextField
