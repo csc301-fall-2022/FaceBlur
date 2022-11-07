@@ -32,10 +32,6 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
                 },
                 exclude: /dist/
             },
-            // {
-            //     test: /\.css$/,
-            //     use: ["style-loader", "css-loader"]
-            // },
             {
                 test: /\.css$/,
                 use: [
