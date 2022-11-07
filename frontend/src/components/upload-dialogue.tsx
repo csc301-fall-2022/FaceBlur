@@ -6,6 +6,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Button from "@mui/material/Button";
 import * as upload from "../static/upload-dialogue.css";
+import Cookies from "js-cookie";
 
 const DragFile = (props: {
     handleDrop: (blob: Blob, string: string) => void;
@@ -132,6 +133,7 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
         formData.append("userId", userId.toString());
 
         return fetch("/api/upload", {
+            headers: {Authorization: "Bearer " + Cookies.get("access")},
             method: "POST",
             body: formData
         }).then(() => {
