@@ -145,7 +145,7 @@ const Login = () => {
                     image={require("../../public/logo.png")}
                     sx={{objectFit: "contain"}}
                 />
-                <CardHeader className={login.header} title="Log into <App Name>" />
+                <CardHeader className={login.header} title="Log into KidBlur" />
                 <CardContent>
                     <div>
                         <TextField
