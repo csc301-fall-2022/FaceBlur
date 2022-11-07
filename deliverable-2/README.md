@@ -3,7 +3,7 @@
 
 ## Application Link
 
-MVP (Heroku): 
+MVP (Heroku): https://csc301-d2.herokuapp.com/ 
 
 Final (AWS): http://tecl-frontend.s3-website-us-east-1.amazonaws.com/ (see deployment details for clarification)
 
@@ -87,7 +87,7 @@ We have everything tracked under Github Issues, which is also connected to our K
 PRs are made from these feature branches to the main branch. The person opening the PR review assigns a single PR reviewer. We don't allow merges until at least 1 reviewer has approved the feature. We chose this to minimize friction in terms of development, but also ensure that the PR had passed at least 1 person's review before being merged into main. The person who made the PR is responsible for merging their PR once it is accepted.
 
  ### Deployment - MVP
- 
+ The MVP is currently deployed on Heroku, purely for demonstrative purposes.
  
  ### Deployment - Final Stack
  The application will be entirely hosted through AWS. The Postgresql database is hosted on RDS, and we are using a serverless implementation.
