@@ -32,14 +32,14 @@ services:
   
   # prisma container
 
-  prisma-postgres-api:
-    stdin_open: true
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: prisma-postgres-api
-    depends_on:
-      - postgres
-    ports:
-      - "3000:3000"
-    restart: always
+  # prisma-postgres-api:
+  #   stdin_open: true
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: prisma-postgres-api
+  #   depends_on:
+  #     - postgres
+  #   ports:
+  #     - "3000:3000"
+  #   restart: always

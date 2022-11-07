@@ -1,3 +1,4 @@
+import serverless from 'serverless-http';
 import express, { Express, Request, Response } from 'express';
 import video_list from './routes/video_list';
 import auth from './routes/auth';
@@ -33,9 +34,9 @@ app.use(
 app.use('/api/video_list', video_list);
 
 const port = process.env.PORT;
-app.get('/api/sanity_check', (req: Request, res: Response) => {
-    res.send('CSC301 Sanity Check is working');
-});
+app.get("/api/sanity-check", (req: Request, res:Response) => {
+    res.send("CSC301 Sanity Check is working")
+})
 
 /* app.get('/', (req: Request, res: Response) => {
     res.send('CSC301 Express Server');
@@ -44,5 +45,7 @@ app.get('/api/sanity_check', (req: Request, res: Response) => {
 if (process.env.NODE_ENV !== 'test') {
     app.listen(port, () => logger.info(`Server started at port ${port}`));
 }
+	
+module.exports.handler = serverless(app);
 
 export default app;

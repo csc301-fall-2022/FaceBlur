@@ -15,6 +15,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.202.0",
     "@prisma/client": "^4.4.0",
+    "@types/serverless": "^3.12.8",
     "aws-sdk": "^2.1246.0",
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.2",
@@ -26,6 +27,7 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "serverless-http": "^3.1.0",
     "winston": "^3.8.2"
   },
   "devDependencies": {
