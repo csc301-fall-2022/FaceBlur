@@ -82,12 +82,12 @@ Describe your Git / GitHub workflow. Essentially, we want to understand how your
 
 We have everything tracked under Github Issues, which is also connected to our Kanban board. Team members are assigned issues, and create feature branches for each issue. Our scum master does her best to ensure these issues are not interdependent, preventing tickets being worked on in parallel from being blockers for each other. 
 
-PRs are made from these feature branches to the main branch. The person opening the PR review assigns a single PR reviewer. We don't allow merges till at least 1 reviewer has approved the feature. We chose this to minimize friction in terms of development, but also ensure that the PR had passed at least 1 person's review before being merged into main. The person who made the PR is responsible for merging their PR once it is accepted.
+PRs are made from these feature branches to the main branch. The person opening the PR review assigns a single PR reviewer. We don't allow merges until at least 1 reviewer has approved the feature. We chose this to minimize friction in terms of development, but also ensure that the PR had passed at least 1 person's review before being merged into main. The person who made the PR is responsible for merging their PR once it is accepted.
 
 TODO: Deployment (Siddarth)
 
  ## Licenses 
  
- We wil be using the MIT license. Our dependencies, express and react, have MIT license, which is a permissive license, and our partners have agreed to share the code with anyone for any use without or without license; This allows us to choose any license we'd like. So, we chose MIT, meaning it can be distributed, modified, and used for any purpose, private or commercial. Now, any developer can modify or use our codebase. 
+ We are using the MIT license. Our dependencies, express and react, have MIT license, which is a permissive license, and our partners have agreed to share the code with anyone for any use without or without license; This allows us to choose any license we'd like. So, we chose MIT, meaning it can be distributed, modified, and used for any purpose, private or commercial. Now, any developer can modify or use our codebase. 
  
- We chose to use a permissive license because we are building this application for a course in our university in collaboration with a research lab at our university; university is a place for learning and improving and as such we saw fit to allow other people to learn and improve on our codebase. We are also aware that we are still in school and still have a lot to learn, so we wantto allow experienced developers to modify our code and improve it for their use.
+ We chose to use a permissive license because we are building this application for a course in our university in collaboration with a research lab at our university; university is a place for learning and improving and as such we saw fit to allow other people to learn and improve on our codebase. We are also aware that we are still in school and still have a lot to learn, so we want to allow experienced developers to modify our code and improve it for their use.

@@ -34,6 +34,10 @@ See below for an example of the density of information served by the bot.
 **2. Tracking meeting minutes**
  * This decision was unsuccessful because we weren't able to commit to documenting the meetings in our meeting-minutes folder, so we have no documentation of things that were discussed 
 
+
+ **3. Delaying CI/CD pipeline implementation**
+ * It took us longer than it should have to make our CI/CD pipeline with CircleCI. Because of that, a lot of our code is not following standards that we initially set for our codebase, such as style issues. We also have not properly set up tests for a lot of our code.
+
 #### Q3. Planned changes
 
 1. We are planning to formalize having the weekly tutorial section also serve as a standup, in addition to our current weekly standup every Monday morning. We are making this change because we have had issues where people working on tickets that are dependent on each other are not aware of the status of each other's tickets, complicating development and ultimately slowing down progress. Currently we often have an informal standup during tutorial, but we plan to make it formal to ensure it happens each time.
