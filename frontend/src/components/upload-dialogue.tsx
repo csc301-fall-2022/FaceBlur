@@ -88,7 +88,7 @@ const DragFile = (props: {
     );
 };
 
-export default function UploadDialogue(props: {handleClick: () => void}) {
+export default function UploadDialogue(props: {handleClick: () => void; updateVideos: () => void}) {
     const ref = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState(new Blob([], {type: "video/mp4"}));
     const [fileName, setFileName] = useState("");
@@ -140,6 +140,7 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
             setBackgroundBlur(false);
             setFile(new Blob([], {type: "video/mp4"}));
             props.handleClick();
+            props.updateVideos();
         });
     };
 

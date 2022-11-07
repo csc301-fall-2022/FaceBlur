@@ -231,7 +231,9 @@ export default function HomePage() {
                     </Box>
                 </div>
                 <div className={home.uploadDialogue}>
-                    {upload && <UploadDialogue handleClick={handleClick} />}
+                    {upload && (
+                        <UploadDialogue handleClick={handleClick} updateVideos={getVideos} />
+                    )}
                 </div>
                 <VideoList disabled={disabled} filteredList={{filteredList: filteredList}} />
             </div>
