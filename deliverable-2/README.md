@@ -3,7 +3,8 @@
 
 ## Application Link
 
-http://tecl-frontend.s3-website-us-east-1.amazonaws.com/ 
+MVP (Heroku): 
+Final (AWS): http://tecl-frontend.s3-website-us-east-1.amazonaws.com/
 
 ## Description 
 
@@ -63,7 +64,7 @@ Our application allows researchers in the child psychology space to anonymize ch
 
 As a developer,you are required to have Nodejs and Postgresql installed before the following process.
 
-1. Ensure that your local instance of postgres is started
+1. Ensure that your local instance of postgres is started, and the .env parameters are filled out correctly
 2. Go into the /api directory.
 3. Follow the instructions under the **Setup** section of the README.md in that directory.
 4. Go into the /frontend directory 
@@ -84,7 +85,11 @@ We have everything tracked under Github Issues, which is also connected to our K
 
 PRs are made from these feature branches to the main branch. The person opening the PR review assigns a single PR reviewer. We don't allow merges until at least 1 reviewer has approved the feature. We chose this to minimize friction in terms of development, but also ensure that the PR had passed at least 1 person's review before being merged into main. The person who made the PR is responsible for merging their PR once it is accepted.
 
-TODO: Deployment (Siddarth)
+ ### Deployment - MVP
+ 
+ 
+ ### Deployment - Final Stack
+ The application will be entirely hosted through AWS. The Postgresql database is hosted on RDS, and we are using a serverless implementation. Thus, throught the `serverless` package, a Lambda function is generated which communicates with the site (statically located in an S3 bucket). All REST API requests are managed through an API Gateway, and the entire app is stored as a stack monitored on CloudWatch. This is all encapsulated by a Route 53 host zone, which routes and manages secure traffic to `tecl.ml` which is currently not available due to domain issues. Currently, all aspects of this have been individually implemented, but we are running into pricing issues with RDS which is why this is on hold until the final product.
 
  ## Licenses 
  
