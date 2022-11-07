@@ -125,12 +125,10 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
     };
 
     const postFile = () => {
-        const userId = 1;
         const formData = new FormData();
         formData.append("file", file);
         formData.append("faceBlur", faceBlur.toString());
         formData.append("backgroundBlur", backgroundBlur.toString());
-        formData.append("userId", userId.toString());
 
         return fetch("/api/upload", {
             headers: {Authorization: "Bearer " + Cookies.get("access")},
