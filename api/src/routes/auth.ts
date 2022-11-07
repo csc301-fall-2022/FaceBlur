@@ -2,13 +2,17 @@ import express, { Request, Response } from 'express';
 import passport from 'passport';
 import Strategy from 'passport-local';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 import prisma from '../prisma';
 import { logger } from '../utils/logger';
 import { LocalPassport } from '../middleware/passport';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 
 LocalPassport(passport, Strategy.Strategy);
+
+const JWT_SECRET = process.env.JWT_SECRET ?? 'secret';
+
 const router = express.Router();
 
 router.use(passport.initialize());
@@ -68,7 +72,14 @@ router.post(
     async (req, res) => {
         try {
             logger.info('Login Succeeded');
-            res.status(200).json({ status: 'success' });
+            const user = req.authInfo as User;
+            res.status(200).json({
+                status: 'success',
+                token: jwt.sign(
+                    { id: user.id, email: user.email } ?? '',
+                    JWT_SECRET
+                ),
+            });
         } catch (err) {
             logger.info('Login Failed');
             logger.error(err);

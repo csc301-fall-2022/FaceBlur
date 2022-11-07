@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { logger } from '../utils/logger';
 import prisma from '../prisma';
+import { User } from '@prisma/client';
 
 import multer from 'multer';
 import { storage, fileFilter } from '../middleware/upload';
@@ -29,8 +30,9 @@ router.post('/', (req: Request, res: Response) => {
             res.status(500).send(err.message);
         } else {
             // Create video record and save to local db
-            const userId = parseInt(req.body.userId);
-            // selected options 
+            const user = req.user as User;
+            const userId = user.id;
+            // selected options
             // const doFaceBlur = req.body.faceBlur;
             // const doBackgroundBlur = req.body.backgroundBlur;
             const video = await prisma.video.upsert({

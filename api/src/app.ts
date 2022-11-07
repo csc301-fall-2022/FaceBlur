@@ -13,27 +13,32 @@ dotenv.config();
 const app: Express = express();
 
 app.use(express.json());
-app.use(passport.initialize())
-app.use("/api/auth", auth);
+app.use(passport.initialize());
+app.use('/api/auth', auth);
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/api/upload', upload);
+// upload route
+app.use(
+    '/api/upload',
+    passport.authenticate('jwt', { session: false }),
+    upload
+);
 
 app.use("/api/video_list", video_list);
 
 const port = process.env.PORT;
-app.get("/api/sanity_check", (req: Request, res:Response) => {
-    res.send("CSC301 Sanity Check is working")
-})
+app.get('/api/sanity_check', (req: Request, res: Response) => {
+    res.send('CSC301 Sanity Check is working');
+});
 
 app.get('/', (req: Request, res: Response) => {
     res.send('CSC301 Express Server');
 });
 
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(port, () => logger.info(`Server started at port ${port}`));
+    app.listen(port, () => logger.info(`Server started at port ${port}`));
 }
 
 export default app;
