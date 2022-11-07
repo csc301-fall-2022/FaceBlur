@@ -4,7 +4,8 @@
 ## Application Link
 
 MVP (Heroku): 
-Final (AWS): http://tecl-frontend.s3-website-us-east-1.amazonaws.com/
+
+Final (AWS): http://tecl-frontend.s3-website-us-east-1.amazonaws.com/ (see deployment details for clarification)
 
 ## Description 
 
@@ -89,7 +90,19 @@ PRs are made from these feature branches to the main branch. The person opening 
  
  
  ### Deployment - Final Stack
- The application will be entirely hosted through AWS. The Postgresql database is hosted on RDS, and we are using a serverless implementation. Thus, throught the `serverless` package, a Lambda function is generated which communicates with the site (statically located in an S3 bucket). All REST API requests are managed through an API Gateway, and the entire app is stored as a stack monitored on CloudWatch. This is all encapsulated by a Route 53 host zone, which routes and manages secure traffic to `tecl.ml` which is currently not available due to domain issues. Currently, all aspects of this have been individually implemented, but we are running into pricing issues with RDS which is why this is on hold until the final product.
+ The application will be entirely hosted through AWS. The Postgresql database is hosted on RDS, and we are using a serverless implementation.
+ ![Screen Shot 2022-11-06 at 11 04 07 PM](https://user-images.githubusercontent.com/32244859/200224294-505bc831-36b6-4253-b7cd-b657a487f507.png)
+ Thus, through the `serverless` package, a Lambda function is generated which communicates with the site (statically located in an S3 bucket).
+ 
+ ![Screen Shot 2022-11-06 at 11 04 52 PM](https://user-images.githubusercontent.com/32244859/200224350-98b0a422-e4b6-4c94-bc04-94037aa5c3e4.png)
+ ![Screen Shot 2022-11-06 at 11 04 17 PM](https://user-images.githubusercontent.com/32244859/200224359-2a301d68-f39f-45ea-a7d2-278a66c3e8d6.png)
+ 
+ All REST API requests are managed through an API Gateway, and the entire app is stored as a stack monitored on CloudWatch. 
+ ![Screen Shot 2022-11-06 at 11 05 06 PM](https://user-images.githubusercontent.com/32244859/200224384-440ccf28-5de8-402c-91fd-bbf96b7cab0d.png)
+ This is all encapsulated by a Route 53 host zone, which routes and manages secure traffic to `tecl.ml` which is currently not available due to domain issues. 
+ ![Screen Shot 2022-11-06 at 11 06 47 PM](https://user-images.githubusercontent.com/32244859/200224439-12a95e3f-3b09-48de-aeea-e3b4cc45f7a3.png)
+
+ Currently, all aspects of this have been individually implemented, but we are running into pricing issues with RDS which is why this is on hold until the final product.
 
  ## Licenses 
  
