@@ -7,12 +7,14 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const VideoPage = () => {
-    //TODO: swap this out to get from params using useParams & add typeguard for undefined
-    const link =
-        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
+    let {key} = useParams();
+    if (key === undefined) {
+        key = "";
+    }
+    const link = "https://tecl-testing.s3.amazonaws.com/" + key.replace(/ /g, "+");
 
     function download(videoLink: string) {
         FileSaver.saveAs(videoLink);
@@ -26,7 +28,7 @@ const VideoPage = () => {
                 spacing={0}
                 alignItems="center"
                 justifyContent="center"
-                style={{minHeight: "100vh"}}
+                style={{maxHeight: "500px"}}
             >
                 <Grid item xs={12}>
                     <Card sx={{width: 0.7, margin: "auto"}}>
