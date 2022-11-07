@@ -47,8 +47,7 @@ provider:
 #                - "/*"
 
 # you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+useDotenv: true
 
 # you can add packaging information here
 package:
@@ -56,27 +55,11 @@ package:
     - node_modules/**
 
 functions:
-  test:
-    handler: handler.test
+  app:
+    handler: app.handler
     events:
-      - http:
-          path: /api/sanity-check
-          method: get
-  auth:
-    handler: handler.auth
-    events:
-      - http:
-          path: /api/auth/login
-          method: post
-      - http:
-          path: /api/auth/register
-          method: post
-  upload:
-    handler: handler.upload
-    events:
-      - http:
-          path: /api/upload
-          method: post
+      - http: ANY /
+      - http: 'ANY /{proxy+}'
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

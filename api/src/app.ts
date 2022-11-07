@@ -41,14 +41,7 @@ app.get('/', (req: Request, res: Response) => {
 if (process.env.NODE_ENV !== 'test') {
     app.listen(port, () => logger.info(`Server started at port ${port}`));
 }
-
-module.exports.handler = serverless(app, {
-  request: (req: any, event: any, context: any) => {
-    context.callbackWaitsForEmptyEventLoop = false;
-
-    req.event = event;
-    req.context = context;
-  }
-})
+	
+module.exports.handler = serverless(app);
 
 export default app;
