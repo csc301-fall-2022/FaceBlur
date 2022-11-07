@@ -1,9 +1,7 @@
 {
   "scripts": {
-    "prebuild": "npm run install",
-    "build": "(cd frontend && npm run build) && (cd api && npx tsc)",
-    "install": "(cd frontend && npm i) && (cd api && npm i)",
-    "prestart": "npm run build",
+    "install": "(cd frontend && npm i --dev) && (cd api && npm i --dev)",
+    "build": "(cd frontend && npm run build) && (cd api && npm run build)",
     "start": "(cd api && npm run start)"
   }
 }
