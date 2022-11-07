@@ -1,6 +1,9 @@
 # KidBlur
 
-> _Note:_ This document is intended to be relatively short. Be concise and precise. Assume the reader has no prior knowledge of your application and is non-technical. 
+
+## Application Link
+
+http://tecl-frontend.s3-website-us-east-1.amazonaws.com/ 
 
 ## Description 
 
@@ -47,13 +50,18 @@ Our application allows researchers in the child psychology space to anonymize ch
  * Provide clear steps for using each feature described above
  * This section is critical to testing your application and must be done carefully and thoughtfully
 
-The process starts at the login page where the user can either login or register for an account if they don't have one yet. Once they've logged in, they will be redirected to the home page which if they are a returning user, will show all the videos that they've uploaded in the past. On this home page, the user can search for videos by their names, using the search bar at the top. On this page, the user can also upload videos using the upload button in the bottom right. When the user clicks the upload button, an upload pop up will display. To exit the popup, the user will just click any where on the page that isn't the popup. To upload a video the user can either choose to select from their files or drag and drop a video in. After the user selects a video, they can choose from two blur types using the checkboxes. These blur types determine whether the face or the background gets blurred. After the user chooses a blur type, they can press the submit button to upload it. 
+1. The user will arrive at the login page initially. There are no pre-created accounts, so if the user must create an account if they have not before. 
+   * If they choose to register, they are redirected to a registration page. After registering, they are automatically logged in. 
+   * Otherwise, they can login immediately.
+2. Once they've logged in, they will be redirected to the home page which if they are a returning user, will show all the videos that they've uploaded in the past. Users can perform the following functions on this page:
+   * search for videos by their names, using the search bar at the top. If the user clicks on a row, it will redirect to the video player, where they can view the video and download it. They can also use the back button to return to the home page
+   * Upload videos using the upload button in the bottom right. When the user clicks the upload button, an upload pop up will display. To exit the popup, the user will just click any where on the page that isn't the popup. To upload a video the user can either choose to select from their files or drag and drop a video in. After the user selects a video, they can choose from two blur types using the checkboxes. These blur types will determine whether the face or the background gets blurred, after the MVP. After the user chooses a blur type, they can press the submit button to upload it. Then the upload dialogue appears, showing the home page, where the new video will be shown in the list.
  
  ## Development requirements
  * If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
  * Briefly describe instructions for setting up and running the application (think a true README).
 
-As a developer,you are required to have Docker and Postgresql installed before the following process.
+As a developer,you are required to have Nodejs and Postgresql installed before the following process.
 
 1. Ensure that your local instance of postgres is started
 2. Go into the /api directory.
@@ -74,18 +82,12 @@ Describe your Git / GitHub workflow. Essentially, we want to understand how your
 
 We have everything tracked under Github Issues, which is also connected to our Kanban board. Team members are assigned issues, and create feature branches for each issue. Our scum master does her best to ensure these issues are not interdependent, preventing tickets being worked on in parallel from being blockers for each other. 
 
-PRs are made from these feature branches to the main branch. The person opening the PR review assigns a single PR reviewer. We don't allow merges till at least 1 reviewer has approved the feature. We chose this to minimize friction in terms of development, but also ensure that the PR had passed at least 1 person's review before being merged into main. The person who made the PR is responsible for merging their PR once it is accepted.
+PRs are made from these feature branches to the main branch. The person opening the PR review assigns a single PR reviewer. We don't allow merges until at least 1 reviewer has approved the feature. We chose this to minimize friction in terms of development, but also ensure that the PR had passed at least 1 person's review before being merged into main. The person who made the PR is responsible for merging their PR once it is accepted.
 
 TODO: Deployment (Siddarth)
 
  ## Licenses 
-
- Keep this section as brief as possible. You may read this [Github article](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository) for a start.
-
- * What type of license will you apply to your codebase?
- * What affect does it have on the development and use of your codebase?
- * Why did you or your partner make this choice?
  
- We wil be using the MIT license. Our dependencies, express and react, have MIT license, which is a permissive license, and our partners have agreed to share the code with anyone for any use without or without license; This allows us to choose any license we'd like. So, we chose MIT, meaning it can be distributed, modified, and used for any purpose, private or commercial. Now, any developer can modify or use our codebase. 
+ We are using the MIT license. Our dependencies, express and react, have MIT license, which is a permissive license, and our partners have agreed to share the code with anyone for any use without or without license; This allows us to choose any license we'd like. So, we chose MIT, meaning it can be distributed, modified, and used for any purpose, private or commercial. Now, any developer can modify or use our codebase. 
  
- We chose to use a permissive license because we are building this application for a course in our university in collaboration with a research lab at our university; university is a place for learning and improving and as such we saw fit to allow other people to learn and improve on our codebase. We are also aware that we are still in school and still have a lot to learn, so we wantto allow experienced developers to modify our code and improve it for their use.
+ We chose to use a permissive license because we are building this application for a course in our university in collaboration with a research lab at our university; university is a place for learning and improving and as such we saw fit to allow other people to learn and improve on our codebase. We are also aware that we are still in school and still have a lot to learn, so we want to allow experienced developers to modify our code and improve it for their use.

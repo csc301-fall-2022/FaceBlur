@@ -1,7 +1,6 @@
 import {Box, InputAdornment, TextField} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import videos from "./DummyData.json";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -39,31 +38,6 @@ const columns: readonly Column[] = [
     {id: "uploader", label: "Uploaded By", minWidth: 170},
     {id: "dateUploaded", label: "Date Uploaded", minWidth: 170}
 ];
-function getVideos(): (Video | undefined)[] {
-    function getTypeAsLiteral(type: string) {
-        if (type === "FACE_BLURRED") {
-            return "FACE_BLURRED";
-        } else if (type === "BACKGROUND_BLURRED") {
-            return "BACKGROUND_BLURRED";
-        } else if (type === "NO_BLUR") {
-            return "NO_BLUR";
-        }
-        return null;
-    }
-    return videos.map((video) => {
-        const typeLiteral = getTypeAsLiteral(video.type);
-        if (typeLiteral !== null) {
-            return {
-                dateUploaded: new Date(video.dateUploaded),
-                name: video.name,
-                id: video.id,
-                type: typeLiteral,
-                uploaderId: video.uploaderId,
-                uploader: video.uploader
-            };
-        }
-    });
-}
 
 const VideoList = (props: VideoProps): JSX.Element => {
     //https://mui.com/material-ui/react-table/
@@ -72,9 +46,9 @@ const VideoList = (props: VideoProps): JSX.Element => {
 
     const navigate = useNavigate();
 
-    const routeChange = () => {
+    const routeChange = (key: string) => {
         if (!props.disabled) {
-            const path = "/video";
+            const path = `/video/${key}`;
             navigate(path);
         }
     };
@@ -110,7 +84,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                     <TableRow
                                         hover={!props.disabled}
                                         role="checkbox"
-                                        onClick={routeChange}
+                                        onClick={() => routeChange(row["name"])}
                                         tabIndex={-1}
                                         key={row.id}
                                     >
@@ -167,6 +141,50 @@ export default function HomePage() {
     const [videosList, setVideosList] = useState<Array<Video | undefined>>([]);
     const [filteredList, setFilteredList] = useState<Array<Video | undefined>>([]);
 
+    //Get videos from prisma
+    function getVideos() {
+        function getTypeAsLiteral(type: string) {
+            if (type === "FACE_BLURRED") {
+                return "FACE_BLURRED";
+            } else if (type === "BACKGROUND_BLURRED") {
+                return "BACKGROUND_BLURRED";
+            } else if (type === "NO_BLUR") {
+                return "NO_BLUR";
+            }
+            return null;
+        }
+        function vids(videos: Video[]): (Video | undefined)[] {
+            return (videos as Video[]).map((video) => {
+                const typeLiteral = getTypeAsLiteral(video.type);
+                if (typeLiteral !== null) {
+                    return {
+                        dateUploaded: new Date(video.dateUploaded),
+                        name: video.name,
+                        id: video.id,
+                        type: typeLiteral,
+                        uploaderId: video.uploaderId,
+                        uploader: video.uploader
+                    };
+                }
+            });
+        }
+
+        fetch("/api/video_list/list", {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            method: "GET"
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setVideosList(vids(data));
+                setFilteredList(vids(data));
+            });
+    }
+
     function filterList(e: React.ChangeEvent<HTMLInputElement>) {
         const currentSearch = e.currentTarget.value.toLowerCase();
         setFilteredList(
@@ -181,8 +199,7 @@ export default function HomePage() {
     }
 
     useEffect(() => {
-        setVideosList(getVideos());
-        setFilteredList(getVideos());
+        getVideos();
     }, []);
 
     return (
@@ -214,7 +231,9 @@ export default function HomePage() {
                     </Box>
                 </div>
                 <div className={home.uploadDialogue}>
-                    {upload && <UploadDialogue handleClick={handleClick} />}
+                    {upload && (
+                        <UploadDialogue handleClick={handleClick} updateVideos={getVideos} />
+                    )}
                 </div>
                 <VideoList disabled={disabled} filteredList={{filteredList: filteredList}} />
             </div>

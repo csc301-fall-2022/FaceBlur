@@ -6,6 +6,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Button from "@mui/material/Button";
 import * as upload from "../static/upload-dialogue.css";
+import Cookies from "js-cookie";
 
 const DragFile = (props: {
     handleDrop: (blob: Blob, string: string) => void;
@@ -87,7 +88,7 @@ const DragFile = (props: {
     );
 };
 
-export default function UploadDialogue(props: {handleClick: () => void}) {
+export default function UploadDialogue(props: {handleClick: () => void; updateVideos: () => void}) {
     const ref = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState(new Blob([], {type: "video/mp4"}));
     const [fileName, setFileName] = useState("");
@@ -124,14 +125,13 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
     };
 
     const postFile = () => {
-        const userId = 1;
         const formData = new FormData();
         formData.append("file", file);
         formData.append("faceBlur", faceBlur.toString());
         formData.append("backgroundBlur", backgroundBlur.toString());
-        formData.append("userId", userId.toString());
 
         return fetch("/api/upload", {
+            headers: {Authorization: "Bearer " + Cookies.get("access")},
             method: "POST",
             body: formData
         }).then(() => {
@@ -140,6 +140,7 @@ export default function UploadDialogue(props: {handleClick: () => void}) {
             setBackgroundBlur(false);
             setFile(new Blob([], {type: "video/mp4"}));
             props.handleClick();
+            props.updateVideos();
         });
     };
 

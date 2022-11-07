@@ -27,8 +27,16 @@
 **1. Discord github workflow integration**
 * The notifications tend to have too much information which isn't very useful to our workflow
 
+See below for an example of the density of information served by the bot.
+![image](https://user-images.githubusercontent.com/22108651/200204266-ab466d81-a5ae-433d-bed7-8d053c512026.png)
+
+
 **2. Tracking meeting minutes**
  * This decision was unsuccessful because we weren't able to commit to documenting the meetings in our meeting-minutes folder, so we have no documentation of things that were discussed 
+
+
+ **3. Delaying CI/CD pipeline implementation**
+ * It took us longer than it should have to make our CI/CD pipeline with CircleCI. Because of that, a lot of our code is not following standards that we initially set for our codebase, such as style issues. We also have not properly set up tests for a lot of our code.
 
 #### Q3. Planned changes
 
@@ -40,9 +48,7 @@
 ## Product - Review
 
 #### Q4. How was your product demo?
- * How did you prepare your demo?
- * What did you manage to demo to your partner?
- * Did your partner accept the features?
- * Were there change requests?
- * What did you learn from the demo from either a process or product perspective?
- * *This section will be marked very leniently so keep it brief and just make sure the points are addressed*
+
+We prepared for our demo by doing a trial runthrough of our product before the actual demo, to ensure that all of our features were functioning as expected. We demoed a paired down version of our current MVP. We did not have the upload functionality truly working, but we had the ability to search, filter and view videos, albeit with dummy data. We could also download, and had the entire user-flow for uploading done, although it did not actually upload to the cloud at the time of the demo.
+
+Our partner accepted our features in general, and were pleased with our adherence to their logo and general implicit color theme. They did not have change requests, but they requested that we prioritize the face processing portion of our project, as that is more important than the front-end & uploading that we had fleshed out for the MVP. We had some issues with the actual face processing, and were unable to integrate it for the MVP, but we are confident in our ability to get it right. From a product perspective, we were reoriented towards facing what is really important to the client.

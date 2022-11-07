@@ -10,6 +10,7 @@ import {CardMedia} from "@mui/material";
 
 import * as themes from "../static/themes.css";
 import * as login from "../static/login.css";
+import Cookies from "js-cookie";
 
 // https://surajsharma.net/blog/react-login-form-typescript
 
@@ -86,20 +87,25 @@ const Login = () => {
                 email: state.email,
                 password: state.password
             })
-        }).then((res) => {
-            if (res.status === 200) {
-                dispatch({
-                    type: "loginSuccess",
-                    payload: "Login Successful"
-                });
-                navigate("/home");
-            } else {
-                dispatch({
-                    type: "loginFailed",
-                    payload: "Incorrect email or password"
-                });
-            }
-        });
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    dispatch({
+                        type: "loginSuccess",
+                        payload: "Login Successful"
+                    });
+                    navigate("/home");
+                } else {
+                    dispatch({
+                        type: "loginFailed",
+                        payload: "Incorrect email or password"
+                    });
+                }
+                return res.json();
+            })
+            .then((data) => {
+                Cookies.set("access", data.token);
+            });
     };
 
     // Handles changing to registration screen
