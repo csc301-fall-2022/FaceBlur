@@ -7,6 +7,7 @@ import CardActions from "@mui/material/CardActions";
 import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import {CardMedia} from "@mui/material";
+import Cookies from "js-cookie";
 
 import * as themes from "../static/themes.css";
 import * as login from "../static/login.css";
@@ -107,20 +108,25 @@ const Register = () => {
                     email: state.email,
                     password: state.password
                 })
-            }).then((res) => {
-                if (res.status === 200) {
-                    dispatch({
-                        type: "registrationSuccess",
-                        payload: "Registration Successful"
-                    });
-                    navigate("/home");
-                } else {
-                    dispatch({
-                        type: "registrationFailed",
-                        payload: "Email in use"
-                    });
-                }
-            });
+            })
+                .then((res) => {
+                    if (res.status === 200) {
+                        dispatch({
+                            type: "registrationSuccess",
+                            payload: "Registration Successful"
+                        });
+                        navigate("/home");
+                    } else {
+                        dispatch({
+                            type: "registrationFailed",
+                            payload: "Email in use"
+                        });
+                    }
+                    return res.json();
+                })
+                .then((data) => {
+                    Cookies.set("access", data.token);
+                });
         }
     };
 

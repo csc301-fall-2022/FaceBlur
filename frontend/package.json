@@ -21,6 +21,7 @@
     "@types/copy-webpack-plugin": "^10.1.0",
     "@types/file-saver": "^2.0.5",
     "file-saver": "^2.0.5",
+    "js-cookie": "^3.0.1",
     "moment": "^2.29.4",
     "react": "^18.0.2",
     "react-dom": "^18.0.2",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
+    "@types/js-cookie": "^3.0.2",
     "@types/node": "16.11.62",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",

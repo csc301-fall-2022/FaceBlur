@@ -33,14 +33,17 @@ router.post('/register', async (req: Request, res: Response) => {
             },
         });
         if (user === null) {
-            await prisma.user.create({
+            const user = await prisma.user.create({
                 data: {
                     email: email,
                     password: encrypted_password,
                 },
             });
             logger.info('Registration Succeeded');
-            res.status(200).json({ status: 'succeeded' });
+            res.status(200).json({ status: 'succeeded', token:  jwt.sign(
+                    { id: user.id, email: user.email } ?? '',
+                    JWT_SECRET
+                )});
         } else {
             logger.error('Email Exists');
             res.status(500).json({ status: 'failed', message: 'Email In Use' });
