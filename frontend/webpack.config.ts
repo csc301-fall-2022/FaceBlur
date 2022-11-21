@@ -34,6 +34,12 @@ const webpackConfig = (env: {production: any; development: any}): Configuration 
             },
             {
                 test: /\.css$/,
+                include: /react-html5video/,
+                use: ["style-loader", "css-loader"]
+            },
+            {
+                test: /\.css$/,
+                exclude: /react-html5video/,
                 use: [
                     {
                         loader: require.resolve("style-loader"),

@@ -14,6 +14,7 @@ const VideoPage = () => {
     if (key === undefined) {
         key = "";
     }
+    
     const link = "https://tecl-testing.s3.amazonaws.com/" + key.replace(/ /g, "+");
 
     function download(videoLink: string) {
@@ -31,7 +32,7 @@ const VideoPage = () => {
                 style={{maxHeight: "500px"}}
             >
                 <Grid item xs={12}>
-                    <Card sx={{width: 0.7, margin: "auto"}}>
+                    <Card sx={{width: 0.65, margin: "auto"}}>
                         <CardContent>
                             <Button
                                 onClick={() => navigate(-1)}
