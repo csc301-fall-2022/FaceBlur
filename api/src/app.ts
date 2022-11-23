@@ -25,7 +25,7 @@ if (process.env.NODE_ENV == 'production') {
 
 // upload route
 app.use(
-    '/api/upload',
+    '/api/',
     passport.authenticate('jwt', { session: false }),
     upload
 );
