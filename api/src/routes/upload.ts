@@ -5,7 +5,8 @@ import { User } from '@prisma/client';
 
 import multer from 'multer';
 import { storage, fileFilter } from '../middleware/upload';
-import { AWS } from '@aws-sdk'
+import AWS, { AWSError } from 'aws-sdk'
+import { DeleteObjectOutput } from '@aws-sdk/client-s3';
 
 const router = express.Router();
 
@@ -18,10 +19,10 @@ interface MulterFile extends Express.Multer.File{
     key: string;
 }
 
-const s3 = new AWS.s3({
+const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: 'us-east-2',
+    region: process.env.AWS_BUCKET_REGION,
 });
 
 
@@ -78,21 +79,23 @@ router.post('/delete', async (req: Request, res: Response) => {
     logger.info('Delete endpoint called');
     // delete from db
     const user = req.user as User;
+    const userId = user.id; 
     const videoName = req.body.name; 
     const deleteVideo = await prisma.video.delete({
         where: {
             name: videoName,
-            uploader: user.id, 
         },
     }); 
     logger.info('Video deleted from DB');
 
+    const bucketName = process.env.AWS_BUCKET_NAME || ''; 
+
     const params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: bucketName,
         Key: videoName,
     }
     // delete from s3
-    s3.deleteObject(params, (err: Error, data: JSON) => {
+    s3.deleteObject(params, (err: AWSError, data: DeleteObjectOutput) => {
         if (err) {
             logger.error('Error deleting file from S3');
             res.status(500).send(err.message);
