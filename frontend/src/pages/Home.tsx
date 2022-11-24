@@ -14,11 +14,12 @@ import Fab from "@mui/material/Fab";
 import UploadDialogue from "components/upload-dialogue";
 import {useNavigate} from "react-router-dom";
 import NavBar from "../components/common";
+import Button from "@mui/material/Button";
 
 import * as home from "../static/home.css";
 
 interface Column {
-    id: "name" | "uploader" | "dateUploaded";
+    id: "name" | "uploader" | "dateUploaded" | "options";
     label: string;
     minWidth?: number;
     align?: "right";
@@ -31,12 +32,14 @@ interface VideoList {
 interface VideoProps {
     filteredList: VideoList;
     disabled: boolean;
+    updateVideos: () => void;
 }
 
 const columns: readonly Column[] = [
     {id: "name", label: "Video Title", minWidth: 170},
     {id: "uploader", label: "Uploaded By", minWidth: 170},
-    {id: "dateUploaded", label: "Date Uploaded", minWidth: 170}
+    {id: "dateUploaded", label: "Date Uploaded", minWidth: 170},
+    {id: "options", label: "", minWidth: 100}
 ];
 
 const VideoList = (props: VideoProps): JSX.Element => {
@@ -60,6 +63,25 @@ const VideoList = (props: VideoProps): JSX.Element => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+    // delete video from prisma and s3
+    function handleDeleteVideo(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, fileId: number) {
+        e.stopPropagation();
+        fetch("/api/video_list/delete", {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                fileId: fileId
+            })
+        }).then((res) => {
+            return res.json();
+        });
+        props.updateVideos();
+    }
+
     return (
         <Paper sx={{width: "100%", overflow: "hidden"}}>
             <TableContainer sx={{maxHeight: 600}}>
@@ -90,13 +112,24 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                     >
                                         {columns.map((column) => {
                                             let value;
-
                                             if (column.id === "uploader") {
                                                 value = row[column.id].email;
                                             } else if (column.id === "dateUploaded") {
                                                 value = row[column.id].toLocaleDateString();
-                                            } else {
+                                            } else if (column.id == "name") {
                                                 value = row[column.id];
+                                            } else {
+                                                return (
+                                                    <TableCell key={column.id}>
+                                                        <Button
+                                                            onClick={(e) =>
+                                                                handleDeleteVideo(e, row.id)
+                                                            }
+                                                        >
+                                                            Delete
+                                                        </Button>
+                                                    </TableCell>
+                                                );
                                             }
                                             return <TableCell key={column.id}>{value}</TableCell>;
                                         })}
@@ -235,7 +268,11 @@ export default function HomePage() {
                         <UploadDialogue handleClick={handleClick} updateVideos={getVideos} />
                     )}
                 </div>
-                <VideoList disabled={disabled} filteredList={{filteredList: filteredList}} />
+                <VideoList
+                    disabled={disabled}
+                    filteredList={{filteredList: filteredList}}
+                    updateVideos={getVideos}
+                />
             </div>
             <Fab variant="extended" className={home.uploadButton} onClick={handleUpload}>
                 Upload
