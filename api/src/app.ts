@@ -8,6 +8,9 @@ import bodyParser from 'body-parser';
 import { logger } from './utils/logger';
 import upload from './routes/upload';
 
+import blur from './routes/blur';
+// import get_blur from './routes/blur';
+
 dotenv.config();
 
 const app: Express = express();
@@ -29,7 +32,15 @@ app.use(
     passport.authenticate('jwt', { session: false }),
     upload
 );
-
+app.use(
+    '/api/blur',
+    passport.authenticate('jwt', { session: false }),
+    blur
+);
+// app.use(
+//     '/api/get_blur',
+//     get_blur
+// );
 app.use('/api/video_list', video_list);
 
 const port = process.env.PORT;

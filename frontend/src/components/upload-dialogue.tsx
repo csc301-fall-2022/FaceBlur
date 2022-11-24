@@ -91,6 +91,7 @@ const DragFile = (props: {
 export default function UploadDialogue(props: {handleClick: () => void; updateVideos: () => void}) {
     const ref = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState(new Blob([], {type: "video/mp4"}));
+    // const [blur_file, setBlurFile] = useState(new Blob([], {type: "video/mp4"}));
     const [fileName, setFileName] = useState("");
     const [uploaded, setUploaded] = useState(false);
     const [faceBlur, setFaceBlur] = useState(false);
@@ -130,18 +131,46 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
         formData.append("faceBlur", faceBlur.toString());
         formData.append("backgroundBlur", backgroundBlur.toString());
 
-        return fetch("/api/upload", {
+        fetch("/api/upload", {
             headers: {Authorization: "Bearer " + Cookies.get("access")},
             method: "POST",
             body: formData
         }).then(() => {
-            setUploaded(false);
-            setFaceBlur(false);
-            setBackgroundBlur(false);
-            setFile(new Blob([], {type: "video/mp4"}));
             props.handleClick();
             props.updateVideos();
         });
+        if (faceBlur) {
+            fetch("/api/blur", {
+                headers: {Authorization: "Bearer " + Cookies.get("access")},
+                method: "POST",
+                body: formData
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("data ", data);
+                    console.log("data.file ", data.file);
+                    const blur_file = new File([data.file], "workkkk.mp4", {
+                        type: "video/mp4"
+                    });
+                    console.log("blur_file 2 ", blur_file);
+                    const formData1 = new FormData();
+                    formData1.append("file", blur_file);
+                    formData1.append("faceBlur", faceBlur.toString());
+                    formData1.append("backgroundBlur", backgroundBlur.toString());
+                    fetch("/api/upload", {
+                        headers: {Authorization: "Bearer " + Cookies.get("access")},
+                        method: "POST",
+                        body: formData1
+                    }).then(() => {
+                        props.handleClick();
+                        props.updateVideos();
+                    });
+                });
+        }
+        setUploaded(false);
+        setFaceBlur(false);
+        setBackgroundBlur(false);
+        setFile(new Blob([], {type: "video/mp4"}));
     };
 
     const handleFaceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
