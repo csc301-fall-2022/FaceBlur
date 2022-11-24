@@ -32,6 +32,7 @@ interface VideoList {
 interface VideoProps {
     filteredList: VideoList;
     disabled: boolean;
+    updateVideos: () => void;
 }
 
 const columns: readonly Column[] = [
@@ -81,6 +82,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
         }).then((res) => {
             return res.json();
         });
+        props.updateVideos();
     }
 
     return (
@@ -269,7 +271,11 @@ export default function HomePage() {
                         <UploadDialogue handleClick={handleClick} updateVideos={getVideos} />
                     )}
                 </div>
-                <VideoList disabled={disabled} filteredList={{filteredList: filteredList}} />
+                <VideoList
+                    disabled={disabled}
+                    filteredList={{filteredList: filteredList}}
+                    updateVideos={getVideos}
+                />
             </div>
             <Fab variant="extended" className={home.uploadButton} onClick={handleUpload}>
                 Upload
