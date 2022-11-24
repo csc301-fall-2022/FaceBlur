@@ -33,7 +33,7 @@ router.post('/delete', async (req: Request, res: Response) => {
     // delete from db
     // const user = req.user as User;
     // const userId = user.id; 
-    const videoName = req.body.name; 
+    const videoName = req.body.fileName; 
     const deleteVideo = await prisma.video.delete({
         where: {
             name: videoName,

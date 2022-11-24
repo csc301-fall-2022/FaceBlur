@@ -14,11 +14,12 @@ import Fab from "@mui/material/Fab";
 import UploadDialogue from "components/upload-dialogue";
 import {useNavigate} from "react-router-dom";
 import NavBar from "../components/common";
+import Button from "@mui/material/Button";
 
 import * as home from "../static/home.css";
 
 interface Column {
-    id: "name" | "uploader" | "dateUploaded";
+    id: "name" | "uploader" | "dateUploaded" | "options";
     label: string;
     minWidth?: number;
     align?: "right";
@@ -36,7 +37,8 @@ interface VideoProps {
 const columns: readonly Column[] = [
     {id: "name", label: "Video Title", minWidth: 170},
     {id: "uploader", label: "Uploaded By", minWidth: 170},
-    {id: "dateUploaded", label: "Date Uploaded", minWidth: 170}
+    {id: "dateUploaded", label: "Date Uploaded", minWidth: 170},
+    {id: "options", label: "", minWidth: 100}
 ];
 
 const VideoList = (props: VideoProps): JSX.Element => {
@@ -60,6 +62,27 @@ const VideoList = (props: VideoProps): JSX.Element => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+    // delete video from prisma and s3
+    function handleDeleteVideo(
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        fileName: string
+    ) {
+        e.stopPropagation();
+        fetch("/api/video_list/delete", {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                fileName: fileName
+            })
+        }).then((res) => {
+            return res.json();
+        });
+    }
+
     return (
         <Paper sx={{width: "100%", overflow: "hidden"}}>
             <TableContainer sx={{maxHeight: 600}}>
@@ -90,13 +113,24 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                     >
                                         {columns.map((column) => {
                                             let value;
-
                                             if (column.id === "uploader") {
                                                 value = row[column.id].email;
                                             } else if (column.id === "dateUploaded") {
                                                 value = row[column.id].toLocaleDateString();
-                                            } else {
+                                            } else if (column.id == "name") {
                                                 value = row[column.id];
+                                            } else {
+                                                return (
+                                                    <TableCell key={column.id}>
+                                                        <Button
+                                                            onClick={(e) =>
+                                                                handleDeleteVideo(e, row.name)
+                                                            }
+                                                        >
+                                                            Delete
+                                                        </Button>
+                                                    </TableCell>
+                                                );
                                             }
                                             return <TableCell key={column.id}>{value}</TableCell>;
                                         })}
