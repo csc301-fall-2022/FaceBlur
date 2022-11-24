@@ -26,7 +26,7 @@ export const storage: StorageEngine = multerS3({
         cb(null, { fieldName: file.fieldname });
     },
     key: (req: Request, file: Express.MulterS3.File, cb: CallableFunction) => {
-        cb(null, `${Date.now().toString()} - ${file.originalname}`);
+        cb(null, `${file.originalname}`);
     }
 });
 

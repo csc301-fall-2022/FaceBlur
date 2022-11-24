@@ -1,0 +1,10 @@
+.logout {
+    position: absolute;
+    background-color: #777676;
+    padding: 0.5em;
+    right: 25px;
+    top: 75px;
+    z-index: 9999;
+    border-radius: 10px;
+    box-shadow: 1px 1px 8px #888888;
+}
