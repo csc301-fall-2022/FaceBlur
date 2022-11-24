@@ -30,33 +30,45 @@ router.get('/list', async (req: Request, res: Response) => {
 // delete videos from s3 and DB 
 router.post('/delete', async (req: Request, res: Response) => {
     logger.info('Delete endpoint called');
-    // delete from db
-    // const user = req.user as User;
-    // const userId = user.id; 
-    const videoName = req.body.fileName; 
+    // delete from s3
+    const videoId = req.body.fileId; 
+    const bucketName = process.env.AWS_BUCKET_NAME || ''; 
+
+    const video = await prisma.video.findUnique({
+        where: {
+            id: videoId,
+        },
+    }); 
+
+    if (video != null) {
+        const videoName = video.name || ''
+
+        const params = {
+            Bucket: bucketName,
+            Key: videoName,
+        }
+        // delete from s3
+        s3.deleteObject(params, (err: AWSError, data: DeleteObjectOutput) => {
+            if (err) {
+                logger.error('Error deleting file from S3');
+                res.status(500).send(err.message);
+            } else {
+                logger.info('File deleted from S3 successfully');
+                res.status(200).send(data);
+            }
+        });
+    } else {
+        res.status(404).send({'message': 'Video not found'});
+    }
+
+    // delete from DB
     const deleteVideo = await prisma.video.delete({
         where: {
-            name: videoName,
+            id: videoId,
         },
     }); 
     logger.info('Video deleted from DB');
-
-    const bucketName = process.env.AWS_BUCKET_NAME || ''; 
-
-    const params = {
-        Bucket: bucketName,
-        Key: videoName,
-    }
-    // delete from s3
-    s3.deleteObject(params, (err: AWSError, data: DeleteObjectOutput) => {
-        if (err) {
-            logger.error('Error deleting file from S3');
-            res.status(500).send(err.message);
-        } else {
-            logger.info('File deleted from S3 successfully');
-            res.status(200).send(data);
-        }
-    });
+    
 });
 
 export default router;

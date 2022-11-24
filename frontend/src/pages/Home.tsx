@@ -65,10 +65,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
     };
 
     // delete video from prisma and s3
-    function handleDeleteVideo(
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-        fileName: string
-    ) {
+    function handleDeleteVideo(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, fileId: number) {
         e.stopPropagation();
         fetch("/api/video_list/delete", {
             headers: {
@@ -77,7 +74,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
             },
             method: "POST",
             body: JSON.stringify({
-                fileName: fileName
+                fileId: fileId
             })
         }).then((res) => {
             return res.json();
@@ -126,7 +123,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                                     <TableCell key={column.id}>
                                                         <Button
                                                             onClick={(e) =>
-                                                                handleDeleteVideo(e, row.name)
+                                                                handleDeleteVideo(e, row.id)
                                                             }
                                                         >
                                                             Delete
