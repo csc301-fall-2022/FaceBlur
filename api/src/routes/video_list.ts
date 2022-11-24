@@ -29,7 +29,6 @@ router.get('/list', async (req: Request, res: Response) => {
 // delete videos from s3 and DB 
 router.post('/delete', async (req: Request, res: Response) => {
     logger.info('Delete endpoint called');
-    // delete from s3
     const videoId = req.body.fileId; 
     const bucketName = process.env.AWS_BUCKET_NAME || ''; 
 
@@ -39,6 +38,7 @@ router.post('/delete', async (req: Request, res: Response) => {
         },
     }); 
 
+    // delete from s3
     if (video != null) {
         const videoName = video.name || ''
 
@@ -46,7 +46,7 @@ router.post('/delete', async (req: Request, res: Response) => {
             Bucket: bucketName,
             Key: videoName,
         }
-        // delete from s3
+
         s3.deleteObject(params, (err: AWSError, data: DeleteObjectOutput) => {
             if (err) {
                 logger.error('Error deleting file from S3');
