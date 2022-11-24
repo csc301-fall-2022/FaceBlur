@@ -2,8 +2,9 @@ import React, {useState} from "react";
 //import Popover from '@mui/material/Popover';
 import PersonIcon from "@mui/icons-material/Person";
 import {CardMedia, IconButton, Stack, Button, CardActionArea} from "@mui/material";
-import "./common.css";
+import * as common from "../static/common.css";
 import {useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function NavBar() {
     const navigate = useNavigate();
@@ -15,6 +16,12 @@ export default function NavBar() {
 
     const handleExit = () => {
         setShowLogout(false);
+    };
+
+    const logout = () => {
+        Cookies.remove("access");
+        const path = "/";
+        navigate(path);
     };
     return (
         <div>
@@ -29,20 +36,20 @@ export default function NavBar() {
                 </CardActionArea>
                 <IconButton
                     sx={{
-                        bgcolor: "#BDBDBD",
+                        bgcolor: "#777676",
                         width: 40,
                         height: 40,
                         color: "white",
                         marginTop: 1,
-                        "&:hover": {bgcolor: "#BDBDBD"}
+                        "&:hover": {bgcolor: "#777676"}
                     }}
                     onMouseEnter={handleHover}
                 >
                     <PersonIcon />
                 </IconButton>
                 {showLogout && (
-                    <div className="logout" onMouseLeave={handleExit}>
-                        <Button sx={{color: "white", "&:hover": {bgcolor: "#BDBDBD"}}}>
+                    <div className={common.logout} onMouseLeave={handleExit}>
+                        <Button sx={{color: "white", "&:hover": {bgcolor: "#777676"}}} onClick={logout}>
                             Logout
                         </Button>
                     </div>
