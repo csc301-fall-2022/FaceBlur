@@ -20,6 +20,13 @@ export default function NavBar() {
 
     const logout = () => {
         Cookies.remove("access");
+        // fetch("/api/auth/logout", {
+        //     headers: {
+        //         Accept: "application/json",
+        //         "Content-Type": "application/json"
+        //     },
+        //     method: "POST"
+        // });
         const path = "/";
         navigate(path);
     };
@@ -49,7 +56,10 @@ export default function NavBar() {
                 </IconButton>
                 {showLogout && (
                     <div className={common.logout} onMouseLeave={handleExit}>
-                        <Button sx={{color: "white", "&:hover": {bgcolor: "#777676"}}} onClick={logout}>
+                        <Button
+                            sx={{color: "white", "&:hover": {bgcolor: "#777676"}}}
+                            onClick={logout}
+                        >
                             Logout
                         </Button>
                     </div>
