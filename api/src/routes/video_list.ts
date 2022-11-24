@@ -3,7 +3,6 @@ import AWS, { AWSError } from 'aws-sdk'
 import { DeleteObjectOutput } from '@aws-sdk/client-s3';
 import { logger } from '../utils/logger';
 import prisma from '../prisma';
-import { User } from '@prisma/client';
 
 const router = express.Router();
 
