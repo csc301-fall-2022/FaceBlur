@@ -27,8 +27,23 @@ router.get('/list', async (req: Request, res: Response) => {
     logger.info("Getting videos from Prisma")
     res.json(await prisma.video.findMany({include: {
         uploader: true,
+        tags: {
+            select: {
+                name: true
+            }
+        }
       },}))
 });
+
+router.get('/tags', async (req: Request, res: Response) => {
+    logger.info("Getting all tags from Prisma")
+    const results = await prisma.tag.findMany({
+        select: {
+            name: true
+        }
+    });
+    res.json(results);
+})
 
 /**
  * Route supporting overwriting video tags
@@ -75,6 +90,12 @@ router.patch('/tags/:videoId', async (req: Request, res: Response) => {
                 tags: true
             }
         })
+
+        //DELETE tags that no longer have any connections
+        await prisma.tag.deleteMany({
+            where: { videos: { none: {} } },
+        });
+
 
         res.status(200).json(updateVideo)
 
