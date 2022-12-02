@@ -3,6 +3,11 @@ import AWS, { AWSError } from 'aws-sdk'
 import { DeleteObjectOutput } from '@aws-sdk/client-s3';
 import { logger } from '../utils/logger';
 import prisma from '../prisma';
+import { Prisma} from '@prisma/client';
+/** Express router providing video metadata related routes
+ * @module routes/video_lists
+ * @requires express
+ */
 
 const router = express.Router();
 
@@ -25,18 +30,78 @@ router.get('/list', async (req: Request, res: Response) => {
       },}))
 });
 
+/**
+ * Route supporting overwriting video tags
+ * @name patch/tags/:videoId
+ * @function
+ * @inner
+ *
+ */
+router.patch('/tags/:videoId', async (req: Request, res: Response) => {
+    const videoId = parseInt(req.params.videoId);
+    const tags = req.body.tags
+    logger.info("Overwriting tags for id: " + videoId + " and tags: " + tags);
 
-// delete videos from s3 and DB 
+    try {
+        await prisma.video.update({
+            where: {
+                id: videoId
+            },
+            data : {
+                tags: {
+                    set: []
+                }
+            }
+        })
+        const updateVideo = await prisma.video.update({
+            where: {
+                id: videoId
+            },
+            data : {
+                tags: {
+                    connectOrCreate:
+                        tags.map((tag:string) => {
+                            return {
+                                where: {name: tag},
+                                create: { name: tag}
+                            }
+                        })
+
+
+
+                }
+            },
+            include: {
+                tags: true
+            }
+        })
+
+        res.status(200).json(updateVideo)
+
+    } catch (e){
+        logger.error(e)
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+            if (e.code === 'P2025'){
+                res.status(404).send({'message': 'Video not found'});
+            }
+        }
+    }
+
+})
+
+
+
+// delete videos from s3 and DB
 router.post('/delete', async (req: Request, res: Response) => {
     logger.info('Delete endpoint called');
-    const videoId = req.body.fileId; 
-    const bucketName = process.env.AWS_BUCKET_NAME || ''; 
+    const videoId = req.body.fileId;
+    const bucketName = process.env.AWS_BUCKET_NAME || '';
 
     const video = await prisma.video.findUnique({
         where: {
             id: videoId,
         },
-    }); 
+    });
 
     // delete from s3
     if (video != null) {
@@ -65,9 +130,9 @@ router.post('/delete', async (req: Request, res: Response) => {
         where: {
             id: videoId,
         },
-    }); 
+    });
     logger.info('Video deleted from DB');
-    
+
 });
 
 export default router;
