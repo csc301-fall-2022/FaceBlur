@@ -3,6 +3,9 @@ interface User {
     email: string;
     password: string;
 }
+interface Tag {
+    name: string;
+}
 
 interface Video {
     id: number;
@@ -11,6 +14,7 @@ interface Video {
     uploaderId: number;
     uploader: User;
     dateUploaded: Date;
+    tags: Array<Tag>;
 }
 
 interface VideoProps {

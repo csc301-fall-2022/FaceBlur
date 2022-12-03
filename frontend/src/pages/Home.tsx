@@ -15,11 +15,12 @@ import UploadDialogue from "components/upload-dialogue";
 import {useNavigate} from "react-router-dom";
 import NavBar from "../components/common";
 import Button from "@mui/material/Button";
+import Tags from "components/tags";
 
 import * as home from "../static/home.css";
 
 interface Column {
-    id: "name" | "uploader" | "dateUploaded" | "options";
+    id: "name" | "uploader" | "dateUploaded" | "options" | "tags";
     label: string;
     minWidth?: number;
     align?: "right";
@@ -39,6 +40,7 @@ const columns: readonly Column[] = [
     {id: "name", label: "Video Title", minWidth: 170},
     {id: "uploader", label: "Uploaded By", minWidth: 170},
     {id: "dateUploaded", label: "Date Uploaded", minWidth: 170},
+    {id: "tags", label: "Tags", minWidth: 170},
     {id: "options", label: "", minWidth: 100}
 ];
 
@@ -46,6 +48,27 @@ const VideoList = (props: VideoProps): JSX.Element => {
     //https://mui.com/material-ui/react-table/
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [tags, setTags] = useState<Array<Tag>>([]);
+
+    const updateTags = () => {
+        fetch("/api/video_list/tags", {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            method: "GET"
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setTags(data);
+            });
+    };
+
+    useEffect(() => {
+        updateTags();
+    }, []);
 
     const navigate = useNavigate();
 
@@ -116,9 +139,9 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                                 value = row[column.id].email;
                                             } else if (column.id === "dateUploaded") {
                                                 value = row[column.id].toLocaleDateString();
-                                            } else if (column.id == "name") {
+                                            } else if (column.id === "name") {
                                                 value = row[column.id];
-                                            } else {
+                                            } else if (column.id === "options") {
                                                 return (
                                                     <TableCell key={column.id}>
                                                         <Button
@@ -130,7 +153,23 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                                         </Button>
                                                     </TableCell>
                                                 );
+                                            } else if (column.id === "tags") {
+                                                console.log(row);
+                                                return (
+                                                    <TableCell
+                                                        key={column.id}
+                                                        onClick={(e) => e.stopPropagation()}
+                                                    >
+                                                        <Tags
+                                                            tagOptions={tags.map((tag) => tag.name)}
+                                                            tags={row.tags.map((tag) => tag.name)}
+                                                            videoID={row.id}
+                                                            updateTagOptions={updateTags}
+                                                        />
+                                                    </TableCell>
+                                                );
                                             }
+
                                             return <TableCell key={column.id}>{value}</TableCell>;
                                         })}
                                     </TableRow>
@@ -196,7 +235,8 @@ export default function HomePage() {
                         id: video.id,
                         type: typeLiteral,
                         uploaderId: video.uploaderId,
-                        uploader: video.uploader
+                        uploader: video.uploader,
+                        tags: video.tags
                     };
                 }
             });
