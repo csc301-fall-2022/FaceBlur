@@ -42,7 +42,7 @@ router.get('/tags', async (req: Request, res: Response) => {
             name: true
         }
     });
-    res.json(results);
+    res.json({tags: results.map((result: {name:string}) => result.name)});
 })
 
 /**
@@ -54,7 +54,8 @@ router.get('/tags', async (req: Request, res: Response) => {
  */
 router.patch('/tags/:videoId', async (req: Request, res: Response) => {
     const videoId = parseInt(req.params.videoId);
-    const tags = req.body.tags
+    const tags = req.body.tags;
+    logger.info(req.body);
     logger.info("Overwriting tags for id: " + videoId + " and tags: " + tags);
 
     try {

@@ -7,7 +7,7 @@ interface Tag {
     name: string;
 }
 
-interface Video {
+interface BackendVideo {
     id: number;
     name: string;
     type: "FACE_BLURRED" | "BACKGROUND_BLURRED" | "NO_BLUR";
@@ -15,6 +15,15 @@ interface Video {
     uploader: User;
     dateUploaded: Date;
     tags: Array<Tag>;
+}
+interface Video {
+    id: number;
+    name: string;
+    type: "FACE_BLURRED" | "BACKGROUND_BLURRED" | "NO_BLUR";
+    uploaderId: number;
+    uploader: User;
+    dateUploaded: Date;
+    tags: Array<string>;
 }
 
 interface VideoProps {
