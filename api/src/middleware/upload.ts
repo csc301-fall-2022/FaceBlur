@@ -21,7 +21,7 @@ const s3 = new S3Client({
 export const storage: StorageEngine = multerS3({
     s3: s3,
     bucket: bucketName,
-    acl: 'public-read',
+    acl: 'private',
     metadata: (req: Request, file: Express.MulterS3.File, cb: CallableFunction) => {
         cb(null, { fieldName: file.fieldname });
     },
