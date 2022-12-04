@@ -47,6 +47,11 @@ const columns: readonly Column[] = [
     {id: "options", label: "", minWidth: 100}
 ];
 
+/**
+ *
+ * @param props See Interface
+ * @returns Video List rendering all videos in the system
+ */
 const VideoList = (props: VideoProps): JSX.Element => {
     //https://mui.com/material-ui/react-table/
     const [page, setPage] = useState(0);

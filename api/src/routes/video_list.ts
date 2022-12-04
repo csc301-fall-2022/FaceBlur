@@ -35,6 +35,13 @@ router.get('/list', async (req: Request, res: Response) => {
       },}))
 });
 
+/**
+ * Route that serves a list of all the active tags
+ * @name /tags/
+ * @function
+ * @inner
+ *
+ */
 router.get('/tags', async (req: Request, res: Response) => {
     logger.info("Getting all tags from Prisma")
     const results = await prisma.tag.findMany({
@@ -47,7 +54,7 @@ router.get('/tags', async (req: Request, res: Response) => {
 
 /**
  * Route supporting overwriting video tags
- * @name patch/tags/:videoId
+ * @name /tags/:videoId
  * @function
  * @inner
  *
@@ -55,7 +62,6 @@ router.get('/tags', async (req: Request, res: Response) => {
 router.patch('/tags/:videoId', async (req: Request, res: Response) => {
     const videoId = parseInt(req.params.videoId);
     const tags = req.body.tags;
-    logger.info(req.body);
     logger.info("Overwriting tags for id: " + videoId + " and tags: " + tags);
 
     try {

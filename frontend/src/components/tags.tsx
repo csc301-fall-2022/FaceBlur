@@ -3,13 +3,18 @@ import Button from "@mui/material/Button";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
-//TODO: decide if this should be sets or arrays? Probably just arrays all the way thru
 interface Props {
     tagOptions: Array<string>;
     tags: Array<string>;
     videoID: number;
     updateTagOptions: () => void;
 }
+
+/**
+ *
+ * @param props See above interface
+ * @returns Editable tags for a single video
+ */
 const Tags = (props: Props) => {
     const [values, setValues] = useState<Array<string>>(props.tags);
     const saveTags = () => {

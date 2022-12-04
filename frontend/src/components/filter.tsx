@@ -3,7 +3,6 @@ import TextField from "@mui/material/TextField";
 import React, {useState} from "react";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-//use https://mui.com/material-ui/react-autocomplete/ (Multiple values, first option)
 
 interface Props {
     tagOptions: Array<string>;
@@ -11,8 +10,12 @@ interface Props {
     setFilteredTags: (newFilteredTags: Array<string>) => void;
 }
 
+/**
+ *
+ * @param props See interface
+ * @returns a filter Component for selecting tags to filter by
+ */
 const Filter = (props: Props) => {
-    // we should be able to fuse this and tags?
     const [visible, setVisible] = useState(false);
 
     return (
