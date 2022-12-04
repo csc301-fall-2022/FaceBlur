@@ -1,8 +1,4 @@
 import express, { Request, Response } from 'express';
-import AWS, { AWSError } from 'aws-sdk'
-import { DeleteObjectOutput } from '@aws-sdk/client-s3';
-import { logger } from '../utils/logger';
-import prisma from '../prisma';
 
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
@@ -28,7 +24,7 @@ router.post("/", async function(req: Request, res: Response) {
       });
     
       // await the signed URL and return it
-      res.send(await getSignedUrl(client, command,{ expiresIn: 3600 } ));
+      res.json(await getSignedUrl(client, command,{ expiresIn: 3600 } ));
 });
 
 
