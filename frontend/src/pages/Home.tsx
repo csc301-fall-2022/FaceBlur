@@ -15,11 +15,13 @@ import UploadDialogue from "components/upload-dialogue";
 import {useNavigate} from "react-router-dom";
 import NavBar from "../components/common";
 import Button from "@mui/material/Button";
+import Tags from "components/tags";
+import Filter from "components/filter";
 
 import * as home from "../static/home.css";
 
 interface Column {
-    id: "name" | "uploader" | "dateUploaded" | "options";
+    id: "name" | "uploader" | "dateUploaded" | "options" | "tags";
     label: string;
     minWidth?: number;
     align?: "right";
@@ -33,19 +35,48 @@ interface VideoProps {
     filteredList: VideoList;
     disabled: boolean;
     updateVideos: () => void;
+    setFilteredTags: (filteredTags: Array<string>) => void;
+    filteredTags: Array<string>;
 }
 
 const columns: readonly Column[] = [
     {id: "name", label: "Video Title", minWidth: 170},
     {id: "uploader", label: "Uploaded By", minWidth: 170},
     {id: "dateUploaded", label: "Date Uploaded", minWidth: 170},
+    {id: "tags", label: "Tags", minWidth: 170},
     {id: "options", label: "", minWidth: 100}
 ];
 
+/**
+ *
+ * @param props See Interface
+ * @returns Video List rendering all videos in the system
+ */
 const VideoList = (props: VideoProps): JSX.Element => {
     //https://mui.com/material-ui/react-table/
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [tags, setTags] = useState<Array<string>>([]);
+
+    const updateTags = () => {
+        fetch("/api/video_list/tags", {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            method: "GET"
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setTags(data.tags);
+            });
+    };
+
+    useEffect(() => {
+        updateTags();
+    }, []);
 
     const navigate = useNavigate();
 
@@ -88,11 +119,32 @@ const VideoList = (props: VideoProps): JSX.Element => {
                 <Table stickyHeader aria-label="videos">
                     <TableHead>
                         <TableRow>
-                            {columns.map((column) => (
-                                <TableCell key={column.id} style={{minWidth: column.minWidth}}>
-                                    <b>{column.label}</b>
-                                </TableCell>
-                            ))}
+                            {columns.map((column) => {
+                                if (column.id === "tags") {
+                                    return (
+                                        <TableCell
+                                            key={column.id}
+                                            style={{minWidth: column.minWidth}}
+                                        >
+                                            <b>{column.label}</b>
+                                            <Filter
+                                                tagOptions={tags}
+                                                filteredTags={props.filteredTags}
+                                                setFilteredTags={props.setFilteredTags}
+                                            />
+                                        </TableCell>
+                                    );
+                                } else {
+                                    return (
+                                        <TableCell
+                                            key={column.id}
+                                            style={{minWidth: column.minWidth}}
+                                        >
+                                            <b>{column.label}</b>
+                                        </TableCell>
+                                    );
+                                }
+                            })}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -116,9 +168,9 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                                 value = row[column.id].email;
                                             } else if (column.id === "dateUploaded") {
                                                 value = row[column.id].toLocaleDateString();
-                                            } else if (column.id == "name") {
+                                            } else if (column.id === "name") {
                                                 value = row[column.id];
-                                            } else {
+                                            } else if (column.id === "options") {
                                                 return (
                                                     <TableCell key={column.id}>
                                                         <Button
@@ -130,7 +182,22 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                                         </Button>
                                                     </TableCell>
                                                 );
+                                            } else if (column.id === "tags") {
+                                                return (
+                                                    <TableCell
+                                                        key={column.id}
+                                                        onClick={(e) => e.stopPropagation()}
+                                                    >
+                                                        <Tags
+                                                            tagOptions={tags}
+                                                            tags={row.tags}
+                                                            videoID={row.id}
+                                                            updateTagOptions={updateTags}
+                                                        />
+                                                    </TableCell>
+                                                );
                                             }
+
                                             return <TableCell key={column.id}>{value}</TableCell>;
                                         })}
                                     </TableRow>
@@ -173,6 +240,8 @@ export default function HomePage() {
 
     const [videosList, setVideosList] = useState<Array<Video | undefined>>([]);
     const [filteredList, setFilteredList] = useState<Array<Video | undefined>>([]);
+    const [filteredTags, setFilteredTags] = useState<Array<string>>([]);
+    const [searchValue, setSearchValue] = useState("");
 
     //Get videos from prisma
     function getVideos() {
@@ -186,8 +255,8 @@ export default function HomePage() {
             }
             return null;
         }
-        function vids(videos: Video[]): (Video | undefined)[] {
-            return (videos as Video[]).map((video) => {
+        function vids(videos: BackendVideo[]): (Video | undefined)[] {
+            return (videos as BackendVideo[]).map((video) => {
                 const typeLiteral = getTypeAsLiteral(video.type);
                 if (typeLiteral !== null) {
                     return {
@@ -196,7 +265,8 @@ export default function HomePage() {
                         id: video.id,
                         type: typeLiteral,
                         uploaderId: video.uploaderId,
-                        uploader: video.uploader
+                        uploader: video.uploader,
+                        tags: video.tags.map((tag) => tag.name)
                     };
                 }
             });
@@ -213,27 +283,42 @@ export default function HomePage() {
                 return res.json();
             })
             .then((data) => {
-                setVideosList(vids(data));
-                setFilteredList(vids(data));
+                const videos = vids(data);
+                setVideosList(videos);
+                setFilteredList(videos);
             });
     }
 
-    function filterList(e: React.ChangeEvent<HTMLInputElement>) {
+    function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
         const currentSearch = e.currentTarget.value.toLowerCase();
-        setFilteredList(
-            videosList.filter((val) => {
-                if (currentSearch === "") {
-                    return true;
-                } else {
-                    return val?.name.toLowerCase().includes(currentSearch);
-                }
-            })
-        );
+        setSearchValue(currentSearch);
     }
 
     useEffect(() => {
         getVideos();
     }, []);
+
+    useEffect(() => {
+        setFilteredList(
+            videosList.filter((video) => {
+                if (searchValue === undefined) {
+                    return true;
+                } else {
+                    const currentSearch = searchValue.toLowerCase();
+                    const hasRightTitle =
+                        currentSearch === "" || video?.name.toLowerCase().includes(currentSearch);
+                    //TODO: change tags to just be the strings, and also remove all that dumb conversion stuff we were doing
+                    const searchableVideoTags = new Set(video?.tags);
+                    const hasRightTags =
+                        filteredTags === undefined ||
+                        filteredTags.length === 0 ||
+                        filteredTags.every((tag) => searchableVideoTags.has(tag));
+
+                    return hasRightTitle && hasRightTags;
+                }
+            })
+        );
+    }, [searchValue, filteredTags, videosList]);
 
     return (
         <div>
@@ -248,7 +333,8 @@ export default function HomePage() {
                             size="small"
                             placeholder="Search"
                             sx={{input: {color: "white", margin: "7px"}}}
-                            onChange={filterList}
+                            value={searchValue}
+                            onChange={handleSearchChange}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment
@@ -272,6 +358,8 @@ export default function HomePage() {
                     disabled={disabled}
                     filteredList={{filteredList: filteredList}}
                     updateVideos={getVideos}
+                    setFilteredTags={setFilteredTags}
+                    filteredTags={filteredTags}
                 />
             </div>
             <Fab variant="extended" className={home.uploadButton} onClick={handleUpload}>

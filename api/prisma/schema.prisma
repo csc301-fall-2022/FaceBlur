@@ -17,6 +17,12 @@ model User {
   videos Video[]
 }
 
+model Tag {
+  id Int @id @default(autoincrement())
+  videos Video[]
+  name String @unique
+}
+
 model Video {
   id Int @id @default(autoincrement())
   name String @unique
@@ -24,6 +30,7 @@ model Video {
   uploaderId Int
   uploader User @relation(fields: [uploaderId], references: [id])
   dateUploaded DateTime @default(now())
+  tags Tag[]
 }
 
 enum BlurType {
