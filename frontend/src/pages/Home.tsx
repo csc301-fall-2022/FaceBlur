@@ -7,7 +7,7 @@ import {
     OutlinedInput,
     TextField
 } from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -80,7 +80,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
 
     const [openFilter, setOpenFilter] = useState(false);
 
-    const updateTags = () => {
+    const updateTags = useCallback(() => {
         fetch("/api/video_list/tags", {
             headers: {
                 Accept: "application/json",
@@ -92,14 +92,24 @@ const VideoList = (props: VideoProps): JSX.Element => {
                 return res.json();
             })
             .then((data) => {
+                console.log(data)
                 setTags(data.tags);
+                const temp: Video[] = [];
+                props.filteredList.filteredList.map((video) => {
+                    if (video) {
+                        if (filters.includes(video.type)) {
+                            temp.push(video);
+                        }
+                    }
+                });
+                setFilteredListDisplay(temp);
             });
-    };
+    }, [filters, props.filteredList.filteredList]);
 
     useEffect(() => {
         updateTags();
         setFilteredListDisplay(props.filteredList.filteredList);
-    }, [props.filteredList.filteredList]);
+    }, [updateTags, props.filteredList.filteredList]);
 
     const navigate = useNavigate();
 
