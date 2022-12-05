@@ -1,4 +1,4 @@
-import {Box, InputAdornment, TextField} from "@mui/material";
+import {Box, IconButton, InputAdornment, InputLabel, ListItemText, OutlinedInput, TextField} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Paper from "@mui/material/Paper";
@@ -17,11 +17,15 @@ import NavBar from "../components/common";
 import Button from "@mui/material/Button";
 import Tags from "components/tags";
 import Filter from "components/filter";
-
+import FilterListIcon from '@mui/icons-material/FilterList';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
 import * as home from "../static/home.css";
 
 interface Column {
-    id: "name" | "uploader" | "dateUploaded" | "options" | "tags";
+    id: "name" | "uploader" | "dateUploaded" | "options" | "tags" | "blurType";
     label: string;
     minWidth?: number;
     align?: "right";
@@ -43,6 +47,7 @@ const columns: readonly Column[] = [
     {id: "name", label: "Video Title", minWidth: 170},
     {id: "uploader", label: "Uploaded By", minWidth: 170},
     {id: "dateUploaded", label: "Date Uploaded", minWidth: 170},
+    {id: "blurType", label: "Blur Type", minWidth: 170},
     {id: "tags", label: "Tags", minWidth: 170},
     {id: "options", label: "", minWidth: 100}
 ];
@@ -57,6 +62,18 @@ const VideoList = (props: VideoProps): JSX.Element => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [tags, setTags] = useState<Array<string>>([]);
+    const [filters, setFilters] = useState<Array<string>>(['No Blur',
+    'Face Blurred',
+    'Background Blurred']);
+    const filterNames = [
+        'No Blur',
+        'Face Blurred',
+        'Background Blurred'
+    ]
+       
+
+    
+    const[openFilter, setOpenFilter] = useState(false);
 
     const updateTags = () => {
         fetch("/api/video_list/tags", {
@@ -94,6 +111,15 @@ const VideoList = (props: VideoProps): JSX.Element => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+    const handleFilterChange = (event: SelectChangeEvent<typeof filters>) => {
+        const {
+          target: { value },
+        } = event;
+        setFilters(
+          typeof value === 'string' ? value.split(',') : value,
+        );
+      };
 
     // delete video from prisma and s3
     function handleDeleteVideo(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, fileId: number) {
@@ -134,7 +160,42 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                             />
                                         </TableCell>
                                     );
-                                } else {
+                                } else if (column.id === "blurType") {
+                                    return (
+                                        <TableCell
+                                            key={column.id}
+                                            style={{minWidth: column.minWidth}}
+                                        >
+                                            <b>{column.label}</b>
+                                            <IconButton>
+                                                <FilterListIcon onClick={() => setOpenFilter(!openFilter)}/>
+                                            </IconButton>
+                    
+                                            {openFilter && (
+                                                 <div>
+                                                 <FormControl sx={{ m: 1, width: 170, position: "absolute", zIndex: 5000 }}>
+                                                   <InputLabel>Filter</InputLabel>
+                                                   <Select
+                                                     multiple
+                                                     value={filters}
+                                                     onChange={handleFilterChange}
+                                                     input={<OutlinedInput label="Filter" />}
+                                                     renderValue={(selected) => selected.join(', ')}
+                                                   >
+                                                     {filterNames.map((filter) => (
+                                                       <MenuItem key={filter} value={filter}>
+                                                         <Checkbox checked={filters.indexOf(filter) > -1} />
+                                                         <ListItemText primary={filter} />
+                                                       </MenuItem>
+                                                     ))}
+                                                   </Select>
+                                                 </FormControl>
+                                               </div>
+                                            )}
+                                        </TableCell>
+                                    )
+                                }
+                                else {
                                     return (
                                         <TableCell
                                             key={column.id}
@@ -182,7 +243,10 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                                         </Button>
                                                     </TableCell>
                                                 );
-                                            } else if (column.id === "tags") {
+                                            } else if (column.id === "blurType") {
+                                                value = row["type"]
+                                            }
+                                            else if (column.id === "tags") {
                                                 return (
                                                     <TableCell
                                                         key={column.id}
