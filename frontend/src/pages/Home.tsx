@@ -122,12 +122,10 @@ const VideoList = (props: VideoProps): JSX.Element => {
         const {
             target: {value}
         } = event;
-        console.log(value);
         setFilters(typeof value === "string" ? value.split(",") : value);
         const temp: Video[] = [];
         props.filteredList.filteredList.map((video) => {
             if (video) {
-                console.log(filters);
                 if (value.includes(video.type)) {
                     temp.push(video);
                 }
