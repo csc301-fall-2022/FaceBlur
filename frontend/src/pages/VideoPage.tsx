@@ -10,8 +10,9 @@ import Grid from "@mui/material/Grid";
 import {useNavigate, useLocation} from "react-router-dom";
 
 const VideoPage = () => {
-    const {state} = useLocation();
-    const {link} = state;
+    const {
+        state: {link}
+    } = useLocation();
 
     function download(videoLink: string) {
         FileSaver.saveAs(videoLink);
