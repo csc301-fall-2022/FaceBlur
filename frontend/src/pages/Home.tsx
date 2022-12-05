@@ -7,7 +7,7 @@ import {
     OutlinedInput,
     TextField
 } from "@mui/material";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -49,6 +49,8 @@ interface VideoProps {
     updateVideos: () => void;
     setFilteredTags: (filteredTags: Array<string>) => void;
     filteredTags: Array<string>;
+    filters: Array<string>;
+    setFilters: (filters: Array<string>) => void;
 }
 
 const columns: readonly Column[] = [
@@ -70,17 +72,11 @@ const VideoList = (props: VideoProps): JSX.Element => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [tags, setTags] = useState<Array<string>>([]);
-    const [filters, setFilters] = useState<Array<string>>([
-        "No Blur",
-        "Face Blurred",
-        "Background Blurred"
-    ]);
-    const [filteredListDisplay, setFilteredListDisplay] = useState<Array<Video | undefined>>([]);
     const filterNames = ["No Blur", "Face Blurred", "Background Blurred"];
 
     const [openFilter, setOpenFilter] = useState(false);
 
-    const updateTags = useCallback(() => {
+    const updateTags = () => {
         fetch("/api/video_list/tags", {
             headers: {
                 Accept: "application/json",
@@ -92,24 +88,14 @@ const VideoList = (props: VideoProps): JSX.Element => {
                 return res.json();
             })
             .then((data) => {
-                console.log(data)
                 setTags(data.tags);
-                const temp: Video[] = [];
-                props.filteredList.filteredList.map((video) => {
-                    if (video) {
-                        if (filters.includes(video.type)) {
-                            temp.push(video);
-                        }
-                    }
-                });
-                setFilteredListDisplay(temp);
+                props.updateVideos();
             });
-    }, [filters, props.filteredList.filteredList]);
+    };
 
     useEffect(() => {
         updateTags();
-        setFilteredListDisplay(props.filteredList.filteredList);
-    }, [updateTags, props.filteredList.filteredList]);
+    });
 
     const navigate = useNavigate();
 
@@ -128,20 +114,11 @@ const VideoList = (props: VideoProps): JSX.Element => {
         setPage(0);
     };
 
-    const handleFilterChange = (event: SelectChangeEvent<typeof filters>) => {
+    const handleFilterChange = (event: SelectChangeEvent<typeof props.filters>) => {
         const {
             target: {value}
         } = event;
-        setFilters(typeof value === "string" ? value.split(",") : value);
-        const temp: Video[] = [];
-        props.filteredList.filteredList.map((video) => {
-            if (video) {
-                if (value.includes(video.type)) {
-                    temp.push(video);
-                }
-            }
-        });
-        setFilteredListDisplay(temp);
+        props.setFilters(typeof value === "string" ? value.split(",") : value);
     };
 
     // delete video from prisma and s3
@@ -209,7 +186,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                                         <InputLabel>Filter</InputLabel>
                                                         <Select
                                                             multiple
-                                                            value={filters}
+                                                            value={props.filters}
                                                             onChange={handleFilterChange}
                                                             input={<OutlinedInput label="Filter" />}
                                                             renderValue={(selected) =>
@@ -223,7 +200,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                                                 >
                                                                     <Checkbox
                                                                         checked={
-                                                                            filters.indexOf(
+                                                                            props.filters.indexOf(
                                                                                 filter
                                                                             ) > -1
                                                                         }
@@ -253,7 +230,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {filteredListDisplay
+                        {props.filteredList.filteredList
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 if (row === undefined) {
@@ -349,6 +326,11 @@ export default function HomePage() {
     const [filteredList, setFilteredList] = useState<Array<Video | undefined>>([]);
     const [filteredTags, setFilteredTags] = useState<Array<string>>([]);
     const [searchValue, setSearchValue] = useState("");
+    const [filters, setFilters] = useState<Array<string>>([
+        "No Blur",
+        "Face Blurred",
+        "Background Blurred"
+    ]);
 
     //Get videos from prisma
     function getVideos() {
@@ -420,12 +402,15 @@ export default function HomePage() {
                         filteredTags === undefined ||
                         filteredTags.length === 0 ||
                         filteredTags.every((tag) => searchableVideoTags.has(tag));
-
-                    return hasRightTitle && hasRightTags;
+                    let hasRightBlurType = false;
+                    if (video) {
+                        hasRightBlurType = filters.includes(video.type);
+                    }
+                    return hasRightTitle && hasRightTags && hasRightBlurType;
                 }
             })
         );
-    }, [searchValue, filteredTags, videosList]);
+    }, [searchValue, filteredTags, videosList, filters]);
 
     return (
         <div>
@@ -467,6 +452,8 @@ export default function HomePage() {
                     updateVideos={getVideos}
                     setFilteredTags={setFilteredTags}
                     filteredTags={filteredTags}
+                    filters={filters}
+                    setFilters={setFilters}
                 />
             </div>
             <Fab variant="extended" className={home.uploadButton} onClick={handleUpload}>
