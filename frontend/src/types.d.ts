@@ -19,7 +19,7 @@ interface BackendVideo {
 interface Video {
     id: number;
     name: string;
-    type: "FACE_BLURRED" | "BACKGROUND_BLURRED" | "NO_BLUR";
+    type: "Face Blurred" | "Background Blurred" | "No Blur";
     uploaderId: number;
     uploader: User;
     dateUploaded: Date;

@@ -1,4 +1,12 @@
-import {Box, IconButton, InputAdornment, InputLabel, ListItemText, OutlinedInput, TextField} from "@mui/material";
+import {
+    Box,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    ListItemText,
+    OutlinedInput,
+    TextField
+} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Paper from "@mui/material/Paper";
@@ -17,11 +25,11 @@ import NavBar from "../components/common";
 import Button from "@mui/material/Button";
 import Tags from "components/tags";
 import Filter from "components/filter";
-import FilterListIcon from '@mui/icons-material/FilterList';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
+import FilterListIcon from "@mui/icons-material/FilterList";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, {SelectChangeEvent} from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
 import * as home from "../static/home.css";
 
 interface Column {
@@ -62,18 +70,15 @@ const VideoList = (props: VideoProps): JSX.Element => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [tags, setTags] = useState<Array<string>>([]);
-    const [filters, setFilters] = useState<Array<string>>(['No Blur',
-    'Face Blurred',
-    'Background Blurred']);
-    const filterNames = [
-        'No Blur',
-        'Face Blurred',
-        'Background Blurred'
-    ]
-       
+    const [filters, setFilters] = useState<Array<string>>([
+        "No Blur",
+        "Face Blurred",
+        "Background Blurred"
+    ]);
+    const [filteredListDisplay, setFilteredListDisplay] = useState<Array<Video | undefined>>([]);
+    const filterNames = ["No Blur", "Face Blurred", "Background Blurred"];
 
-    
-    const[openFilter, setOpenFilter] = useState(false);
+    const [openFilter, setOpenFilter] = useState(false);
 
     const updateTags = () => {
         fetch("/api/video_list/tags", {
@@ -93,7 +98,8 @@ const VideoList = (props: VideoProps): JSX.Element => {
 
     useEffect(() => {
         updateTags();
-    }, []);
+        setFilteredListDisplay(props.filteredList.filteredList);
+    }, [props.filteredList.filteredList]);
 
     const navigate = useNavigate();
 
@@ -114,12 +120,21 @@ const VideoList = (props: VideoProps): JSX.Element => {
 
     const handleFilterChange = (event: SelectChangeEvent<typeof filters>) => {
         const {
-          target: { value },
+            target: {value}
         } = event;
-        setFilters(
-          typeof value === 'string' ? value.split(',') : value,
-        );
-      };
+        console.log(value);
+        setFilters(typeof value === "string" ? value.split(",") : value);
+        const temp: Video[] = [];
+        props.filteredList.filteredList.map((video) => {
+            if (video) {
+                console.log(filters);
+                if (value.includes(video.type)) {
+                    temp.push(video);
+                }
+            }
+        });
+        setFilteredListDisplay(temp);
+    };
 
     // delete video from prisma and s3
     function handleDeleteVideo(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, fileId: number) {
@@ -168,34 +183,55 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                         >
                                             <b>{column.label}</b>
                                             <IconButton>
-                                                <FilterListIcon onClick={() => setOpenFilter(!openFilter)}/>
+                                                <FilterListIcon
+                                                    onClick={() => setOpenFilter(!openFilter)}
+                                                />
                                             </IconButton>
-                    
+
                                             {openFilter && (
-                                                 <div>
-                                                 <FormControl sx={{ m: 1, width: 170, position: "absolute", zIndex: 5000 }}>
-                                                   <InputLabel>Filter</InputLabel>
-                                                   <Select
-                                                     multiple
-                                                     value={filters}
-                                                     onChange={handleFilterChange}
-                                                     input={<OutlinedInput label="Filter" />}
-                                                     renderValue={(selected) => selected.join(', ')}
-                                                   >
-                                                     {filterNames.map((filter) => (
-                                                       <MenuItem key={filter} value={filter}>
-                                                         <Checkbox checked={filters.indexOf(filter) > -1} />
-                                                         <ListItemText primary={filter} />
-                                                       </MenuItem>
-                                                     ))}
-                                                   </Select>
-                                                 </FormControl>
-                                               </div>
+                                                <div>
+                                                    <FormControl
+                                                        sx={{
+                                                            m: 1,
+                                                            width: 170,
+                                                            position: "absolute",
+                                                            zIndex: 5000
+                                                        }}
+                                                    >
+                                                        <InputLabel>Filter</InputLabel>
+                                                        <Select
+                                                            multiple
+                                                            value={filters}
+                                                            onChange={handleFilterChange}
+                                                            input={<OutlinedInput label="Filter" />}
+                                                            renderValue={(selected) =>
+                                                                selected.join(", ")
+                                                            }
+                                                        >
+                                                            {filterNames.map((filter) => (
+                                                                <MenuItem
+                                                                    key={filter}
+                                                                    value={filter}
+                                                                >
+                                                                    <Checkbox
+                                                                        checked={
+                                                                            filters.indexOf(
+                                                                                filter
+                                                                            ) > -1
+                                                                        }
+                                                                    />
+                                                                    <ListItemText
+                                                                        primary={filter}
+                                                                    />
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
+                                                </div>
                                             )}
                                         </TableCell>
-                                    )
-                                }
-                                else {
+                                    );
+                                } else {
                                     return (
                                         <TableCell
                                             key={column.id}
@@ -209,7 +245,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {props.filteredList.filteredList
+                        {filteredListDisplay
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 if (row === undefined) {
@@ -244,9 +280,8 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                                     </TableCell>
                                                 );
                                             } else if (column.id === "blurType") {
-                                                value = row["type"]
-                                            }
-                                            else if (column.id === "tags") {
+                                                value = row["type"];
+                                            } else if (column.id === "tags") {
                                                 return (
                                                     <TableCell
                                                         key={column.id}
@@ -311,11 +346,11 @@ export default function HomePage() {
     function getVideos() {
         function getTypeAsLiteral(type: string) {
             if (type === "FACE_BLURRED") {
-                return "FACE_BLURRED";
+                return "Face Blurred";
             } else if (type === "BACKGROUND_BLURRED") {
-                return "BACKGROUND_BLURRED";
+                return "Background Blurred";
             } else if (type === "NO_BLUR") {
-                return "NO_BLUR";
+                return "No Blur";
             }
             return null;
         }
