@@ -193,7 +193,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                                             m: 1,
                                                             width: 170,
                                                             position: "absolute",
-                                                            zIndex: 5000
+                                                            backgroundColor: "white"
                                                         }}
                                                     >
                                                         <InputLabel>Filter</InputLabel>
