@@ -80,12 +80,24 @@ const VideoList = (props: VideoProps): JSX.Element => {
 
     const navigate = useNavigate();
 
-    const routeChange = (key: string) => {
+    async function routeChange(key: string) {
         if (!props.disabled) {
-            const path = `/video/${key}`;
-            navigate(path);
+            const response = await fetch("/api/video", {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    key: key
+                })
+            });
+            const link = await response.json();
+
+            const path = `/video`;
+            navigate(path, {state: {link: link}});
         }
-    };
+    }
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -158,7 +170,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                     <TableRow
                                         hover={!props.disabled}
                                         role="checkbox"
-                                        onClick={() => routeChange(row["name"])}
+                                        onClick={async () => await routeChange(row["name"])}
                                         tabIndex={-1}
                                         key={row.id}
                                     >
