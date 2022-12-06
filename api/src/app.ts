@@ -37,10 +37,6 @@ app.use(
     passport.authenticate('jwt', { session: false }),
     blur
 );
-// app.use(
-//     '/api/get_blur',
-//     get_blur
-// );
 app.use('/api/video_list', video_list);
 
 const port = process.env.PORT;

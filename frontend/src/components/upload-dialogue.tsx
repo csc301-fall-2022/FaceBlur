@@ -8,6 +8,8 @@ import Button from "@mui/material/Button";
 import * as upload from "../static/upload-dialogue.css";
 import Cookies from "js-cookie";
 
+let faceblur = false;
+let backgroundblur = false;
 const DragFile = (props: {
     handleDrop: (blob: Blob, string: string) => void;
     children: JSX.Element;
@@ -91,18 +93,19 @@ const DragFile = (props: {
 export default function UploadDialogue(props: {handleClick: () => void; updateVideos: () => void}) {
     const ref = useRef<HTMLInputElement>(null);
     const [file, setFile] = useState(new Blob([], {type: "video/mp4"}));
-    // const [blur_file, setBlurFile] = useState(new Blob([], {type: "video/mp4"}));
     const [fileName, setFileName] = useState("");
     const [uploaded, setUploaded] = useState(false);
-    const [faceBlur, setFaceBlur] = useState(false);
-    const [backgroundBlur, setBackgroundBlur] = useState(false);
+    //const [faceBlur, setFaceBlur] = useState(false);
+    // const [backgroundBlur, setBackgroundBlur] = useState(false);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (ref.current && !ref.current.contains(event.target as HTMLElement)) {
                 setUploaded(false);
-                setFaceBlur(false);
-                setBackgroundBlur(false);
+                faceblur = false;
+                backgroundblur = false;
+                //setFaceBlur(false);
+                //setBackgroundBlur(false);
                 props.handleClick();
             }
         };
@@ -128,8 +131,8 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
     const postFile = () => {
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("faceBlur", faceBlur.toString());
-        formData.append("backgroundBlur", backgroundBlur.toString());
+        formData.append("faceBlur", faceblur.toString());
+        formData.append("backgroundBlur", backgroundblur.toString());
 
         fetch("/api/upload", {
             headers: {Authorization: "Bearer " + Cookies.get("access")},
@@ -138,54 +141,45 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
         }).then(() => {
             props.handleClick();
             props.updateVideos();
-        });
-        if (faceBlur) {
-            fetch("/api/blur", {
-                headers: {Authorization: "Bearer " + Cookies.get("access")},
-                method: "POST",
-                body: formData
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log("data ", data);
-                    console.log("data.file ", data.file);
-                    const blur_file = new File([data.file], "workkkk.mp4", {
-                        type: "video/mp4"
-                    });
-                    console.log("blur_file 2 ", blur_file);
-                    const formData1 = new FormData();
-                    formData1.append("file", blur_file);
-                    formData1.append("faceBlur", faceBlur.toString());
-                    formData1.append("backgroundBlur", backgroundBlur.toString());
-                    fetch("/api/upload", {
-                        headers: {Authorization: "Bearer " + Cookies.get("access")},
-                        method: "POST",
-                        body: formData1
-                    }).then(() => {
+            if (faceblur || backgroundblur) {
+                fetch("/api/blur", {
+                    headers: {Authorization: "Bearer " + Cookies.get("access")},
+                    method: "POST",
+                    body: formData
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log("data ", data);
                         props.handleClick();
                         props.updateVideos();
                     });
-                });
-        }
-        setUploaded(false);
-        setFaceBlur(false);
-        setBackgroundBlur(false);
-        setFile(new Blob([], {type: "video/mp4"}));
+            }
+            setUploaded(false);
+            //setFaceBlur(false);
+            faceblur = false;
+            //setBackgroundBlur(false);
+            backgroundblur = false;
+            setFile(new Blob([], {type: "video/mp4"}));
+        });
     };
 
     const handleFaceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
-            setFaceBlur(true);
+            //setFaceBlur(true);
+            faceblur = true;
         } else {
-            setFaceBlur(false);
+            //setFaceBlur(false);
+            faceblur = false;
         }
     };
 
     const handleBackgroundChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
-            setBackgroundBlur(true);
+            //setBackgroundBlur(true);
+            backgroundblur = true;
         } else {
-            setBackgroundBlur(false);
+            //setBackgroundBlur(false);
+            backgroundblur = false;
         }
     };
 
