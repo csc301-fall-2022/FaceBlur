@@ -3,7 +3,6 @@ import TextField from "@mui/material/TextField";
 import React, {useState} from "react";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
-
 interface Props {
     tagOptions: Array<string>;
     filteredTags: Array<string>;
