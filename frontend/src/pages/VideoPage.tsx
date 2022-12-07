@@ -7,14 +7,12 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 
 const VideoPage = () => {
-    let {key} = useParams();
-    if (key === undefined) {
-        key = "";
-    }
-    const link = "https://tecl-testing.s3.amazonaws.com/" + key.replace(/ /g, "+");
+    const {
+        state: {link}
+    } = useLocation();
 
     function download(videoLink: string) {
         FileSaver.saveAs(videoLink);

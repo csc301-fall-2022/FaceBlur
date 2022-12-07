@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import video_list from './routes/video_list';
 import auth from './routes/auth';
+import get_video from './routes/get_video';
 import dotenv from 'dotenv';
 import passport from 'passport';
 import bodyParser from 'body-parser';
@@ -31,6 +32,7 @@ app.use(
 );
 
 app.use('/api/video_list', video_list);
+app.use('/api/video', get_video);
 
 const port = process.env.PORT;
 app.get('/api/sanity_check', (req: Request, res: Response) => {

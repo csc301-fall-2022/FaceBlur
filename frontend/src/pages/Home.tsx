@@ -99,12 +99,24 @@ const VideoList = (props: VideoProps): JSX.Element => {
 
     const navigate = useNavigate();
 
-    const routeChange = (key: string) => {
+    async function routeChange(key: string) {
         if (!props.disabled) {
-            const path = `/video/${key}`;
-            navigate(path);
+            const response = await fetch("/api/video", {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    key: key
+                })
+            });
+            const link = await response.json();
+
+            const path = `/video`;
+            navigate(path, {state: {link: link}});
         }
-    };
+    }
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -114,6 +126,9 @@ const VideoList = (props: VideoProps): JSX.Element => {
         setPage(0);
     };
 
+    /**
+     * updates filters state to reflect currently selected filters
+     */
     const handleFilterChange = (event: SelectChangeEvent<typeof props.filters>) => {
         const {
             target: {value}
@@ -240,7 +255,7 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                     <TableRow
                                         hover={!props.disabled}
                                         role="checkbox"
-                                        onClick={() => routeChange(row["name"])}
+                                        onClick={async () => await routeChange(row["name"])}
                                         tabIndex={-1}
                                         key={row.id}
                                     >
@@ -311,12 +326,18 @@ export default function HomePage() {
         return new Promise((resolve) => setTimeout(resolve, milliseconds));
     };
 
+    /**
+     * when user clicks off upload dialogue, upload dialogue disapears
+     */
     const handleClick = async () => {
         showUploadDialogue(false);
         await sleep(500);
         setDisabled(false);
     };
 
+    /**
+     * shows upload dialogue and also disables video routes
+     */
     const handleUpload = () => {
         showUploadDialogue(true);
         setDisabled(true);
@@ -388,6 +409,9 @@ export default function HomePage() {
     }, []);
 
     useEffect(() => {
+        /**
+         * filters video list using current search, tags and blur filters
+         */
         setFilteredList(
             videosList.filter((video) => {
                 if (searchValue === undefined) {
