@@ -1,4 +1,4 @@
-import React, {useReducer} from "react";
+import React from "react";
 import {useNavigate} from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
@@ -7,6 +7,7 @@ import CardActions from "@mui/material/CardActions";
 import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import {CardMedia} from "@mui/material";
+import {store} from "src/store/store";
 
 import * as themes from "../static/themes.css";
 import * as login from "../static/login.css";
@@ -14,65 +15,8 @@ import Cookies from "js-cookie";
 
 // https://surajsharma.net/blog/react-login-form-typescript
 
-// login state type
-type State = {
-    email: string;
-    password: string;
-    helperText: string;
-    isError: boolean;
-};
-
-// initial state of login
-const initialState: State = {
-    email: "",
-    password: "",
-    helperText: "",
-    isError: false
-};
-
-// possible actions to take for updating State
-type Action =
-    | {type: "setEmail"; payload: string}
-    | {type: "setPassword"; payload: string}
-    | {type: "loginSuccess"; payload: string}
-    | {type: "loginFailed"; payload: string}
-    | {type: "setIsError"; payload: boolean};
-
-// update function
-const reducer = (state: State, action: Action): State => {
-    switch (action.type) {
-        case "setEmail":
-            return {
-                ...state,
-                email: action.payload
-            };
-        case "setPassword":
-            return {
-                ...state,
-                password: action.payload
-            };
-        case "loginSuccess":
-            return {
-                ...state,
-                helperText: action.payload,
-                isError: false
-            };
-        case "loginFailed":
-            return {
-                ...state,
-                helperText: action.payload,
-                isError: true
-            };
-        case "setIsError":
-            return {
-                ...state,
-                isError: action.payload
-            };
-    }
-};
-
 const Login = () => {
-    const [state, dispatch] = useReducer(reducer, initialState);
+    //const [state, dispatch] = useReducer(reducer, initialState);
     const navigate = useNavigate();
 
     // This is temporary, use a login endpoint from the api here later
@@ -84,19 +28,19 @@ const Login = () => {
             },
             method: "POST",
             body: JSON.stringify({
-                email: state.email,
-                password: state.password
+                email: store.getState().email,
+                password: store.getState().password
             })
         })
             .then((res) => {
                 if (res.status === 200) {
-                    dispatch({
+                    store.dispatch({
                         type: "loginSuccess",
                         payload: "Login Successful"
                     });
                     navigate("/home");
                 } else {
-                    dispatch({
+                    store.dispatch({
                         type: "loginFailed",
                         payload: "Incorrect email or password"
                     });
@@ -122,7 +66,7 @@ const Login = () => {
 
     // Handles email change in the input element
     const handleEmailChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        dispatch({
+        store.dispatch({
             type: "setEmail",
             payload: event.target.value
         });
@@ -130,7 +74,7 @@ const Login = () => {
 
     // Handles password change in the input element
     const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        dispatch({
+        store.dispatch({
             type: "setPassword",
             payload: event.target.value
         });
@@ -149,7 +93,7 @@ const Login = () => {
                 <CardContent>
                     <div>
                         <TextField
-                            error={state.isError}
+                            error={store.getState().isError}
                             fullWidth
                             id="email"
                             label="Email"
@@ -160,14 +104,14 @@ const Login = () => {
                             variant="outlined"
                         />
                         <TextField
-                            error={state.isError}
+                            error={store.getState().isError}
                             fullWidth
                             id="password"
                             label="Password"
                             placeholder="Password"
                             margin="normal"
                             type="password"
-                            helperText={state.helperText}
+                            helperText={store.getState().helperText}
                             onChange={handlePasswordChange}
                             onKeyPress={handleKeyPress}
                             variant="outlined"

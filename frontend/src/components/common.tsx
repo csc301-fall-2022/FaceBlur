@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-//import Popover from '@mui/material/Popover';
 import PersonIcon from "@mui/icons-material/Person";
 import {CardMedia, IconButton, Stack, Button, CardActionArea} from "@mui/material";
 import * as common from "../static/common.css";
 import {useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
+import {store} from "src/store/store";
 
-export default function NavBar() {
+function NavBar() {
     const navigate = useNavigate();
     const [showLogout, setShowLogout] = useState(false);
 
@@ -20,13 +20,10 @@ export default function NavBar() {
 
     const logout = () => {
         Cookies.remove("access");
-        // fetch("/api/auth/logout", {
-        //     headers: {
-        //         Accept: "application/json",
-        //         "Content-Type": "application/json"
-        //     },
-        //     method: "POST"
-        // });
+        store.dispatch({
+            type: "setLogout",
+            payload: null
+        });
         const path = "/";
         navigate(path);
     };
@@ -68,3 +65,5 @@ export default function NavBar() {
         </div>
     );
 }
+
+export default NavBar;
