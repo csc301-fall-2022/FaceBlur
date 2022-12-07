@@ -1,11 +1,18 @@
-import cv2
-import face_recognition
-from moviepy.editor import AudioFileClip, VideoFileClip
-import proglog
 import os
 import time
 
+import cv2
+import face_recognition
+import proglog
+from moviepy.editor import AudioFileClip, VideoFileClip
+
+
 def blur_frame(image):
+    """
+    takes frame of video and returns the frame with the face blurred
+
+    :param image: frame of video
+    """
     i = image.copy()
     small_frame = cv2.resize(i, (0, 0), fx=0.25, fy=0.25)
     rgb_frame = small_frame[:, :, ::-1]
@@ -26,13 +33,21 @@ def blur_frame(image):
 
 
 def convert_video(name: str):
-    
+    """
+    takes a path to a video and creates a new version with the face blurred
+
+    :param name str: path to video file
+    """
     clip = VideoFileClip(name)
     audio = AudioFileClip(name)
     final = clip.fl_image(blur_frame)
     final.set_audio(audio)
     name = name.replace(".mp4", "")
-    final.write_videofile(name + "-faceblur.mp4", audio_codec="aac", logger=proglog.TqdmProgressBarLogger(print_messages=False))
+    final.write_videofile(
+        name + "-faceblur.mp4",
+        audio_codec="aac",
+        logger=proglog.TqdmProgressBarLogger(print_messages=False),
+    )
     return name + "-faceblur.mp4"
 
 
@@ -41,10 +56,9 @@ if __name__ == "__main__":
     absolute_path = os.path.dirname(__file__)
     path = absolute_path.replace("src/middleware", "")
     start = time.time()
-    filename = convert_video(path + 'videos/' + key) 
+    filename = convert_video(path + "videos/" + key)
     file_list = filename.split("/")
     print(file_list[-1])
     end = time.time()
     total_time = (end - start) / 60
     # print("face blur time: "+ str(total_time))
-
