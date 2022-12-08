@@ -10,10 +10,16 @@ export default function NavBar() {
     const navigate = useNavigate();
     const [showLogout, setShowLogout] = useState(false);
 
+    /**
+     * when user hovers over user icon, show logout button
+     */
     const handleHover = () => {
         setShowLogout(true);
     };
 
+    /**
+     * hide logout button if user stops hovering over it
+     */
     const handleExit = () => {
         setShowLogout(false);
     };
