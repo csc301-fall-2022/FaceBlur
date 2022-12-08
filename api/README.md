@@ -1,7 +1,11 @@
 # TECL API
 
 ## Setup
-
+Install required dependencies for running the python scripts
+```bash
+conda install opencv
+pip3 install -r requirements.txt
+```
 Use npm to install all the required packages for the project
 
 ```bash
