@@ -94,8 +94,20 @@ const VideoList = (props: VideoProps): JSX.Element => {
     };
 
     useEffect(() => {
-        updateTags();
-    });
+        fetch("/api/video_list/tags", {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            method: "GET"
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setTags(data.tags);
+            });
+    }, []);
 
     const navigate = useNavigate();
 
