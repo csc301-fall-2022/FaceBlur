@@ -18,11 +18,20 @@ const DragFile = (props: {
     const [drag, setDrag] = useState(false);
 
     useEffect(() => {
+        /**
+         * stops default event from happening when user drags in a video
+         * @param e
+         */
         const handleDrag = (e: DragEvent) => {
             e.preventDefault();
             e.stopPropagation();
             setDrag(true);
         };
+        /**
+         * stops default event from happening when user drops a file
+         * calls props.handleDrop to save the file
+         * @param e
+         */
         const handleDrop = (e: DragEvent) => {
             e.preventDefault();
             e.stopPropagation();
@@ -77,6 +86,10 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
     const [uploaded, setUploaded] = useState(false);
 
     useEffect(() => {
+        /**
+         * if user clicks outside of the upload dialogue, reset states and close upload dialogue
+         * @param event
+         */
         const handleClickOutside = (event: MouseEvent) => {
             if (ref.current && !ref.current.contains(event.target as HTMLElement)) {
                 setUploaded(false);
@@ -91,21 +104,32 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
         };
     });
 
+    /**
+     * calls uploadFile with the selected file and file name
+     * @param e
+     */
     const selectFile = (e: ChangeEvent) => {
         const target = e.target as HTMLInputElement;
         if (target != null && target.files != null) {
             uploadFile(target.files[0], target.files[0].name);
         }
     };
-    
+
+    /**
+     * sets file, filename and uploaded states
+     * @param newFile file that user added
+     * @param name file name
+     */
     const uploadFile = (newFile: Blob, name: string) => {
         setFile(newFile);
         setFileName(name);
         setUploaded(true);
     };
-    /* Calls upload endpoint 
-       then if faceblur or backgroundblur was selected it calls blurring endpoint
-    */
+
+    /**
+     * calls upload endpoint
+     * if faceBlur or backgroundBlur was selected, call blur endpoint
+     */
     const postFile = () => {
         const formData = new FormData();
         formData.append("file", file);
@@ -127,7 +151,6 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
                 }).then(() => {
                     props.handleClick();
                     props.updateVideos();
-
                 });
             }
             setUploaded(false);
@@ -137,6 +160,10 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
         });
     };
 
+    /**
+     * sets faceBlur to reflect what the user checks in the upload dialogue
+     * @param e
+     */
     const handleFaceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
             faceblur = true;
@@ -145,6 +172,10 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
         }
     };
 
+    /**
+     * sets backgroundBlur to reflect what the user checks in the upload dialogue
+     * @param e
+     */
     const handleBackgroundChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
             backgroundblur = true;
