@@ -7,6 +7,7 @@ import CardActions from "@mui/material/CardActions";
 import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import {CardMedia} from "@mui/material";
+import Link from "@mui/material/Link";
 
 import * as themes from "../static/themes.css";
 import * as login from "../static/login.css";
@@ -146,7 +147,7 @@ const Login = () => {
                     image={require("../../public/logo.png")}
                     sx={{objectFit: "contain"}}
                 />
-                <CardHeader className={login.header} title="Log into KidBlur" />
+                <CardHeader className={login.header} title="Log into KidBlur!" />
                 <CardContent>
                     <div>
                         <TextField
@@ -187,12 +188,7 @@ const Login = () => {
                 </CardActions>
                 {/* Not implememented yet */}
                 <CardContent>
-                    <div>Forgot Password?</div>
-                </CardContent>
-                <CardContent>
-                    <a onClick={handleNoAccount}>
-                        <u>Don&#39;t have an account yet?</u>
-                    </a>
+                    <Link onClick={handleNoAccount}>Don&#39;t have an account yet?</Link>
                 </CardContent>
             </Card>
         </form>

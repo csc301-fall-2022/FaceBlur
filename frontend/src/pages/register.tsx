@@ -8,6 +8,7 @@ import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import {CardMedia} from "@mui/material";
 import Cookies from "js-cookie";
+import Link from "@mui/material/Link";
 
 import * as themes from "../static/themes.css";
 import * as login from "../static/login.css";
@@ -173,7 +174,7 @@ const Register = () => {
                     image={require("../../public/logo.png")}
                     sx={{objectFit: "contain"}}
                 />
-                <CardHeader className={login.header} title="Register for KidBlur" />
+                <CardHeader className={login.header} title="Register for KidBlur!" />
                 <CardContent>
                     <div>
                         <TextField
@@ -226,9 +227,7 @@ const Register = () => {
                 </CardActions>
                 {/* Not implememented yet */}
                 <CardContent>
-                    <a onClick={handleExistingAccount}>
-                        <u>Already have an account?</u>
-                    </a>
+                    <Link onClick={handleExistingAccount}>Already have an account?</Link>
                 </CardContent>
             </Card>
         </form>
