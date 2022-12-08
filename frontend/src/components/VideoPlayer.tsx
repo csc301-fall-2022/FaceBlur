@@ -7,7 +7,7 @@ const VideoPlayer = ({videoLink}: VideoProps) => (
         <source src={videoLink} type="video/mp4" />
         <source src={videoLink} type="video/webm" />
         <source src={videoLink} type="video/ogg" />
-        Your browser does no support the video tag.
+        Your browser does not support the video tag.
     </Video>
 );
 export default VideoPlayer;

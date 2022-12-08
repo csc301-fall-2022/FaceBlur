@@ -14,7 +14,7 @@ const VideoPage = () => {
         state: {link}
     } = useLocation();
 
-    /** 
+    /**
      * Downloads the video file from the video link
      * @param videoLink Presigned URL to a video stored in a s3 object
      */
