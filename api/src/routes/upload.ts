@@ -5,9 +5,9 @@ import { User } from '@prisma/client';
 
 import multer from 'multer';
 import { storage, fileFilter } from '../middleware/upload';
-const fs = require('fs');
-const {resolve} = require('path');
-var AWS = require('aws-sdk');
+import fs from 'fs';
+import { resolve } from 'path';
+import AWS from 'aws-sdk';
 
 const router = express.Router();
 const bucketName: string = process.env.AWS_BUCKET_NAME || '';
@@ -59,15 +59,15 @@ router.post('/', (req: Request, res: Response) => {
                     dateUploaded: new Date(),
                 },
             });
-            var params = {
+            const params = {
                 Bucket: bucketName, 
                 Key: (req.file as MulterFile).key
               };
             const absolutePath = resolve('videos');
-            var s3 = new AWS.S3();
-            let readStream = s3.getObject(params).createReadStream();
+            const s3 = new AWS.S3();
+            const readStream = s3.getObject(params).createReadStream();
             console.log("path where video is saved locally: ", absolutePath + '/' +(req.file as MulterFile).key)
-            let writeStream = fs.createWriteStream(absolutePath + '/' + (req.file as MulterFile).key);
+            const writeStream = fs.createWriteStream(absolutePath + '/' + (req.file as MulterFile).key);
             readStream.pipe(writeStream);
             const resData = {
                 file: req.file,

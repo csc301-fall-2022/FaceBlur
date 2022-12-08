@@ -1,10 +1,29 @@
-// import app from '../src/app';
-// import { logger } from '../src/utils/logger';
-// import { prisma } from './generate';
+import app from '../src/app';
+import { prisma } from './generate';
 
-// import { Post } from '@prisma/client';
-// import faker from 'faker';
-// import supertest from 'supertest';
+import { User } from '@prisma/client';
+import supertest from 'supertest';
+
+describe('with existing post', () => {
+  let user: User;
+
+  beforeEach(async () => {
+    user = await prisma.user.create({
+      data: {
+            id: 1,
+            email: 'test@gmail.com',
+            password:
+                '$2b$10$UNQGu4eZmEgvucwIIC/DMeszMuvHXf/6euvCwUYAlS2YxRm0WLC52',
+        },
+    });
+  });
+
+  it('should return the post', async () => {
+    const response = await supertest(app).post('/api/auth/register').expect(200);
+    expect(JSON.parse(response.text)).toMatchObject([user]);
+  });
+});
+
 
 // describe('registration success', () => {
 //     test('register a user', async () => {
