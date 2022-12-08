@@ -17,7 +17,7 @@ workflows:
             filters:
               branches:
                 only:
-                  -main
+                  - main
             api-key: HEROKU_API_KEY
             app-name: csc301 
             force: false 
