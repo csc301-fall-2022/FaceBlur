@@ -12,7 +12,7 @@ const App = () => {
             <Routes>
                 <Route element={<ProtectedRoute />}>
                     <Route path="/home" element={<HomePage />} />
-                    <Route path="/video/:key" element={<VideoPage />} />
+                    <Route path="/video" element={<VideoPage />} />
                 </Route>
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
