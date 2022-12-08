@@ -7,6 +7,7 @@ import FormGroup from "@mui/material/FormGroup";
 import Button from "@mui/material/Button";
 import * as upload from "../static/upload-dialogue.css";
 import Cookies from "js-cookie";
+//const constructFileFromLocalFileData = require('get-file-object-from-local-path').constructFileFromLocalFileData;
 
 let faceblur = false;
 let backgroundblur = false;
@@ -146,13 +147,11 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
                     headers: {Authorization: "Bearer " + Cookies.get("access")},
                     method: "POST",
                     body: formData
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        console.log("data ", data);
-                        props.handleClick();
-                        props.updateVideos();
-                    });
+                }).then(() => {
+                    props.handleClick();
+                    props.updateVideos();
+
+                });
             }
             setUploaded(false);
             //setFaceBlur(false);

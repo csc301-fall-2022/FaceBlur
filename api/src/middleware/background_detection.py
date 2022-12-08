@@ -48,10 +48,9 @@ if __name__ == "__main__":
     key = input()
     absolute_path = os.path.dirname(__file__)
     path = absolute_path.replace("src/middleware", "")
-    start = time.time()
+    # start = time.time()
     filename = convert_video(path + "videos/" + key)
-    file_list = filename.split("/")
-    print(file_list[-1])
-    end = time.time()
-    total_time = (end - start) / 60
+    print(filename)
+    # end = time.time()
+    # total_time = (end - start) / 60
     # print("background blur time: "+ str(total_time))
