@@ -20,6 +20,7 @@ export default function NavBar() {
 
     const logout = () => {
         Cookies.remove("access");
+        localStorage.clear();
         const path = "/";
         navigate(path);
     };
