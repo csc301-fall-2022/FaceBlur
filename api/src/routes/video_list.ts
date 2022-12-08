@@ -117,9 +117,13 @@ router.patch('/tags/:videoId', async (req: Request, res: Response) => {
 
 })
 
-
-
-// delete videos from s3 and DB
+/**
+ * Route supporting deleting videos by video id 
+ * @name /delete
+ * @function
+ * @inner
+ *
+ */
 router.post('/delete', async (req: Request, res: Response) => {
     logger.info('Delete endpoint called');
     const videoId = req.body.fileId;
