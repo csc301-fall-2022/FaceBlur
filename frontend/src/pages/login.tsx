@@ -7,15 +7,19 @@ import CardActions from "@mui/material/CardActions";
 import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import {CardMedia} from "@mui/material";
-import {store} from "src/store/store";
+import {AppDispatch, store} from "src/store/store";
+
+import { useDispatch, useSelector } from "react-redux/es/exports";
 
 import * as themes from "../static/themes.css";
 import * as login from "../static/login.css";
 import Cookies from "js-cookie";
 
+import {State} from "src/store/auth-reducer";
+
 // https://surajsharma.net/blog/react-login-form-typescript
 
-const Login = () => {
+const Login = (props: State) => {
     //const [state, dispatch] = useReducer(reducer, initialState);
     const navigate = useNavigate();
 
@@ -28,8 +32,8 @@ const Login = () => {
             },
             method: "POST",
             body: JSON.stringify({
-                email: store.getState().email,
-                password: store.getState().password
+                email: props.email,
+                password: props.password
             })
         })
             .then((res) => {
@@ -93,7 +97,7 @@ const Login = () => {
                 <CardContent>
                     <div>
                         <TextField
-                            error={store.getState().isError}
+                            error={useSelector(isError: boolean => isError)}
                             fullWidth
                             id="email"
                             label="Email"
@@ -141,5 +145,13 @@ const Login = () => {
         </form>
     );
 };
+
+// function mapStateToProps(state: State) {
+//     return {
+//         state
+//     };
+// }
+
+export const useAppDispatch: () => AppDispatch = useDispatch
 
 export default Login;

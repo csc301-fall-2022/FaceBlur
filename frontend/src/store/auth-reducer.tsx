@@ -1,5 +1,5 @@
 // login state type
-type State = {
+export type State = {
     email: string;
     password: string;
     helperText: string;
@@ -23,7 +23,7 @@ type Action =
     | {type: "loginSuccess"; payload: string}
     | {type: "loginFailed"; payload: string}
     | {type: "setIsError"; payload: boolean}
-    | {type: "setLogout"; payload: null};
+    | {type: "setLogout"; payload: boolean};
 
 // update function
 export const reducer = (state: State = initialState, action: Action): State => {

@@ -1,15 +1,17 @@
 import {configureStore} from "@reduxjs/toolkit";
-import {reducer} from "./auth-reducer";
-
-export const store = configureStore({
-    reducer: reducer,
-    preloadedState: {
-        email: "",
-        password: "",
-        helperText: "",
-        isError: false,
-        loggedIn: false
-    }
+import {reducer, initialState} from "./auth-reducer";
+import { combineReducers } from "@reduxjs/toolkit";
+//const enhancer = window.REDUX_DEVTOOLS_EXTENSION &&window.REDUX_DEVTOOLS_EXTENSION()
+const rootReducer = combineReducers({
+    authReducer: reducer
 });
 
-console.log(store.getState());
+export const store = configureStore({
+    reducer: rootReducer
+    // enhancers: enhancer
+});
+
+
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

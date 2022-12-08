@@ -4,7 +4,8 @@ import {CardMedia, IconButton, Stack, Button, CardActionArea} from "@mui/materia
 import * as common from "../static/common.css";
 import {useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
-import {store} from "src/store/store";
+import {AppDispatch, store} from "src/store/store";
+import { useDispatch } from "react-redux/es/exports";
 
 function NavBar() {
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ function NavBar() {
         Cookies.remove("access");
         store.dispatch({
             type: "setLogout",
-            payload: null
+            payload: false
         });
         const path = "/";
         navigate(path);
@@ -65,5 +66,7 @@ function NavBar() {
         </div>
     );
 }
+
+export const useAppDispatch: () => AppDispatch = useDispatch
 
 export default NavBar;
