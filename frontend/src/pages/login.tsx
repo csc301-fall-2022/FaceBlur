@@ -94,7 +94,6 @@ const Login = () => {
                         type: "loginSuccess",
                         payload: "Login Successful"
                     });
-                    navigate("/home");
                 } else {
                     dispatch({
                         type: "loginFailed",
@@ -105,6 +104,8 @@ const Login = () => {
             })
             .then((data) => {
                 Cookies.set("access", data.token);
+                localStorage.setItem("loggedIn", "true");
+                navigate("/home");
             });
     };
 
