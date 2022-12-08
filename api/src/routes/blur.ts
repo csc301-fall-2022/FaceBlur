@@ -26,6 +26,9 @@ interface MulterFile extends Express.Multer.File{
     metadata: any;
 }
 
+/* Blurs face and/or background of a video that is passed in, by running a python script 
+   And uploads to S3 bucket and database
+*/
 router.post('/', (req: Request, res: Response) => {
     logger.info('blur endpoint called');
     blur(req, res, async (err) => {
@@ -34,22 +37,22 @@ router.post('/', (req: Request, res: Response) => {
         } else {
             const { file, faceBlur, backgroundBlur } = req.body;
              if (faceBlur == 'true') {
-                console.log("entered face blur func");
-                console.log("(req.file as MulterFile): ",(req.file as MulterFile));
+                logger.info("entered face blur func");
+                logger.info("(req.file as MulterFile): ",(req.file as MulterFile));
                 const python = spawnSync('python3', ['src/middleware/face_detection.py'], {input:(req.file as MulterFile).key }); 
-                console.log("face blur python script complete");
+                logger.info("face blur python script complete");
                 let path2 = python.stdout.toString().replace('\n', '');
                 let filename = path.basename(path2);
-                console.log("new path: ", path2);
+                logger.info("new path: ", path2);
                 const fileContent = fs.readFileSync(path2);
                 const s3 = new AWS.S3({
                     accessKeyId: accessKey,
                     secretAccessKey: secretKey
                 });
-                // Setting up S3 upload parameters
+                
                 const params = {
                     Bucket: bucketName,
-                    Key: filename, // File name you want to save as in S3
+                    Key: filename, 
                     Body: fileContent
                 };
 
@@ -58,8 +61,9 @@ router.post('/', (req: Request, res: Response) => {
                     if (err) {
                         throw err;
                     }
-                    console.log(`File uploaded successfully. ${data.Location}`);
+                    logger.info("Face blur file uploaded successfully. ", data.Location);
                 });
+                // Uploading files to db
                 const user = req.user as User;
                 const userId = user.id;
                 const video = await prisma.video.upsert({
@@ -80,28 +84,27 @@ router.post('/', (req: Request, res: Response) => {
                         dateUploaded: new Date(),
                     },
                 });
-                console.log("Python script output: ", python.stdout.toString());
-                console.log("Python errors: ", python.stderr.toString());
+                logger.info("Face blur Python script output: ", python.stdout.toString());
+                logger.info("Face blur Python errors: ", python.stderr.toString());
                 if (backgroundBlur != 'true') {
                     res.status(200);
                 }
             }
             if (backgroundBlur == 'true') {
-                console.log("entered background blur func");
+                logger.info("entered background blur func");
                 const python1 = spawnSync('python3', ['src/middleware/background_detection.py'], {input:(req.file as MulterFile).key }); 
-                console.log("background blur python script complete");
+                logger.info("background blur python script complete");
                 let path1 = python1.stdout.toString().replace('\n', '');
                 let filename = path.basename(path1);
-                console.log("new path: ", path1);
+                logger.info("new path: ", path1);
                 const fileContent = fs.readFileSync(path1);
                 const s3 = new AWS.S3({
                     accessKeyId: accessKey,
                     secretAccessKey: secretKey
                 });
-                // Setting up S3 upload parameters
                 const params = {
                     Bucket: bucketName,
-                    Key: filename, // File name you want to save as in S3
+                    Key: filename, 
                     Body: fileContent
                 };
 
@@ -110,8 +113,9 @@ router.post('/', (req: Request, res: Response) => {
                     if (err) {
                         throw err;
                     }
-                    console.log(`File uploaded successfully. ${data.Location}`);
+                    logger.info("Background blur file uploaded successfully. ", data.Location);
                 });
+                // Uploading files to db
                 const user = req.user as User;
                 const userId = user.id;
                 const video = await prisma.video.upsert({
@@ -132,8 +136,8 @@ router.post('/', (req: Request, res: Response) => {
                         dateUploaded: new Date(),
                     },
                 });
-                console.log("Python1 script output: ", python1.stdout.toString());
-                console.log("Python1 errors: ", python1.stderr.toString());
+                logger.info("Python1 script output: ", python1.stdout.toString());
+                logger.info("Python1 errors: ", python1.stderr.toString());
                 res.status(200);
             }
             let absolutePath = resolve('./blur.ts');

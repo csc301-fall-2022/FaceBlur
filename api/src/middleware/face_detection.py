@@ -23,7 +23,6 @@ def blur_frame(image):
         bottom *= 4
         left *= 4
 
-        # cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
         face_image = i[top:bottom, left:right]
 
         # Blur the face image

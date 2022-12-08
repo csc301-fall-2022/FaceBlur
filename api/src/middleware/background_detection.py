@@ -13,6 +13,12 @@ def blur_frame(image):
     takes a given frame of a video and returns the frame with the background blurred
 
     :param image: frame of video
+
+    *    Title: How to Remove the Background from a Video?
+    *    Author: Aziz Berkay Yesilyurt
+    *    Date: Sep 1, 2021
+    *    Code version: 1.0
+    *    Availability: https://kowl.medium.com/background-removal-using-python-60f67eccbb07
     """
     i = image.copy()
     selfie_segmentation = mediapipe.solutions.selfie_segmentation.SelfieSegmentation(
@@ -21,8 +27,8 @@ def blur_frame(image):
     mask = selfie_segmentation.process(i).segmentation_mask[:, :, None]
     mask = mask > 0.8
 
-    bg = cv2.GaussianBlur(i.astype(float), (99, 99), 30)
-    return mask * i + (1 - mask) * bg
+    blur = cv2.GaussianBlur(i.astype(float), (99, 99), 30)
+    return mask * i + (1 - mask) * blur
 
 
 def convert_video(name: str):

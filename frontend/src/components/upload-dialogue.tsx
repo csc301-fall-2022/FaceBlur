@@ -122,13 +122,15 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
             uploadFile(target.files[0], target.files[0].name);
         }
     };
-
+    
     const uploadFile = (newFile: Blob, name: string) => {
         setFile(newFile);
         setFileName(name);
         setUploaded(true);
     };
-
+    /* Calls upload endpoint 
+       then if faceblur or backgroundblur was selected it calls blurring endpoint
+    */
     const postFile = () => {
         const formData = new FormData();
         formData.append("file", file);
