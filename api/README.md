@@ -1,7 +1,7 @@
 # TECL API
 
 ## Setup
-Install required dependecies for running the python scripts
+Install required dependencies for running the python scripts
 ```bash
 conda install opencv
 pip3 install -r requirements.txt
