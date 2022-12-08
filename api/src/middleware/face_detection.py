@@ -1,10 +1,12 @@
 import os
-import time
 
 import cv2
-import face_recognition
+import mediapipe as mp
 import proglog
 from moviepy.editor import AudioFileClip, VideoFileClip
+
+mp_face_detection = mp.solutions.face_detection
+mp_drawing = mp.solutions.drawing_utils
 
 
 def blur_frame(image):
@@ -14,20 +16,38 @@ def blur_frame(image):
     :param image: frame of video
     """
     i = image.copy()
-    small_frame = cv2.resize(i, (0, 0), fx=0.25, fy=0.25)
-    rgb_frame = small_frame[:, :, ::-1]
-    face_locations = face_recognition.face_locations(rgb_frame)
-    for top, right, bottom, left in face_locations:
-        top *= 4
-        right *= 4
-        bottom *= 4
-        left *= 4
+    rgb_frame = i[:, :, ::-1]
+    with mp_face_detection.FaceDetection(
+        model_selection=0, min_detection_confidence=0.3
+    ) as face_detection:
+        results = face_detection.process(rgb_frame)
+        if not results.detections:
+            return i
+        for detection in results.detections:
+            box = detection.location_data.relative_bounding_box
+            y_scale = len(i)
+            x_scale = len(i[0])
 
-        face_image = i[top:bottom, left:right]
+            width = box.width * 1.25
+            height = box.height * 1.25
 
-        # Blur the face image
-        face_image = cv2.GaussianBlur(face_image, (99, 99), 30)
-        i[top:bottom, left:right] = face_image
+            left = box.xmin * x_scale
+            right = left + width * x_scale
+            left = int(left)
+            right = int(right)
+            right = min(right, x_scale)
+
+            top = box.ymin * y_scale
+            bottom = top + height * y_scale
+            bottom = int(bottom)
+            top = int(top)
+            top = min(top, y_scale)
+
+            face_image = i[top:bottom, left:right]
+
+            # Blur the face image
+            face_image = cv2.GaussianBlur(face_image, (99, 99), 30)
+            i[top:bottom, left:right] = face_image
     return i
 
 
@@ -54,9 +74,5 @@ if __name__ == "__main__":
     key = input()
     absolute_path = os.path.dirname(__file__)
     path = absolute_path.replace("src/middleware", "")
-    # start = time.time()
     filename = convert_video(path + "videos/" + key)
     print(filename)
-    # end = time.time()
-    # total_time = (end - start) / 60
-    # print("face blur time: "+ str(total_time))
