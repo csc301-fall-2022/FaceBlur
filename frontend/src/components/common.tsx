@@ -18,6 +18,9 @@ export default function NavBar() {
         setShowLogout(false);
     };
 
+    /**
+     * clears local storage, removes cookies and navigates back to login page
+     */
     const logout = () => {
         Cookies.remove("access");
         localStorage.clear();
