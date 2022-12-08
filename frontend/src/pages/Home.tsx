@@ -1,4 +1,12 @@
-import {Box, InputAdornment, TextField} from "@mui/material";
+import {
+    Box,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    ListItemText,
+    OutlinedInput,
+    TextField
+} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Paper from "@mui/material/Paper";
@@ -17,11 +25,15 @@ import NavBar from "../components/common";
 import Button from "@mui/material/Button";
 import Tags from "components/tags";
 import Filter from "components/filter";
-
+import FilterListIcon from "@mui/icons-material/FilterList";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, {SelectChangeEvent} from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
 import * as home from "../static/home.css";
 
 interface Column {
-    id: "name" | "uploader" | "dateUploaded" | "options" | "tags";
+    id: "name" | "uploader" | "dateUploaded" | "options" | "tags" | "blurType";
     label: string;
     minWidth?: number;
     align?: "right";
@@ -37,12 +49,15 @@ interface VideoProps {
     updateVideos: () => void;
     setFilteredTags: (filteredTags: Array<string>) => void;
     filteredTags: Array<string>;
+    filters: Array<string>;
+    setFilters: (filters: Array<string>) => void;
 }
 
 const columns: readonly Column[] = [
     {id: "name", label: "Video Title", minWidth: 170},
     {id: "uploader", label: "Uploaded By", minWidth: 170},
     {id: "dateUploaded", label: "Date Uploaded", minWidth: 170},
+    {id: "blurType", label: "Blur Type", minWidth: 170},
     {id: "tags", label: "Tags", minWidth: 170},
     {id: "options", label: "", minWidth: 100}
 ];
@@ -57,6 +72,9 @@ const VideoList = (props: VideoProps): JSX.Element => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [tags, setTags] = useState<Array<string>>([]);
+    const filterNames = ["No Blur", "Face Blurred", "Background Blurred"];
+
+    const [openFilter, setOpenFilter] = useState(false);
 
     const updateTags = () => {
         fetch("/api/video_list/tags", {
@@ -71,11 +89,24 @@ const VideoList = (props: VideoProps): JSX.Element => {
             })
             .then((data) => {
                 setTags(data.tags);
+                props.updateVideos();
             });
     };
 
     useEffect(() => {
-        updateTags();
+        fetch("/api/video_list/tags", {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            method: "GET"
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setTags(data.tags);
+            });
     }, []);
 
     const navigate = useNavigate();
@@ -105,6 +136,16 @@ const VideoList = (props: VideoProps): JSX.Element => {
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
+    };
+
+    /**
+     * updates filters state to reflect currently selected filters
+     */
+    const handleFilterChange = (event: SelectChangeEvent<typeof props.filters>) => {
+        const {
+            target: {value}
+        } = event;
+        props.setFilters(typeof value === "string" ? value.split(",") : value);
     };
 
     // delete video from prisma and s3
@@ -144,6 +185,62 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                                 filteredTags={props.filteredTags}
                                                 setFilteredTags={props.setFilteredTags}
                                             />
+                                        </TableCell>
+                                    );
+                                } else if (column.id === "blurType") {
+                                    return (
+                                        <TableCell
+                                            key={column.id}
+                                            style={{minWidth: column.minWidth}}
+                                        >
+                                            <b>{column.label}</b>
+                                            <IconButton>
+                                                <FilterListIcon
+                                                    onClick={() => setOpenFilter(!openFilter)}
+                                                />
+                                            </IconButton>
+
+                                            {openFilter && (
+                                                <div>
+                                                    <FormControl
+                                                        sx={{
+                                                            m: 1,
+                                                            width: 170,
+                                                            position: "absolute",
+                                                            backgroundColor: "white"
+                                                        }}
+                                                    >
+                                                        <InputLabel>Filter</InputLabel>
+                                                        <Select
+                                                            multiple
+                                                            value={props.filters}
+                                                            onChange={handleFilterChange}
+                                                            input={<OutlinedInput label="Filter" />}
+                                                            renderValue={(selected) =>
+                                                                selected.join(", ")
+                                                            }
+                                                        >
+                                                            {filterNames.map((filter) => (
+                                                                <MenuItem
+                                                                    key={filter}
+                                                                    value={filter}
+                                                                >
+                                                                    <Checkbox
+                                                                        checked={
+                                                                            props.filters.indexOf(
+                                                                                filter
+                                                                            ) > -1
+                                                                        }
+                                                                    />
+                                                                    <ListItemText
+                                                                        primary={filter}
+                                                                    />
+                                                                </MenuItem>
+                                                            ))}
+                                                        </Select>
+                                                    </FormControl>
+                                                </div>
+                                            )}
                                         </TableCell>
                                     );
                                 } else {
@@ -194,6 +291,8 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                                         </Button>
                                                     </TableCell>
                                                 );
+                                            } else if (column.id === "blurType") {
+                                                value = row["type"];
                                             } else if (column.id === "tags") {
                                                 return (
                                                     <TableCell
@@ -239,12 +338,18 @@ export default function HomePage() {
         return new Promise((resolve) => setTimeout(resolve, milliseconds));
     };
 
+    /**
+     * when user clicks off upload dialogue, upload dialogue disapears
+     */
     const handleClick = async () => {
         showUploadDialogue(false);
         await sleep(500);
         setDisabled(false);
     };
 
+    /**
+     * shows upload dialogue and also disables video routes
+     */
     const handleUpload = () => {
         showUploadDialogue(true);
         setDisabled(true);
@@ -254,16 +359,21 @@ export default function HomePage() {
     const [filteredList, setFilteredList] = useState<Array<Video | undefined>>([]);
     const [filteredTags, setFilteredTags] = useState<Array<string>>([]);
     const [searchValue, setSearchValue] = useState("");
+    const [filters, setFilters] = useState<Array<string>>([
+        "No Blur",
+        "Face Blurred",
+        "Background Blurred"
+    ]);
 
     //Get videos from prisma
     function getVideos() {
         function getTypeAsLiteral(type: string) {
             if (type === "FACE_BLURRED") {
-                return "FACE_BLURRED";
+                return "Face Blurred";
             } else if (type === "BACKGROUND_BLURRED") {
-                return "BACKGROUND_BLURRED";
+                return "Background Blurred";
             } else if (type === "NO_BLUR") {
-                return "NO_BLUR";
+                return "No Blur";
             }
             return null;
         }
@@ -311,6 +421,9 @@ export default function HomePage() {
     }, []);
 
     useEffect(() => {
+        /**
+         * filters video list using current search, tags and blur filters
+         */
         setFilteredList(
             videosList.filter((video) => {
                 if (searchValue === undefined) {
@@ -325,12 +438,15 @@ export default function HomePage() {
                         filteredTags === undefined ||
                         filteredTags.length === 0 ||
                         filteredTags.every((tag) => searchableVideoTags.has(tag));
-
-                    return hasRightTitle && hasRightTags;
+                    let hasRightBlurType = false;
+                    if (video) {
+                        hasRightBlurType = filters.includes(video.type);
+                    }
+                    return hasRightTitle && hasRightTags && hasRightBlurType;
                 }
             })
         );
-    }, [searchValue, filteredTags, videosList]);
+    }, [searchValue, filteredTags, videosList, filters]);
 
     return (
         <div>
@@ -372,6 +488,8 @@ export default function HomePage() {
                     updateVideos={getVideos}
                     setFilteredTags={setFilteredTags}
                     filteredTags={filteredTags}
+                    filters={filters}
+                    setFilters={setFilters}
                 />
             </div>
             <Fab variant="extended" className={home.uploadButton} onClick={handleUpload}>

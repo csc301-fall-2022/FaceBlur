@@ -5,9 +5,12 @@ import { User } from '@prisma/client';
 
 import multer from 'multer';
 import { storage, fileFilter } from '../middleware/upload';
+const fs = require('fs');
+const {resolve} = require('path');
+var AWS = require('aws-sdk');
 
 const router = express.Router();
-
+const bucketName: string = process.env.AWS_BUCKET_NAME || '';
 // TODO: maybe we need a filesize limit
 const upload = multer({ storage: storage, fileFilter: fileFilter }).single(
     'file'
@@ -17,7 +20,13 @@ interface MulterFile extends Express.Multer.File{
     key: string;
 }
 
-// Endpoint for uploading and processing a video
+/**
+ * Route for uploading videos to S3 and the database with metadata
+ * @name /upload
+ * @function
+ * @inner
+ *
+ */
 router.post('/', (req: Request, res: Response) => {
     logger.info('Upload endpoint called');
     // Upload file with multer - uploads to S3
@@ -32,9 +41,6 @@ router.post('/', (req: Request, res: Response) => {
             // Create video record and save to local db
             const user = req.user as User;
             const userId = user.id;
-            // selected options
-            // const doFaceBlur = req.body.faceBlur;
-            // const doBackgroundBlur = req.body.backgroundBlur;
             const video = await prisma.video.upsert({
                 where: {
                     name: (req.file as MulterFile).key,
@@ -44,7 +50,7 @@ router.post('/', (req: Request, res: Response) => {
                 },
                 create: {
                     name: (req.file as MulterFile).key,
-                    type: 'NO_BLUR', // no blur for now, processed videos will have the blur type 
+                    type: 'NO_BLUR',
                     uploader: {
                         connect: {
                             id: userId,
@@ -53,6 +59,16 @@ router.post('/', (req: Request, res: Response) => {
                     dateUploaded: new Date(),
                 },
             });
+            var params = {
+                Bucket: bucketName, 
+                Key: (req.file as MulterFile).key
+              };
+            const absolutePath = resolve('videos');
+            var s3 = new AWS.S3();
+            let readStream = s3.getObject(params).createReadStream();
+            console.log("path where video is saved locally: ", absolutePath + '/' +(req.file as MulterFile).key)
+            let writeStream = fs.createWriteStream(absolutePath + '/' + (req.file as MulterFile).key);
+            readStream.pipe(writeStream);
             const resData = {
                 file: req.file,
                 blurType: video.type,

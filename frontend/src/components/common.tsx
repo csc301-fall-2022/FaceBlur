@@ -18,15 +18,12 @@ export default function NavBar() {
         setShowLogout(false);
     };
 
+    /**
+     * clears local storage, removes cookies and navigates back to login page
+     */
     const logout = () => {
         Cookies.remove("access");
-        // fetch("/api/auth/logout", {
-        //     headers: {
-        //         Accept: "application/json",
-        //         "Content-Type": "application/json"
-        //     },
-        //     method: "POST"
-        // });
+        localStorage.clear();
         const path = "/";
         navigate(path);
     };

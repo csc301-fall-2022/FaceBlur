@@ -3,7 +3,10 @@ import express, { Request, Response } from 'express';
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 
-
+/** Express router providing video metadata related routes
+ * @module routes/get_video
+ * @requires express
+ */
 const router = express.Router();
 
 const config = {
@@ -16,6 +19,12 @@ const config = {
 
 const client = new S3Client(config);
 
+/**
+ * Route that gives a presigned URL to access a video in the private s3 bucket based off of a key
+ * @name /
+ * @function
+ * @inner
+ */
 router.post("/", async function(req: Request, res: Response) {
     console.log(req.body.key)
     const command = new GetObjectCommand({
