@@ -1,26 +1,42 @@
-import request from 'supertest';
+import { Prisma, PrismaClient, User } from '@prisma/client'
+import prisma from '../src/prisma';
+import { createUser } from './mock';
 
-import app from '../src/app';
-import { logger } from '../src/utils/logger';
+const mockedPrismaClient = () => {
+  const prismaClient = new PrismaClient();
+  prismaClient.$use(async (params, next) => {
+    return {
+        id: 1,
+        email: 'test@gmail.com',
+        password:
+            '$2b$10$UNQGu4eZmEgvucwIIC/DMeszMuvHXf/6euvCwUYAlS2YxRm0WLC52',
+        videos: []
+    } as User
+  })
+  return prismaClient;
+}
 
 describe('registration success', () => {
     test('register a user', async () => {
+        const prismaClient = mockedPrismaClient()
+
         const user = {
             id: 1,
             email: 'test@gmail.com',
             password:
                 '$2b$10$UNQGu4eZmEgvucwIIC/DMeszMuvHXf/6euvCwUYAlS2YxRm0WLC52',
         };
-        const res = await request(app).post('/api/auth/register').send(user);
+        const test = await createUser(prismaClient, user);
         // response check
-        expect(res.body).toEqual({ status: 'succeeded' });
-        expect(res.statusCode).toBe(200);
-        return res;
+        await expect(test?.email).toBe("test@gmail.com");
+        await prismaClient.$disconnect();
     });
 });
 
 describe('registration fail', () => {
     test('duplicate users', async () => {
+        const prismaClient = mockedPrismaClient()
+
         const user1 = {
             id: 1,
             email: 'test@gmail.com',
@@ -33,33 +49,14 @@ describe('registration fail', () => {
             password:
                 '$2b$10$UNQGu4eZmEgvucwIIC/DMeszMuvHXf/6euvCwUYAlS2YxRm0WLC52',
         };
-        await request(app).post('/api/auth/register').send(user1);
-        const res = await request(app).post('/api/auth/register').send(user2);
-        // response check
-        expect(res.body).toEqual({ message: 'Email In Use', status: 'failed' });
-        expect(res.statusCode).toBe(500);
-        return res;
-    });
-});
-
-describe('login success', () => {
-    test('login a user', async () => {
-        const userReg = {
-            id: 1,
-            email: 'test@gmail.com',
-            password:
-                '$2b$10$UNQGu4eZmEgvucwIIC/DMeszMuvHXf/6euvCwUYAlS2YxRm0WLC52',
-        };
-        const user = {
-            email: 'test@gmail.com',
-            password:
-                '$2b$10$UNQGu4eZmEgvucwIIC/DMeszMuvHXf/6euvCwUYAlS2YxRm0WLC52',
-        };
-        await request(app).post('/api/auth/register').send(userReg);
-        const res = await request(app).post('/api/auth/login').send(user);
-        // response check
-        expect(res.body).toEqual({ status: 'success' });
-        expect(res.statusCode).toBe(200);
-        return res;
+        try {
+            const test1 = await createUser(prismaClient, user1);
+            const test2 = await createUser(prismaClient, user2);
+        } catch(error) {
+            if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            await expect(error).toBe("P2002");
+            await prismaClient.$disconnect();
+            }
+        }
     });
 });
