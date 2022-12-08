@@ -3,14 +3,26 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.3
-  github-super-linter: circleci/github-super-linter@1.0.1
+  heroku: circleci/heroku@2.0.0
 
 workflows:
-    backend-checks:
+    # backend-checks:
+    #   jobs:
+    #     - node/test:
+    #         app-dir: ~/project/api
+    #         test-results-for: jest 
+    heroku-deploy:
       jobs:
-        - node/test:
-            app-dir: ~/project/api
-            test-results-for: jest 
+        - heroku/deploy-via-git:
+            filters:
+              branches:
+                only:
+                  -main
+            api-key: HEROKU_API_KEY
+            app-name: csc301 
+            force: false 
+            maintenance-mode: false
+
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
