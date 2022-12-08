@@ -7,7 +7,6 @@ import FormGroup from "@mui/material/FormGroup";
 import Button from "@mui/material/Button";
 import * as upload from "../static/upload-dialogue.css";
 import Cookies from "js-cookie";
-//const constructFileFromLocalFileData = require('get-file-object-from-local-path').constructFileFromLocalFileData;
 
 let faceblur = false;
 let backgroundblur = false;
@@ -19,27 +18,11 @@ const DragFile = (props: {
     const [drag, setDrag] = useState(false);
 
     useEffect(() => {
-        // let count = 0;
         const handleDrag = (e: DragEvent) => {
             e.preventDefault();
             e.stopPropagation();
             setDrag(true);
         };
-        // const handleDragIn = (e: any) => {
-        //     e.preventDefault();
-        //     e.stopPropagation();
-        //     count++;
-        //     if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-        //         setDrag(true);
-        //     }
-        // };
-        // const handleDragOut = (e: {preventDefault: () => void; stopPropagation: () => void}) => {
-        //     e.preventDefault();
-        //     e.stopPropagation();
-        //     count--;
-        //     if (count > 0) return;
-        //     setDrag(false);
-        // };
         const handleDrop = (e: DragEvent) => {
             e.preventDefault();
             e.stopPropagation();
@@ -53,8 +36,6 @@ const DragFile = (props: {
 
             setDrag(false);
         };
-        // ref.current?.addEventListener("dragenter", handleDragIn);
-        // ref.current?.addEventListener("dragleave", handleDragOut);
         const currentRef = ref.current;
         if (currentRef != null) {
             currentRef.addEventListener("dragover", handleDrag);
@@ -62,8 +43,6 @@ const DragFile = (props: {
         }
 
         return () => {
-            // ref.current?.removeEventListener("dragenter", handleDragIn);
-            // ref.current?.removeEventListener("dragleave", handleDragOut);
             if (currentRef != null) {
                 currentRef.removeEventListener("dragover", handleDrag);
                 currentRef.removeEventListener("drop", handleDrop);
