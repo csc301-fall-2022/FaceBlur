@@ -1,4 +1,4 @@
-# team-project-18-uoft-t
+# KidBlur for the [Toronto Early Cognition Lab](https://www.tecl.ca/)
 team-project-18-uoft-t created by GitHub Classroom.
 - Siddarth Dagar
 - Baker Jackson
