@@ -25,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 if (process.env.NODE_ENV == 'production') {
     app.use(express.static('../frontend/dist'));
+    app.use(express.static('../frontend/public'))
 }
 
 // upload route
