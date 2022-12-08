@@ -96,8 +96,6 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
     const [file, setFile] = useState(new Blob([], {type: "video/mp4"}));
     const [fileName, setFileName] = useState("");
     const [uploaded, setUploaded] = useState(false);
-    //const [faceBlur, setFaceBlur] = useState(false);
-    // const [backgroundBlur, setBackgroundBlur] = useState(false);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -105,8 +103,6 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
                 setUploaded(false);
                 faceblur = false;
                 backgroundblur = false;
-                //setFaceBlur(false);
-                //setBackgroundBlur(false);
                 props.handleClick();
             }
         };
@@ -156,9 +152,7 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
                 });
             }
             setUploaded(false);
-            //setFaceBlur(false);
             faceblur = false;
-            //setBackgroundBlur(false);
             backgroundblur = false;
             setFile(new Blob([], {type: "video/mp4"}));
         });
@@ -166,20 +160,16 @@ export default function UploadDialogue(props: {handleClick: () => void; updateVi
 
     const handleFaceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
-            //setFaceBlur(true);
             faceblur = true;
         } else {
-            //setFaceBlur(false);
             faceblur = false;
         }
     };
 
     const handleBackgroundChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.checked) {
-            //setBackgroundBlur(true);
             backgroundblur = true;
         } else {
-            //setBackgroundBlur(false);
             backgroundblur = false;
         }
     };
