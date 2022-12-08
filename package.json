@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "install": "(cd frontend && npm i --dev) && (cd api && npm i --dev)",
+    "install": "(cd frontend && npm i --dev) && (cd api && npm i --dev) && (pip install -r api/requirements.txt)",
     "build": "(cd frontend && npm run build) && (cd api && npm run build)",
     "start": "(cd api && npm run start)"
   }
