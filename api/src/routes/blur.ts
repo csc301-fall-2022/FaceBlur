@@ -30,46 +30,46 @@ interface MulterFile extends Express.Multer.File{
    And uploads to S3 bucket and database
 */
 router.post('/', (req: Request, res: Response) => {
-    logger.info('blur endpoint called');
+    console.log('blur endpoint called');
     blur(req, res, async (err) => {
         if (err) {
             res.status(500).send(err.message);
         } else {
             const { file, faceBlur, backgroundBlur } = req.body;
              if (faceBlur == 'true') {
-                logger.info("entered face blur func");
-                logger.info("(req.file as MulterFile): ",(req.file as MulterFile));
+                console.log("entered face blur func");
+                console.log("(req.file as MulterFile): ",(req.file as MulterFile));
                 const python = spawnSync('python3', ['src/middleware/face_detection.py'], {input:(req.file as MulterFile).key }); 
-                logger.info("face blur python script complete");
+                console.log("face blur python script complete");
                 
                 let path2 = python.stdout.toString().replace('\n', '');
                 let filename = path.basename(path2);
-                logger.info("new path: ", path2);
+                console.log("new path: ", path2);
                 const fileContent = fs.readFileSync(path2);
                 const user = req.user as User;
                 const userId = user.id;
                 uploadBlurredVid(filename, fileContent, 'FACE_BLURRED', userId);
 
-                logger.info("Face blur Python script output: ", python.stdout.toString());
-                logger.info("Face blur Python errors: ", python.stderr.toString());
+                console.log("Face blur Python script output: ", python.stdout.toString());
+                console.log("Face blur Python errors: ", python.stderr.toString());
                 if (backgroundBlur != 'true') {
                     res.status(200);
                 }
             }
             if (backgroundBlur == 'true') {
-                logger.info("entered background blur func");
+                console.log("entered background blur func");
                 const python1 = spawnSync('python3', ['src/middleware/background_detection.py'], {input:(req.file as MulterFile).key }); 
-                logger.info("background blur python script complete");
+                console.log("background blur python script complete");
                 let path1 = python1.stdout.toString().replace('\n', '');
                 let filename = path.basename(path1);
-                logger.info("new path: ", path1);
+                console.log("new path: ", path1);
                 const fileContent = fs.readFileSync(path1);
                 const user = req.user as User;
                 const userId = user.id;
                 uploadBlurredVid(filename, fileContent, 'BACKGROUND_BLURRED', userId);
 
-                logger.info("Python1 script output: ", python1.stdout.toString());
-                logger.info("Python1 errors: ", python1.stderr.toString());
+                console.log("Python1 script output: ", python1.stdout.toString());
+                console.log("Python1 errors: ", python1.stderr.toString());
                 res.status(200);
             }
             let absolutePath = resolve('./blur.ts');
@@ -103,7 +103,7 @@ async function uploadBlurredVid(filename:string, fileContent:any, type:any, user
         if (err) {
             throw err;
         }
-        logger.info("Blurred file uploaded successfully. ", data.Location);
+        console.log("Blurred file uploaded successfully. ", data.Location);
     });
     // Uploading files to db
     const video = await prisma.video.upsert({
