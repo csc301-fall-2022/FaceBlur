@@ -17,7 +17,13 @@ interface MulterFile extends Express.Multer.File{
     key: string;
 }
 
-// Endpoint for uploading and processing a video
+/**
+ * Route for uploading videos to S3 and the database with metadata
+ * @name /upload
+ * @function
+ * @inner
+ *
+ */
 router.post('/', (req: Request, res: Response) => {
     logger.info('Upload endpoint called');
     // Upload file with multer - uploads to S3
