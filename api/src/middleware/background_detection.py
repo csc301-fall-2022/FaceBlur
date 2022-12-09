@@ -2,10 +2,10 @@ import os
 import sys
 import time
 
-import cv2
 import mediapipe
 import proglog
 from moviepy.editor import AudioFileClip, VideoFileClip
+from scipy.ndimage.filters import gaussian_filter
 
 
 def blur_frame(image):
@@ -27,7 +27,7 @@ def blur_frame(image):
     mask = selfie_segmentation.process(i).segmentation_mask[:, :, None]
     mask = mask > 0.8
 
-    blur = cv2.GaussianBlur(i.astype(float), (99, 99), 30)
+    blur = gaussian_filter(i.astype(float), (15, 15, 0))
     return mask * i + (1 - mask) * blur
 
 

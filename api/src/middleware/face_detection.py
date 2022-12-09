@@ -1,9 +1,9 @@
 import os
 
-import cv2
 import mediapipe as mp
 import proglog
 from moviepy.editor import AudioFileClip, VideoFileClip
+from scipy.ndimage.filters import gaussian_filter
 
 mp_face_detection = mp.solutions.face_detection
 mp_drawing = mp.solutions.drawing_utils
@@ -46,7 +46,7 @@ def blur_frame(image):
             face_image = i[top:bottom, left:right]
 
             # Blur the face image
-            face_image = cv2.GaussianBlur(face_image, (99, 99), 30)
+            face_image = gaussian_filter(face_image, (15, 15, 0))
             i[top:bottom, left:right] = face_image
     return i
 
