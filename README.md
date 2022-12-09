@@ -1,5 +1,7 @@
 # KidBlur for the [Toronto Early Cognition Lab](https://www.tecl.ca/)
+
 Project Link: https://csc301.herokuapp.com/
+
 Demo Link: 
 
 team-project-18-uoft-t created by GitHub Classroom.
