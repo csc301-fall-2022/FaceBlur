@@ -33,6 +33,11 @@ const initialState: State = {
     isError: false
 };
 
+// valid email checker
+const isValidEmail = (email: string) => {
+    return /\S+@\S+\.\S+/.test(email);
+};
+
 // possible actions to take for updating State
 type Action =
     | {type: "setEmail"; payload: string}
@@ -91,7 +96,6 @@ const Register = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const navigate = useNavigate();
 
-    // This is temporary, use a login endpoint from the api here later
     const handleRegister = () => {
         if (state.password !== state.confirmPassword) {
             dispatch({
@@ -144,10 +148,21 @@ const Register = () => {
 
     // Handles email change in the input element
     const handleEmailChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        dispatch({
-            type: "setEmail",
-            payload: event.target.value
-        });
+        if (isValidEmail(event.target.value)) {
+            dispatch({
+                type: "setEmail",
+                payload: event.target.value
+            });
+            dispatch({
+                type: "setIsError",
+                payload: false
+            });
+        } else {
+            dispatch({
+                type: "setIsError",
+                payload: true
+            });
+        }
     };
 
     // Handles password change in the input element
