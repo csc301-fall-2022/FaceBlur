@@ -8,6 +8,7 @@ import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import {CardMedia} from "@mui/material";
 import Cookies from "js-cookie";
+import Link from "@mui/material/Link";
 
 import * as themes from "../static/themes.css";
 import * as login from "../static/login.css";
@@ -30,6 +31,11 @@ const initialState: State = {
     confirmPassword: "",
     helperText: "",
     isError: false
+};
+
+// valid email checker
+const isValidEmail = (email: string) => {
+    return /\S+@\S+\.\S+/.test(email);
 };
 
 // possible actions to take for updating State
@@ -90,7 +96,6 @@ const Register = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const navigate = useNavigate();
 
-    // This is temporary, use a login endpoint from the api here later
     const handleRegister = () => {
         if (state.password !== state.confirmPassword) {
             dispatch({
@@ -143,10 +148,21 @@ const Register = () => {
 
     // Handles email change in the input element
     const handleEmailChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        dispatch({
-            type: "setEmail",
-            payload: event.target.value
-        });
+        if (isValidEmail(event.target.value)) {
+            dispatch({
+                type: "setEmail",
+                payload: event.target.value
+            });
+            dispatch({
+                type: "setIsError",
+                payload: false
+            });
+        } else {
+            dispatch({
+                type: "setIsError",
+                payload: true
+            });
+        }
     };
 
     // Handles password change in the input element
@@ -173,7 +189,7 @@ const Register = () => {
                     image={require("../../public/logo.png")}
                     sx={{objectFit: "contain"}}
                 />
-                <CardHeader className={login.header} title="Register for KidBlur" />
+                <CardHeader className={login.header} title="Register for KidBlur!" />
                 <CardContent>
                     <div>
                         <TextField
@@ -226,9 +242,7 @@ const Register = () => {
                 </CardActions>
                 {/* Not implememented yet */}
                 <CardContent>
-                    <a onClick={handleExistingAccount}>
-                        <u>Already have an account?</u>
-                    </a>
+                    <Link onClick={handleExistingAccount}>Already have an account?</Link>
                 </CardContent>
             </Card>
         </form>

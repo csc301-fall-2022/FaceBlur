@@ -177,7 +177,14 @@ const VideoList = (props: VideoProps): JSX.Element => {
                                     return (
                                         <TableCell
                                             key={column.id}
-                                            style={{minWidth: column.minWidth}}
+                                            style={{
+                                                minWidth: column.minWidth,
+                                                minHeight: 49,
+                                                display: "flex",
+                                                alignItems: "center",
+                                                flexDirection: "row",
+                                                gap: 2
+                                            }}
                                         >
                                             <b>{column.label}</b>
                                             <Filter
